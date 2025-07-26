@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.desktop-view { display: block; }
+.mobile-view { display: none; }
+
+@media (max-width: 768px) {
+  .desktop-view { display: none; }
+  .mobile-view { display: flex; }
+}
