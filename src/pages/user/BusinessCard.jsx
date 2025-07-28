@@ -70,7 +70,8 @@ const businessCards = [
 
 const BusinessCards = () => {
   return (
-    <div style={{width:"90%"}} className="mx-auto">
+    <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
+    <div style={{ width: '90%', margin: '0 auto' }}>
           <Header/>
        <BusinessHero/>
        <BusinessCardGrid />
@@ -91,6 +92,7 @@ const BusinessCards = () => {
 
     
      <Footer/>
+     </div>
      </div>
   );
 };

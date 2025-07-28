@@ -284,6 +284,7 @@ const StationerySection = ({ title, subtitle, data }) => (
 );
 
 const Stationery = () => (
+    <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
   <div style={{ width: '90%', margin: '0 auto' }}>
     <Header />
 
@@ -358,6 +359,7 @@ Shop our Personalized Stationery collection, including Customizable Postcards, S
       </div>
     </div>
     <Footer />
+  </div>
   </div>
 );
 

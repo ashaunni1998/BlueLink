@@ -5,7 +5,7 @@ import BusinessCardOptions from "./BusinessCardOptions";
 
 const PersonalizedGift = () => {
   return (
-    <div style={{ width: "90%" }} className="mx-auto">
+  <div style={{ width: '90%', margin: '0 auto' }}>
       <Header />
 
       {/* Hero Section */}

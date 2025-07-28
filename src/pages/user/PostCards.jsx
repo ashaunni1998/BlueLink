@@ -7,6 +7,7 @@ const styles = {
   container: {
     fontFamily: 'sans-serif',
     color: '#333',
+    width: '90%', margin: '0 auto' 
   },
   hero: {
     background: 'linear-gradient(to bottom, #c7e9c0, #b0dfb0)',
@@ -161,7 +162,8 @@ const sizes = [
 
 const PostCards = () => {
   return (
-    <div style={styles.container} style={{width:"90%"}} className="mx-auto">
+    <div style={{ maxWidth: "100%", overflowX: "hidden" }}>
+    <div style={styles.container} >
       <Header/>
 
       {/* Hero */}
@@ -256,6 +258,7 @@ const PostCards = () => {
       </section>
       <BusinessCardOptions/>
 <Footer/>
+    </div>
     </div>
   );
 };

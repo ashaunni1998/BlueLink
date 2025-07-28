@@ -154,7 +154,7 @@ const styles = {
   </svg>
   );
   return (
-    <div style={{ fontFamily: "Arial, sans-serif",   width:"90%" }} className="mx-auto">
+    <div style={{ fontFamily: "Arial, sans-serif",   width:"90%" , margin: '0 auto'}} >
       {/* Navbar */}
       {/* <nav
         style={{
@@ -323,57 +323,49 @@ const styles = {
 
 
 
- <section
+<section
   style={{
     display: "flex",
-    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
     alignItems: "center",
-    justifyContent: "space-between",
-    width: "100%",
-    height: "320px",
-    overflow: "hidden",
-    boxSizing: "border-box",
-    padding: "0 40px",
+    padding: "40px 20px",
     backgroundColor: "#f5f5f5",
   }}
 >
-  {/* Left - Image */}
   <div
     style={{
-      flex: "1",
-      height: "100%",
+      flex: "1 1 300px",
+      minWidth: "300px",
+      maxWidth: "500px",
+      height: "300px",
       backgroundImage: "url('/homeimages/flyer.jpeg')",
       backgroundSize: "cover",
       backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-      position:"relative",
+      borderRadius: "8px",
     }}
-  ></div>
-
-  {/* Right - Text */}
+  />
   <div
     style={{
-      flex: "1",
-      padding: "20px 40px",
-      color: "#333",
-      maxWidth: "600px",
-      position:"absolute",
-      marginLeft:"720px",
-     boxSizing:"border-box",
-     border:"1px solid white",
-     backgroundColor:"white",
+      flex: "1 1 300px",
+      minWidth: "300px",
+      maxWidth: "500px",
+      backgroundColor: "#fff",
+      padding: "30px",
+      borderRadius: "8px",
+      boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+      marginTop: "20px",
     }}
   >
-    <h1 style={{ fontSize: "36px", marginBottom: "10px" }}>
-      Flyers & Leaflets.
-    </h1>
-    <p style={{ fontSize: "18px", lineHeight: "1.5" }}>
+    <h1 style={{ fontSize: "24px", marginBottom: "10px" }}>Flyers & Leaflets.</h1>
+    <p style={{ fontSize: "16px", lineHeight: "1.5" }}>
       Get creative with your Flyer printing.
       <br />
       Choose from fancy finishes and premium papers.
     </p>
   </div>
 </section>
+
 
 
    {/* Reviews Section */}

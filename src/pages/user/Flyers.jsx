@@ -5,7 +5,8 @@ import BusinessCardOptions from "./BusinessCardOptions";
 
 const Flyer = () => {
   return (
-    <div  style={{width:"90%"}} className="mx-auto">
+     <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
+   <div style={{ width: '90%', margin: '0 auto' }}>
       <Header />
       {/* Hero Section */}
    <section
@@ -188,6 +189,7 @@ const Flyer = () => {
       </section>
       <BusinessCardOptions/>
       <Footer />
+    </div>
     </div>
   );
 };
