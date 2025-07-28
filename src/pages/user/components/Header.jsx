@@ -32,15 +32,21 @@ const menuItems = [
   {
     title: "Business Cards",
     subItems: [
-      { label: "Business Card", link: "/businessCard" },
-      { label: "Option B", link: "/business-card/option-b" },
+       { label: "All Business Cards", link: "/businessCard" },
+      { label: "Business Cards", link: "/BusinessCardDetails" },
+      { label: "Super Business Cards", link:  "/BusinessCardDetails" },
+      { label: "Ice White Pearl Business Cards", link:  "/BusinessCardDetails" },
+      { label: "Folded Business Cards", link:  "/BusinessCardDetails" },
+    
     ],
   },
   {
     title: "Postcards",
     subItems: [
-      { label: "PostCards", link: "/postcards/" },
-      { label: "Option B", link: "/postcards/option-b" },
+      { label: "Original PostCards", link: "/postcards/" },
+      { label: "Super PostCards", link: "/postcards/" },
+      { label: "Pearlescent PostCards", link: "/postcards/" },
+     
     ],
   },
   {
@@ -51,15 +57,39 @@ const menuItems = [
     ],
   },
 
-   {
-    title: "Stationery",
-    subItems: [
-      { label: "stationery", link: "/stationery" },
-      { label: "Option B", link: "/flyers-leaflets/option-b" },
-    ],
-  },
+  //  {
+  //   title: "Stationery",
+  //   subItems: [
+  //     { label: "Stationery", link: "/stationery" },
+  //     { label: "Stickers And Labels", link: "/flyers-leaflets/option-b" },
+  //   ],
+  // },
 
- 
+ {
+  title: "Stationery",
+  subItems: [
+    {
+      label: "Stationery",
+      link: "/stationery",
+      subItems: [
+        { label: "Letterhead", link: "/stationery/letterhead" },
+        { label: "Envelopes Orange & Purple", link: "/stationery/envelopes" },
+        { label: "Greeting Cards", link: "/stationery/greeting-cards" },
+        { label: "Invitation Cards", link: "/stationery/invitation-cards" }
+      ]
+    },
+    {
+      label: "Stickers And Labels",
+      link: "/stickers-labels",
+      subItems: [
+        { label: "Metallic Round Sticker", link: "/stickers-labels/round-metallic" },
+        { label: "Metallic Rectangular Sticker", link: "/stickers-labels/rect-metallic" },
+        { label: "Coated Paper Sticker", link: "/stickers-labels/coated-paper" }
+      ]
+    }
+  ]
+},
+
   {
     title: "Personalized Gift",
     subItems: [
@@ -84,13 +114,13 @@ const menuItems = [
   },
 
 
-   {
-    title: "Stickers and Labels",
-    subItems: [
-      { label: "Option A", link: "/stickers-labels/option-a" },
-      { label: "Option B", link: "/stickers-labels/option-b" },
-    ],
-  },
+  //  {
+  //   title: "Stickers and Labels",
+  //   subItems: [
+  //     { label: "Option A", link: "/stickers-labels/option-a" },
+  //     { label: "Option B", link: "/stickers-labels/option-b" },
+  //   ],
+  // },
   
   {
     title: "The Blog",
@@ -109,7 +139,7 @@ export default function Header() {
 
   
   const { t, i18n } = useTranslation();
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
   const [menuOpen, setMenuOpen] = useState(false);
   // const [langDropdown, setLangDropdown] = useState(false);
   // const [selectedLang, setSelectedLang] = useState(languages[0]);
@@ -150,8 +180,8 @@ const filteredResults = dummyResults.filter(item =>
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-      if (window.innerWidth >= 768) setMenuOpen(false);
+      setIsMobile(window.innerWidth < 1024);
+      if (window.innerWidth >= 1024) setMenuOpen(false);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -319,9 +349,19 @@ const handleCloseMobileMenu = () => {
                   )}
                   {item.subItems && hoveredMenu === item.title && (
                     <div style={dropdownMenu}>
-                      {item.subItems.map((subItem, i) => (
-                        <Link key={i} to={subItem.link} style={dropdownItem}>{subItem.label}</Link>
-                      ))}
+                     {item.subItems.map((subItem, i) => (
+  <div key={i} style={{ position: "relative" }}>
+    <Link to={subItem.link} style={dropdownItem}>{subItem.label}</Link>
+    {subItem.subItems && (
+      <div style={{ ...dropdownMenu, left: "100%", top: "0", marginLeft: "1px" }}>
+        {subItem.subItems.map((child, j) => (
+          <Link key={j} to={child.link} style={dropdownItem}>{child.label}</Link>
+        ))}
+      </div>
+    )}
+  </div>
+))}
+
                     </div>
                   )}
                 </div>
@@ -594,7 +634,8 @@ const navLinksContainer = {
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  flexWrap: "wrap",
+  flexWrap: "nowrap",
+  overflowY:"visible",
 };
 
 const navIcons = {
@@ -628,6 +669,7 @@ const topBar = {
 const logoWrapper = {
   display: "flex",
   alignItems: "center",
+
 };
 
 
@@ -733,7 +775,10 @@ const navBar = {
 const navLinks = {
   display: "flex",
  gap: "25px",
-  flexWrap: "wrap",
+  flexWrap: "nowrap",
+  whiteSpace:"nowrap",
+  position:"relative",
+  zIndex:1,
 };
 
 const navLink = {
@@ -754,6 +799,7 @@ const dropdownMenu = {
   padding: "8px 0",
   minWidth: "180px",
   borderRadius: "6px",
+  whiteSpace: "nowrap",
 };
 
 const dropdownItem = {

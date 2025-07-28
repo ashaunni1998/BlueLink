@@ -15,6 +15,7 @@ import Stickers from "./pages/user/Stickers";
 import BusinessCardDetails from "./pages/user/BusinessCardDetails";
 import Stationery from "./pages/user/Stationery";
 import PersonalizedGift from "./pages/user/PersonalizedGift";
+import SuperBusinessCards from "./pages/user/SuperBusinessCards";
 
 
 
@@ -45,6 +46,7 @@ function App() {
         <Route path="/businesscardDetails" element={<BusinessCardDetails/>}/>
         <Route path="/stationery" element={<Stationery/>}/>
         <Route path="/personalized-gift" element={<PersonalizedGift/>}/>
+        <Route path="/superbusinessCard" element={<SuperBusinessCards/>}/>
 
 
 
