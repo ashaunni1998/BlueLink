@@ -108,27 +108,19 @@ const Footer = () => {
           {[
             "All Products",
             "Business Cards",
-            "Square Business Cards",
-            "Letterpress Business Cards",
-            "Luxe by MOO",
-            "MOO Water Bottle",
-            "MiniCards",
             "Flyers",
             "Postcards",
-            "Notecards",
-            "Gift Cards",
-            "Greeting Cards",
             "Stickers and Labels",
             "Letterheads",
-            "Accessories",
-            "Branded Merchandise",
+            "Stationery",
+            
           ].map((item) => (
             <a key={item} style={styles.link}>{item}</a>
           ))}
         </div>
 
         {/* Column 2: Paper Stocks */}
-        <div style={styles.column}>
+        {/* <div style={styles.column}>
           <div style={styles.columnTitle}>Paper Stocks</div>
           {[
             "Paper Stocks",
@@ -142,24 +134,24 @@ const Footer = () => {
           ].map((item) => (
             <a key={item} style={styles.link}>{item}</a>
           ))}
-        </div>
+        </div> */}
 
         {/* Column 3: About Us */}
         <div style={styles.column}>
           <div style={styles.columnTitle}>About Us</div>
           {[
-            "About MOO",
-            "Media resources",
-            "People, products and the planet",
-            "Who we are",
-            "Careers",
-            "The Drop",
-            "Business Services",
-            "Reseller",
-            "Printfinity",
-            "The MOO Promise",
-            "Packaging",
-            "Partner with MOO",
+            "About Blue Link",
+            // "Media resources",
+            // "People, products and the planet",
+            // "Who we are",
+            // "Careers",
+            // "The Drop",
+            // "Business Services",
+            // "Reseller",
+            // "Printfinity",
+            // "The MOO Promise",
+            // "Packaging",
+            // "Partner with MOO",
           ].map((item) => (
             <a key={item} style={styles.link}>{item}</a>
           ))}
@@ -170,14 +162,14 @@ const Footer = () => {
           <div style={styles.columnTitle}>Help</div>
           {[
             "Contact us",
-            "Pricing",
             "Next Day Delivery",
             "FAQs",
-            "Artwork guidelines",
-            "Affiliates",
-            "Refer and Earn",
-            "Do not sell or share my personal information",
-            "Vulnerability Disclosure",
+            // "Pricing",
+            // "Artwork guidelines",
+            // "Affiliates",
+            // "Refer and Earn",
+            // "Do not sell or share my personal information",
+            // "Vulnerability Disclosure",
           ].map((item) => (
             <a key={item} style={styles.link}>{item}</a>
           ))}
@@ -187,14 +179,13 @@ const Footer = () => {
       {/* Legal strip */}
       <div style={styles.bottomStrip}>
         <p>
-          © MOO Inc., 25 Fairmount Ave, East Providence, RI 02914, USA –
-          Registered in the United States of America.
+         Blue Link Printing
         </p>
         <div style={styles.legalLinks}>
           <span style={styles.link}>Terms & Conditions</span>
           <span style={styles.link}>Privacy Policy</span>
           <span style={styles.link}>Fonts</span>
-          <span style={styles.link}>Sitemap</span>
+          {/* <span style={styles.link}>Sitemap</span> */}
           <span style={styles.link}>Company information</span>
           <span style={styles.link}>Cookie Preferences</span>
         </div>

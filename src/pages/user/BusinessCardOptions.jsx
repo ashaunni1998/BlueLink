@@ -41,7 +41,9 @@ const options = [
 
 const BusinessCardOptions = () => {
   return (
-    <div style={{ padding: "60px 20px", fontFamily: "'Helvetica Neue', sans-serif" }}>
+    <div style={{ padding: "60px 20px", fontFamily: "'Helvetica Neue', sans-serif",  maxWidth: "100%",
+    boxSizing: "border-box",
+    overflowX: "hidden", }}>
       <h2 style={{ textAlign: "center", fontSize: "32px", marginBottom: "16px", fontWeight: "600" }}>
         Make your own Business Cards
       </h2>
@@ -52,7 +54,8 @@ const BusinessCardOptions = () => {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+         gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+
           gap: "30px",
           maxWidth: "1200px",
           margin: "0 auto",
@@ -75,7 +78,7 @@ const BusinessCardOptions = () => {
               <img
                 src={opt.image}
                 alt="option icon"
-                style={{ height: "180px", objectFit: "contain" }}
+                style={{ height: "auto", objectFit: "contain",width:"100%",maxHeight:"180px" }}
               />
             </div>
             <div>

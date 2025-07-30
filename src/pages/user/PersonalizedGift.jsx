@@ -5,11 +5,12 @@ import BusinessCardOptions from "./BusinessCardOptions";
 
 const PersonalizedGift = () => {
   return (
+    <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
   <div style={{ width: '90%', margin: '0 auto' }}>
       <Header />
 
       {/* Hero Section */}
-      <section
+      {/* <section
         style={{
           position: "relative",
           backgroundImage: "url('/assets/gifts/banner.jpg')",
@@ -32,15 +33,41 @@ const PersonalizedGift = () => {
             Thoughtful designs, premium quality.
           </p>
         </div>
-      </section>
+      </section> */}
+
+
+      <section style={{ position: "relative", width: "100%" }}>
+  <img
+    src="/assets/gifts/banner.jpg"
+    alt="Personalized Gifts"
+    style={{ width: "100%", height: "450px", display: "block" }}
+  />
+  <div
+    style={{
+      position: "absolute",
+      top: "20%",
+      left: "5%",
+      color: "#fff",
+      maxWidth: "600px",
+    }}
+  >
+    <h1 style={{ fontSize: "36px", marginBottom: "10px" }}>Personalized Gifts</h1>
+    <p style={{ fontSize: "18px", lineHeight: "1.5" }}>
+      Unique, custom gifts made just for them.
+      <br />
+      Thoughtful designs, premium quality.
+    </p>
+  </div>
+</section>
+
 
       {/* Shop by Category */}
       <section style={{ maxWidth: "1200px", margin: "50px auto", padding: "0 20px" }}>
         <h2 style={{ fontSize: "24px", marginBottom: "20px", textAlign: "center" }}>Shop by Gift Type</h2>
         <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "30px", padding: "20px" }}>
           {[
-            { img: "mugs.jpg", title: "Photo Mugs", desc: "Custom printed mugs", link: "#" },
-            { img: "pillows.jpg", title: "Cushions", desc: "Personalized pillows", link: "#" },
+            { img: "mugs.jpg", title: "Photo Mugs", desc: "Custom printed mugs", link: "/personalizedgiftDetails" },
+            { img: "pillows.jpg", title: "Cushions", desc: "Personalized pillows", link: "/personalizedgiftDetails" },
             { img: "keychains.jpg", title: "Keychains", desc: "Engraved & printed", link: "#" },
             { img: "frames.jpg", title: "Photo Frames", desc: "Customized memories", link: "#" },
             { img: "notebooks.jpg", title: "Notebooks", desc: "Printed covers & pages", link: "#" },
@@ -172,6 +199,7 @@ const PersonalizedGift = () => {
 
       <BusinessCardOptions />
       <Footer />
+    </div>
     </div>
   );
 };

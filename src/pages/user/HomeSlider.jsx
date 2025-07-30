@@ -5,16 +5,33 @@ const homeSlides = [
     image: "https://www.moo.com/dam/jcr:cfd23cfc-64cf-451c-90e2-b6fee400f950/0812WF-HPC-3840x1000-Business-Cards-Standard.jpg",
     title: "Fast & Reliable Blueprint Printing",
     description: "Upload your files, customize your order, and we’ll deliver it to your door.",
+    cardLinks:[
+             "Original Business Cards",
+              "Super Business Cards",
+              "Luxe Business Cards",
+              "Cotton Business Cards",
+    ]
   },
   {
     image: "https://www.moo.com/dam/jcr:cc5361fb-cdeb-4763-a58b-1d6c45358e65/0812WF-HPC-3840x1000-EN-Business-Reseller0.jpg",
     title: "High-Quality Prints for Professionals",
     description: "Architectural and engineering prints done with precision and care.",
+    cardLinks:[
+      "Business Boost",
+      "Business Boost Plus",
+      "Business Boost Pro",
+
+    ]
   },
   {
     image: "https://www.moo.com/dam/jcr:77605a35-92ad-48a8-8b13-076f67780224/0812WF-HPC-3840x1000-Invitations.jpg",
     title: "Upload Blueprints with Ease",
     description: "Just drag and drop your files, select options, and checkout quickly.",
+    cardLinks:[
+         "Matte Paper Stickers",
+         "Glossy Paper Stickers",
+         "Craft Paper Stickers",
+    ]
   },
 ];
 
@@ -156,69 +173,72 @@ export default function HomeSlider() {
           }}
         >
           {/* Progress Bars */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "start",
-              gap: "8px",
-              marginBottom: "15px",
-              justifyContent:"start"
-            }}
-          >
-            {homeSlides.map((_, index) => (
-              <div
-                key={index}
-                style={{
-                  flex: 1,
-                  height: "5px",
-                  backgroundColor: "#ddd",
-                  borderRadius: "10px",
-                  overflow: "hidden",
-                  position: "relative",
-                  maxWidth: "60px",
-                }}
-              >
-                <div
-                  style={{
-                    height: "100%",
-                    width: index === currentSlide ? "100%" : "0%",
-                    backgroundColor: "#333",
-                    transition: index === currentSlide ? "width 7s linear" : "none",
-                  }}
-                />
-              </div>
-            ))}
-          </div>
+         {/* Progress Bars (Desktop Only) */}
+{!isMobile && (
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "start",
+      gap: "8px",
+      marginBottom: "15px",
+    }}
+  >
+    {homeSlides.map((_, index) => (
+      <div
+        key={index}
+        style={{
+          flex: 1,
+          height: "5px",
+          backgroundColor: "#ddd",
+          borderRadius: "10px",
+          overflow: "hidden",
+          position: "relative",
+          maxWidth: "60px",
+        }}
+      >
+        <div
+          style={{
+            height: "100%",
+            width: index === currentSlide ? "100%" : "0%",
+            backgroundColor: "#333",
+            transition: index === currentSlide ? "width 7s linear" : "none",
+          }}
+        />
+      </div>
+    ))}
+  </div>
+)}
+
 
           {/* Card Links */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              flexWrap: "wrap",
-              gap: "30px",
-            }}
-          >
-            {[
-              "Original Business Cards",
-              "Super Business Cards",
-              "Luxe Business Cards",
-              "Cotton Business Cards",
-            ].map((item, idx) => (
-              <div
-                key={idx}
-                style={{
-                  fontSize: "13px",
-                  color: "#112211",
-                  fontWeight: "600",
-                  cursor: "pointer",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {item}
-              </div>
-            ))}
-          </div>
+        
+{/* Card Links (Desktop Only) */}
+{!isMobile && (
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      flexWrap: "wrap",
+      gap: "30px",
+    }}
+  >
+    {slide.cardLinks.map((item, idx) => (
+      <div
+        key={idx}
+        style={{
+          fontSize: "13px",
+          color: "#112211",
+          fontWeight: "600",
+          cursor: "pointer",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {item}
+      </div>
+    ))}
+  </div>
+)}
+
         </div>
 
 
@@ -247,6 +267,40 @@ export default function HomeSlider() {
           >
             Upload Your Blueprint
           </button>
+{/* Progress Bars (Mobile Only) */}
+<div
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    gap: "8px",
+    marginTop: "20px",
+  }}
+>
+  {homeSlides.map((_, index) => (
+    <div
+      key={index}
+      style={{
+        flex: 1,
+        height: "5px",
+        backgroundColor: "#ddd",
+        borderRadius: "10px",
+        overflow: "hidden",
+        maxWidth: "60px",
+      }}
+    >
+      <div
+        style={{
+          height: "100%",
+          width: index === currentSlide ? "100%" : "0%",
+          backgroundColor: "#333",
+          transition: index === currentSlide ? "width 7s linear" : "none",
+        }}
+      />
+    </div>
+  ))}
+</div>
+
+
         </div>
       )}
     </>

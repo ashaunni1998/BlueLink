@@ -303,7 +303,7 @@ const styles = {
         </div>
         <div style={{ padding: "12px", borderTop: "1px solid #eee", textAlign: "center" }}>
           <a
-            href="#"
+            href="/businessCard"
             style={{
               color: "#007a5e",
               textDecoration: "none",

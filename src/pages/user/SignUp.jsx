@@ -20,6 +20,8 @@ const SignUp = () => {
     country: 'India',
   });
 
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 600);
 
   useEffect(() => {
@@ -31,16 +33,68 @@ const SignUp = () => {
   }, []);
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
+    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Email is invalid";
+    }
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+    } else if (formData.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+    }
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+    }
+    return newErrors;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    setErrors({});
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("https://kerala-digital-park-server.vercel.app/api/user/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          password: formData.password,
+          country: formData.country,
+        }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        navigate("/sign-in");
+      } else {
+        setErrors({ general: data.message || "Registration failed" });
+      }
+    } catch (error) {
+      setErrors({ general: "Something went wrong. Please try again." });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -66,12 +120,19 @@ const SignUp = () => {
           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
         }}>
           <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Create an account</h2>
+
+          {errors.general && (
+            <div style={{ color: 'red', marginBottom: '15px', textAlign: 'center' }}>
+              {errors.general}
+            </div>
+          )}
+
           <form onSubmit={handleSubmit}>
-            {renderInputRow("First name", "firstName", "text", formData.firstName, handleChange, isMobile)}
-            {renderInputRow("Last name", "lastName", "text", formData.lastName, handleChange, isMobile)}
-            {renderInputRow("Email address", "email", "email", formData.email, handleChange, isMobile)}
-            {renderInputRow("Password", "password", "password", formData.password, handleChange, isMobile)}
-            {renderInputRow("Confirm password", "confirmPassword", "password", formData.confirmPassword, handleChange, isMobile)}
+            {renderInputRow("First name", "firstName", "text", formData.firstName, handleChange, errors.firstName, isMobile)}
+            {renderInputRow("Last name", "lastName", "text", formData.lastName, handleChange, errors.lastName, isMobile)}
+            {renderInputRow("Email address", "email", "email", formData.email, handleChange, errors.email, isMobile)}
+            {renderInputRow("Password", "password", "password", formData.password, handleChange, errors.password, isMobile)}
+            {renderInputRow("Confirm password", "confirmPassword", "password", formData.confirmPassword, handleChange, errors.confirmPassword, isMobile)}
 
             {/* Country Dropdown */}
             <div style={rowStyle(isMobile)}>
@@ -88,25 +149,26 @@ const SignUp = () => {
               </select>
             </div>
 
-            {/* Create Account Button */}
+            {/* Submit Button */}
             <button
               type="submit"
+              disabled={isSubmitting}
               style={{
-                backgroundColor: '#1abc9c',
+                backgroundColor: isSubmitting ? '#999' : '#1abc9c',
                 color: 'white',
                 padding: '12px',
                 border: 'none',
                 borderRadius: '4px',
                 marginTop: '20px',
-                cursor: 'pointer',
+                cursor: isSubmitting ? 'not-allowed' : 'pointer',
                 width: '100%',
                 fontWeight: 'bold',
               }}
             >
-              Create Account
+              {isSubmitting ? "Creating Account..." : "Create Account"}
             </button>
 
-            {/* Sign In Redirect */}
+            {/* Sign In Link */}
             <button
               type="button"
               onClick={() => navigate('/sign-in')}
@@ -134,18 +196,20 @@ const SignUp = () => {
   );
 };
 
-// Input field + label (responsive)
-const renderInputRow = (label, name, type, value, handleChange, isMobile) => (
+const renderInputRow = (label, name, type, value, handleChange, error, isMobile) => (
   <div style={rowStyle(isMobile)}>
     <label style={labelStyle(isMobile)}>{label}</label>
-    <input
-      type={type}
-      name={name}
-      value={value}
-      onChange={handleChange}
-      placeholder={label}
-      style={inputStyle}
-    />
+    <div style={{ width: '100%' }}>
+      <input
+        type={type}
+        name={name}
+        value={value}
+        onChange={handleChange}
+        placeholder={label}
+        style={inputStyle}
+      />
+      {error && <div style={{ color: 'red', fontSize: '13px', marginTop: '4px' }}>{error}</div>}
+    </div>
   </div>
 );
 

@@ -22,6 +22,18 @@ root.render(
 />
 
 
+
+window.onerror = function (msg, url, line, col, error) {
+  // Ignore specific 'Script error.'
+  if (msg === "Script error.") return;
+
+  console.error("Global Error:", { msg, url, line, col, error });
+};
+
+window.addEventListener("unhandledrejection", (event) => {
+  console.warn("Unhandled promise rejection:", event.reason);
+});
+
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

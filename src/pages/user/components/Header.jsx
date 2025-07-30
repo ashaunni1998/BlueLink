@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import GoogleTranslateDropdown from "../GoogleTranslateDropdown.jsx";
@@ -32,28 +32,38 @@ const menuItems = [
   {
     title: "Business Cards",
     subItems: [
-       { label: "All Business Cards", link: "/businessCard" },
+      { label: "All Business Cards", link: "/businessCard" },
       { label: "Business Cards", link: "/BusinessCardDetails" },
-      { label: "Super Business Cards", link:  "/BusinessCardDetails" },
-      { label: "Ice White Pearl Business Cards", link:  "/BusinessCardDetails" },
-      { label: "Folded Business Cards", link:  "/BusinessCardDetails" },
-    
+      { label: "Super Business Cards", link: "/BusinessCardDetails" },
+      { label: "Ice White Pearl Business Cards", link: "/BusinessCardDetails" },
+      { label: "Folded Business Cards", link: "/BusinessCardDetails" },
+
     ],
   },
   {
     title: "Postcards",
     subItems: [
-      { label: "Original PostCards", link: "/postcards/" },
+      { label: "All Postcards", link: "/postcards/" },
+      { label: "Original PostCards", link: "/postcarddetails/" },
       { label: "Super PostCards", link: "/postcards/" },
       { label: "Pearlescent PostCards", link: "/postcards/" },
-     
+
     ],
   },
   {
     title: "Flyers & Leaflets",
     subItems: [
-      { label: "Flyers", link: "/flyers" },
-      { label: "Option B", link: "/flyers-leaflets/option-b" },
+      { label: "All Flyers", link: "/flyers" },
+      { label: "US Letter Flyers", link: "/flyerdetails" },
+      { label: "Half Page Flyers", link: "/flyers-leaflets/option-b" },
+      { label: "Long Flyers", link: "/flyers-leaflets/option-b" },
+      { label: "Square Flyers", link: "/flyers-leaflets/option-b" },
+      { label: "Small Flyers", link: "/flyers-leaflets/option-b" },
+      { label: "Premium Flyers", link: "/flyers-leaflets/option-b" },
+      { label: "Pearlescent Flyers", link: "/flyers-leaflets/option-b" },
+      { label: "Eco Flyers", link: "/flyers-leaflets/option-b" },
+      { label: "Custom Flyers", link: "/flyers-leaflets/option-b" },
+      { label: "Design a Flyer", link: "/flyers-leaflets/option-b" },
     ],
   },
 
@@ -65,51 +75,61 @@ const menuItems = [
   //   ],
   // },
 
- {
-  title: "Stationery",
-  subItems: [
-    {
-      label: "Stationery",
-      link: "/stationery",
-      subItems: [
-        { label: "Letterhead", link: "/stationery/letterhead" },
-        { label: "Envelopes Orange & Purple", link: "/stationery/envelopes" },
-        { label: "Greeting Cards", link: "/stationery/greeting-cards" },
-        { label: "Invitation Cards", link: "/stationery/invitation-cards" }
-      ]
-    },
-    {
-      label: "Stickers And Labels",
-      link: "/stickers-labels",
-      subItems: [
-        { label: "Metallic Round Sticker", link: "/stickers-labels/round-metallic" },
-        { label: "Metallic Rectangular Sticker", link: "/stickers-labels/rect-metallic" },
-        { label: "Coated Paper Sticker", link: "/stickers-labels/coated-paper" }
-      ]
-    }
-  ]
-},
+  {
+    title: "Stationery",
+    subItems: [
+      {
+        label: "Stationery",
+        link: "/stationery",
+        subItems: [
+          { label: "Letterhead", link: "/stationery/letterhead" },
+          { label: "Envelopes Orange & Purple", link: "/stationery/envelopes" },
+          { label: "Greeting Cards", link: "/greetingcardDetails" },
+          { label: "Invitation Cards", link: "/stationery/invitation-cards" }
+        ]
+      },
+      {
+        label: "Stickers And Labels",
+        link: "/stickers",
+        subItems: [
+           { label: "All Stickers", link: "/stickers" },
+          { label: "Metallic Round Stickers", link: "/stickerdetails" },
+          { label: "Metallic Rectangular Stickers", link: "/stickers-labels/rect-metallic" },
+          { label: "Coated Paper Round Stickers", link: "/stickers-labels/coated-paper" },
+          { label: "Coated Paper Rectangular Stickers", link: "/stickers-labels/coated-paper" },
+          { label: "Mate Paper Round Stickers", link: "/stickers-labels/coated-paper" },
+          { label: "Mate Paper Rectangular Stickers", link: "/stickers-labels/coated-paper" },
+          { label: "Vinyl Round Stickers", link: "/stickers-labels/coated-paper" },
+          { label: " Vinyl Rectangular Stickers", link: "/stickers-labels/coated-paper" },
+          { label: "Vinyl Sticker Books", link: "/stickers-labels/coated-paper" },
+          { label: "Waterproof & non-tearable High Temperature Resistant Sticker", link: "/stickers-labels/coated-paper" }
+
+        ]
+      }
+    ]
+  },
 
   {
     title: "Personalized Gift",
     subItems: [
-      { label: "Option A", link: "/personalized-gift" },
+      { label: "Personalized Gift", link: "/personalized-gift" },
       { label: "Option B", link: "/personalized-gift/option-b" },
     ],
   },
   {
     title: "T-shirt Printing",
     subItems: [
-      { label: "Option A", link: "/uv-printing/option-a" },
-      { label: "Option B", link: "/uv-printing/option-b" },
+      { label: "T-Shirt Printing", link: "/tshirtprinting" },
+     
     ],
   },
 
   {
     title: "Button Badgets",
     subItems: [
-      { label: "Option A", link: "/graphic-designing/option-a" },
-      { label: "Option B", link: "/graphic-designing/option-b" },
+      
+      { label: "Button Badgets", link: "/buttonbadges" },
+     
     ],
   },
 
@@ -121,7 +141,7 @@ const menuItems = [
   //     { label: "Option B", link: "/stickers-labels/option-b" },
   //   ],
   // },
-  
+
   {
     title: "The Blog",
     link: "/blog",
@@ -130,14 +150,14 @@ const menuItems = [
     title: "Help & FAQs",
     link: "/help",
   },
-  
+
 
 
 ];
 
 export default function Header() {
 
-  
+
   const { t, i18n } = useTranslation();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -147,28 +167,29 @@ export default function Header() {
   const [accountDropdown, setAccountDropdown] = useState(false);
   const [showAccountDropdown, setShowAccountDropdown] = useState(false);
   const [expandedMenus, setExpandedMenus] = useState({});
+  const [activeSubItem, setActiveSubItem] = useState(null);
 
 
 
 
 
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
-const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
-// Dummy search data
-const dummyResults = [
-  "Business Card Templates",
-  "Premium Business Cards",
-  "Business Card Designs",
-  "Business Card Printing",
-  "Modern Business Cards",
-];
+  // Dummy search data
+  const dummyResults = [
+    "Business Card Templates",
+    "Premium Business Cards",
+    "Business Card Designs",
+    "Business Card Printing",
+    "Modern Business Cards",
+  ];
 
-// Filter results based on query
-const filteredResults = dummyResults.filter(item =>
-  item.toLowerCase().includes(searchQuery.toLowerCase())
-);
- 
+  // Filter results based on query
+  const filteredResults = dummyResults.filter(item =>
+    item.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
 
 
 
@@ -187,12 +208,46 @@ const filteredResults = dummyResults.filter(item =>
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const toggleSubMenu = (title) => {
-    setExpandedMenus((prev) => ({
-      ...prev,
-      [title]: !prev[title],
-    }));
-  };
+  // const toggleSubMenu = (title) => {
+  //   setExpandedMenus((prev) => ({
+  //     ...prev,
+  //     [title]: !prev[title],
+  //   }));
+  // };
+
+//   const toggleSubMenu = (key) => {
+
+//   setExpandedMenus((prev) => ({
+//     ...prev,
+//     [key]: !prev[key],
+//   }));
+// };
+
+
+
+const toggleSubMenu = (key) => {
+  setExpandedMenus((prev) => {
+    const newExpanded = { ...prev };
+    const isExpanding = !prev[key];
+
+    // Collapse children if parent is collapsing
+    if (!isExpanding) {
+      Object.keys(newExpanded).forEach(k => {
+        if (k.startsWith(`${key} >`) || k === key) {
+          delete newExpanded[k];
+        }
+      });
+    } else {
+      newExpanded[key] = true;
+    }
+
+    return newExpanded;
+  });
+};
+
+
+
+
 
   const handleAccountMouseEnter = () => {
     clearTimeout(accountTimeoutRef.current);
@@ -204,9 +259,9 @@ const filteredResults = dummyResults.filter(item =>
       setAccountDropdown(false);
     }, 200);
   };
-const handleCloseMobileMenu = () => {
-  setMenuOpen(false);
-};
+  const handleCloseMobileMenu = () => {
+    setMenuOpen(false);
+  };
 
 
   return (
@@ -218,17 +273,17 @@ const handleCloseMobileMenu = () => {
             <img
               src="/assets/logo/logo2.jpg"
               alt="Logo"
-              style={{ height: "50px", objectFit: "contain" }}
+              style={{ height: "50px", objectFit: "contain",width:"115px" }}
             />
           </a>
         </div>
 
         {!isMobile && (
           <div className="topRightRow" style={topRightRow}>
-            <GoogleTranslateDropdown/>
-            
+            <GoogleTranslateDropdown />
+
             {/* Language */}
-       {/* {!isMobile && (
+            {/* {!isMobile && (
   <div className="lang-selector" style={{ position: "relative" }}>
     <span onClick={() => setLangDropdown(!langDropdown)} style={topLink}>
       <img
@@ -332,7 +387,7 @@ const handleCloseMobileMenu = () => {
 
         )}
       </div>
- 
+
       {/* Navigation Bar (Desktop only) */}
       <div style={navBar}>
         {!isMobile && (
@@ -347,23 +402,68 @@ const handleCloseMobileMenu = () => {
                   ) : (
                     <span style={navLink}>{item.title}</span>
                   )}
-                  {item.subItems && hoveredMenu === item.title && (
-                    <div style={dropdownMenu}>
-                     {item.subItems.map((subItem, i) => (
-  <div key={i} style={{ position: "relative" }}>
-    <Link to={subItem.link} style={dropdownItem}>{subItem.label}</Link>
-    {subItem.subItems && (
-      <div style={{ ...dropdownMenu, left: "100%", top: "0", marginLeft: "1px" }}>
-        {subItem.subItems.map((child, j) => (
-          <Link key={j} to={child.link} style={dropdownItem}>{child.label}</Link>
-        ))}
-      </div>
-    )}
-  </div>
-))}
+              {item.subItems && hoveredMenu === item.title && (
+  <div style={dropdownMenu}>
+    {item.subItems.map((subItem, i) => {
+      const hasNested = subItem.subItems && subItem.subItems.length > 0;
+      return (
+        <div
+          key={i}
+          style={{
+            position: "relative",
+            display: "flex",
+            flexDirection: "column",
+          }}
+          onMouseEnter={() => setActiveSubItem(subItem.label)}
+          onMouseLeave={() => setActiveSubItem(null)}
+        >
+          <Link
+            to={subItem.link}
+            style={{
+              ...dropdownItem,
+              fontWeight: hasNested ? "bold" : "normal",
+              display: "block",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {subItem.label}
+          </Link>
 
-                    </div>
-                  )}
+          {hasNested && activeSubItem === subItem.label && (
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: "100%",
+                background: "#fff",
+                border: "1px solid #ddd",
+                boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+                whiteSpace: "nowrap",
+                zIndex: 300,
+                minWidth: "220px",
+              }}
+            >
+              {subItem.subItems.map((nestedItem, j) => (
+                <Link
+                  key={j}
+                  to={nestedItem.link}
+                  style={{
+                    ...dropdownItem,
+                    padding: "10px 16px",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {nestedItem.label}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      );
+    })}
+  </div>
+)}
+
                 </div>
               ))}
             </div>
@@ -374,8 +474,8 @@ const handleCloseMobileMenu = () => {
       {/* Mobile Hamburger Menu Expanded */}
       {isMobile && menuOpen && (
         <div style={mobileMenu}>
-         {/* Close Icon */}
-{/* <div style={{ display: "flex", justifyContent: "flex-end", padding: "10px" }}>
+          {/* Close Icon */}
+          {/* <div style={{ display: "flex", justifyContent: "flex-end", padding: "10px" }}>
   <button
     onClick={() => setMenuOpen(false)}
     style={{
@@ -396,36 +496,36 @@ const handleCloseMobileMenu = () => {
             <span style={searchIcon}>🔍</span>
           </div> */}
 
-         <div style={{
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  padding: "10px 16px",
-  borderBottom: "1px solid #eee",
-  backgroundColor: "#fff"
-}}>
-  <input
-    type="text"
-    placeholder="Search"
-    style={{
-      flex: 1,
-      marginRight: "10px",
-      padding: "8px 12px",
-      fontSize: "16px",
-      border: "1px solid #ccc",
-      borderRadius: "4px"
-    }}
-  />
-  <i
-    className="fas fa-times"
-    onClick={handleCloseMobileMenu}
-    style={{
-      fontSize: "22px",
-      cursor: "pointer",
-      color: "#333"
-    }}
-  ></i>
-</div>
+          <div style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "10px 16px",
+            borderBottom: "1px solid #eee",
+            backgroundColor: "#fff"
+          }}>
+            <input
+              type="text"
+              placeholder="Search"
+              style={{
+                flex: 1,
+                marginRight: "10px",
+                padding: "8px 12px",
+                fontSize: "16px",
+                border: "1px solid #ccc",
+                borderRadius: "4px"
+              }}
+            />
+            <i
+              className="fas fa-times"
+              onClick={handleCloseMobileMenu}
+              style={{
+                fontSize: "22px",
+                cursor: "pointer",
+                color: "#333"
+              }}
+            ></i>
+          </div>
 
 
           {/* Language Selector */}
@@ -468,98 +568,188 @@ const handleCloseMobileMenu = () => {
             )}
           </div> */}
 
-          
+
 
           {/* Navigation Items */}
-          {menuItems.map((item) => (
-            <div key={item.title}>
-              <div onClick={() => item.subItems && toggleSubMenu(item.title)}
-                style={{ ...mobileNavLink, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span>{item.title}</span>
-                {item.subItems && <span>{expandedMenus[item.title] ? <i class="fa-solid fa-angle-up"></i> : <i class="fa-solid fa-angle-down"></i>}</span>}
-              </div>
-              {expandedMenus[item.title] && item.subItems && (
-                <div style={{ paddingLeft: "16px" }}>
-                  {item.subItems.map((subItem, i) => (
-                    <Link key={i} to={subItem.link} style={mobileSubItem}>{subItem.label}</Link>
-                  ))}
-                </div>
-              )}
-
-             
-
-            </div>
-          ))}
+         
 
 
- {/* ✅ Account & Cart at the bottom */}
-    <div style={{
-  marginTop: "auto",
-  backgroundColor: "#374151",
-  color: "white",
-  padding: "10px 15px",
-  borderTop: "1px solid #555"
-}}>
-  {/* Account Dropdown */}
-  <div style={{ marginBottom: "10px" }}>
+{menuItems.map((item) => (
+  <div key={item.title}>
     <div
-      onClick={() => setShowAccountDropdown(!showAccountDropdown)}
+     onClick={() => toggleSubMenu(item.title)}
+
+
       style={{
+        ...mobileNavLink,
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        fontWeight: "bold",
-        padding: "12px",
-        backgroundColor: "#4B5563",
-        borderRadius: "6px",
-        cursor: "pointer"
       }}
     >
-      Account
-    <span>
-  {showAccountDropdown ? (
-    <i className="fa-solid fa-angle-up"></i>
-  ) : (
-    <i className="fa-solid fa-angle-down"></i>
-  )}
-</span>
-
+      <span>{item.title}</span>
+      {item.subItems && (
+        <span>
+          {expandedMenus[item.title] ? (
+            <i className="fa-solid fa-angle-up"></i>
+          ) : (
+            <i className="fa-solid fa-angle-down"></i>
+          )}
+        </span>
+      )}
     </div>
 
-    {showAccountDropdown && (
-      <div style={{
-        marginTop: "10px",
-        backgroundColor: "#1F2937",
-        borderRadius: "6px",
-        padding: "10px"
-      }}>
-        <Link to="/sign-in" style={accountItem}>Sign up</Link>
-        <div style={dropdownDivider}></div>
-        <div style={accountItem}>Overview</div>
-        <div style={accountItem}>Re-order</div>
-        <div style={accountItem}>Order History</div>
-        <div style={accountItem}>Saved Projects</div>
-        <div style={accountItem}>Refer and Earn</div>
-        <div style={accountItem}>Redeem Gift Cards</div>
+    {/* Show subItems in column style */}
+    {expandedMenus[item.title] && item.subItems && (
+      <div style={{ paddingLeft: "16px" }}>
+        {item.subItems.map((subItem, i) => (
+          <div key={i}>
+          {subItem.subItems ? (
+            <div>
+  <div
+   onClick={() => toggleSubMenu(`${item.title} > ${subItem.label}`)}
+
+    style={{
+      ...mobileSubItem,
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      fontWeight: "bold",
+      cursor: "pointer"
+    }}
+  >
+    <span>{subItem.label}</span>
+    <span>
+      {expandedMenus[subItem.label] ? (
+        <i className="fa-solid fa-angle-up"></i>
+      ) : (
+        <i className="fa-solid fa-angle-down"></i>
+      )}
+    </span>
+  </div>
+
+     {/* {expandedMenus[subItem.label] && (
+                  <div style={{ paddingLeft: "20px", display: "flex", flexDirection: "column", gap: "8px", marginTop: "8px" }}>
+                    {subItem.subItems.map((child, j) => (
+                      <Link
+                        key={j}
+                        to={child.link}
+                        style={mobileSubItem}
+                        onClick={handleCloseMobileMenu}
+                      >
+                        {child.label}
+                      </Link>
+                    ))}
+                  </div>
+                )} */}
+              </div>
+
+
+) : (
+  <Link
+    to={subItem.link}
+    style={{
+      ...mobileSubItem,
+      fontWeight: "bold",
+      display: "block",
+      padding: "10px 12px",
+      textDecoration: "none",
+      color: "#000"
+    }}
+    onClick={handleCloseMobileMenu}
+  >
+    {subItem.label}
+  </Link>
+)}
+ 
+
+          {expandedMenus[`${item.title} > ${subItem.label}`] && subItem.subItems && (
+
+            <div style={{ paddingLeft: "20px", display: "flex", flexDirection: "column", gap: "8px", marginTop: "8px" }}>
+
+                {subItem.subItems.map((child, j) => (
+                  <Link key={j} to={child.link} style={mobileSubItem}>
+                    {child.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     )}
   </div>
+))}
 
-  {/* Cart */}
-  <div style={{
-    padding: "12px",
-    backgroundColor: "#10B981",
-    textAlign: "center",
-    borderRadius: "6px",
-    fontWeight: "bold",
-    color: "white"
-  }}>
-    <Link to="/cart" style={{ color: "white", textDecoration: "none" }}>
-      <i className="fas fa-shopping-cart" style={{ marginRight: "8px" }}></i>
-      Cart
-    </Link>
-  </div>
-</div>
+
+          {/* ✅ Account & Cart at the bottom */}
+          <div style={{
+            marginTop: "auto",
+            backgroundColor: "#374151",
+            color: "white",
+            padding: "10px 15px",
+            borderTop: "1px solid #555"
+          }}>
+            {/* Account Dropdown */}
+            <div style={{ marginBottom: "10px" }}>
+              <div
+                onClick={() => setShowAccountDropdown(!showAccountDropdown)}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  fontWeight: "bold",
+                  padding: "12px",
+                  backgroundColor: "#4B5563",
+                  borderRadius: "6px",
+                  cursor: "pointer"
+                }}
+              >
+                Account
+                <span>
+                  {showAccountDropdown ? (
+                    <i className="fa-solid fa-angle-up"></i>
+                  ) : (
+                    <i className="fa-solid fa-angle-down"></i>
+                  )}
+                </span>
+
+              </div>
+
+              {showAccountDropdown && (
+                <div style={{
+                  marginTop: "10px",
+                  backgroundColor: "#1F2937",
+                  borderRadius: "6px",
+                  padding: "10px"
+                }}>
+                  <Link to="/sign-in" style={accountItem}>Sign up</Link>
+                  <div style={dropdownDivider}></div>
+                  <div style={accountItem}>Overview</div>
+                  <div style={accountItem}>Re-order</div>
+                  <div style={accountItem}>Order History</div>
+                  <div style={accountItem}>Saved Projects</div>
+                  <div style={accountItem}>Refer and Earn</div>
+                  <div style={accountItem}>Redeem Gift Cards</div>
+                </div>
+              )}
+            </div>
+
+            {/* Cart */}
+            <div style={{
+              padding: "12px",
+              backgroundColor: "#10B981",
+              textAlign: "center",
+              borderRadius: "6px",
+              fontWeight: "bold",
+              color: "white"
+            }}>
+              <Link to="/cart" style={{ color: "white", textDecoration: "none" }}>
+                <i className="fas fa-shopping-cart" style={{ marginRight: "8px" }}></i>
+                Cart
+              </Link>
+            </div>
+          </div>
 
 
           {/* Account Section */}
@@ -588,10 +778,10 @@ const handleCloseMobileMenu = () => {
           </Link> */}
         </div>
       )}
-       {/* Offer Bar */}
-<div style={offerBarStyle}>
-  🎉 New members get <strong>$5</strong> off their first order! <a href="/sign-in" className="text-white" >Sign up now.</a>
-</div>
+      {/* Offer Bar */}
+      <div style={offerBarStyle}>
+        🎉 New members get <strong>$5</strong> off their first order! <a href="/sign-in" className="text-white" >Sign up now.</a>
+      </div>
 
 
 
@@ -621,7 +811,7 @@ const handleCloseMobileMenu = () => {
 
 const topRightRow = {
 
-  display:"flex",
+  display: "flex",
   alignItems: "center",
   gap: "20px",
   flexWrap: "wrap",
@@ -635,7 +825,7 @@ const navLinksContainer = {
   justifyContent: "space-between",
   alignItems: "center",
   flexWrap: "nowrap",
-  overflowY:"visible",
+  overflowY: "visible",
 };
 
 const navIcons = {
@@ -650,20 +840,20 @@ const headerWrapper = {
   fontFamily: "'Segoe UI', sans-serif",
   borderBottom: "1px solid #eee",
   boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
-  backgroundColor:"white",
+  backgroundColor: "white",
   width: "100%",
   position: "sticky",
-      top: "0",
-      zIndex:"100 ", /* Optional: ensures header is above other content */
-      /* Add other styling for your header */
-    
+  top: "0",
+  zIndex: "100 ", /* Optional: ensures header is above other content */
+  /* Add other styling for your header */
+
 };
 
 const topBar = {
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  padding: "10px 20px",
+  padding: "5px 0px ",
 };
 
 const logoWrapper = {
@@ -704,7 +894,7 @@ const searchIcon = {
 const hamburgerStyle = {
   fontSize: "24px",
   cursor: "pointer",
-  textDecoration:"none",
+  textDecoration: "none",
 };
 
 const mobileRow1 = {
@@ -743,7 +933,7 @@ const accountItem = {
   padding: "8px 0",
   fontSize: "14px",
   cursor: "pointer",
-//  color: "#fff",
+  //  color: "#fff",
   textDecoration: "none",
   display: "block"
 };
@@ -767,18 +957,18 @@ const dropdownStyle = {
 };
 
 const navBar = {
-  padding: "10px 20px",
-  
-  display:"flex",
+  padding: "10px 0px",
+
+  display: "flex",
 };
 
 const navLinks = {
   display: "flex",
- gap: "25px",
+  gap: "25px",
   flexWrap: "nowrap",
-  whiteSpace:"nowrap",
-  position:"relative",
-  zIndex:1,
+  whiteSpace: "nowrap",
+  position: "relative",
+  zIndex: 1,
 };
 
 const navLink = {
@@ -845,8 +1035,8 @@ const mobileSubItem = {
   padding: "6px 10px",
   fontSize: "14px",
   borderBottom: "1px solid #eee",
-  textDecoration:"none",
-  color:"black",
+  textDecoration: "none",
+  color: "black",
 };
 
 const offerBarStyle = {
