@@ -48,3 +48,19 @@
     display: block !important;
   }
 }
+
+/* Hide Google translate top banner and dropdown */
+.goog-te-banner-frame.skiptranslate,
+.goog-te-gadget,
+.goog-te-balloon-frame,
+#goog-gt-tt,
+.goog-tooltip,
+.goog-tooltip:hover,
+.goog-te-menu-value,
+.goog-te-menu-frame {
+  display: none !important;
+}
+
+body {
+  top: 0px !important;
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
+import GoogleTranslateDropdown from "../GoogleTranslateDropdown";
 
 const Footer = () => {
   const styles = {
@@ -92,13 +93,14 @@ const Footer = () => {
       </div>
 
       {/* Language selector */}
-      <div style={styles.languageBox}>
+      {/* <div style={styles.languageBox}>
         <div style={styles.languageSelector}>
           <span>United States (English)</span>
           <img src="https://flagcdn.com/us.svg" alt="US" width="20" />
           <span>▾</span>
         </div>
-      </div>
+      </div> */}
+      <GoogleTranslateDropdown/>
 
       {/* Main link grid */}
       <div style={styles.mainGrid}>

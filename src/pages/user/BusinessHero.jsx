@@ -22,8 +22,8 @@ const BusinessHero = () => {
           sizes, and instant impressions! Let your cards speak for themselves.
         </p>
         <div className="hero-buttons">
-          <button className="btn-primary">Shop Business Cards</button>
-          <button className="btn-secondary">Reorder</button>
+       <a href="/BusinessCardDetails">   <button className="btn-primary">Shop Business Cards</button></a>
+          {/* <button className="btn-secondary">Reorder</button> */}
         </div>
       </div>
 

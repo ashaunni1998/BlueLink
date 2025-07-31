@@ -20,54 +20,47 @@ const GoogleTranslateDropdown = () => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
 
+  // Load Google Translate script
   useEffect(() => {
-    window.googleTranslateElementInit = () => {
-      new window.google.translate.TranslateElement(
-        {
-          pageLanguage: "en",
-          includedLanguages: "en,fr,de,it,nl,es",
-          autoDisplay: false,
-        },
-        "hidden_translate_container"
-      );
-    };
+  window.googleTranslateElementInit = () => {
+    new window.google.translate.TranslateElement(
+      {
+        pageLanguage: "en",
+        includedLanguages: "en,fr,de,it,nl,es",
+        autoDisplay: false,
+      },
+      "hidden_translate_container"
+    );
+  };
 
-    const existingScript = document.getElementById("google-translate-script");
-    if (!existingScript) {
-      const script = document.createElement("script");
-      script.id = "google-translate-script";
-      script.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-      script.async = true;
-      script.onerror = () => {
-        console.error("Google Translate script failed to load.");
-      };
-      document.body.appendChild(script);
-    }
-  }, []);
+  const script = document.createElement("script");
+  script.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+  script.async = true;
+  script.crossOrigin = "anonymous";
+  document.body.appendChild(script);
+}, []);
 
+
+  // Change language when dropdown item is selected
   useEffect(() => {
-    const checkTranslateLoaded = setInterval(() => {
-      const select = document.querySelector("select.goog-te-combo");
-      if (select) {
-        triggerTranslate(selectedLang.code);
-        clearInterval(checkTranslateLoaded);
-      }
-    }, 500);
-    return () => clearInterval(checkTranslateLoaded);
-  }, []);
-
-  const triggerTranslate = (langCode) => {
+  const tryTranslate = () => {
     const select = document.querySelector("select.goog-te-combo");
     if (select) {
-      select.value = langCode;
-      select.dispatchEvent(new Event("change"));
+      select.value = selectedLang.code;
+      const event = new Event("change", { bubbles: true });
+      select.dispatchEvent(event);
+    } else {
+      setTimeout(tryTranslate, 500); // Keep checking until ready
     }
   };
+
+  tryTranslate();
+}, [selectedLang]);
+
 
   const handleSelect = (lang) => {
     setSelectedLang(lang);
     setOpen(false);
-    triggerTranslate(lang.code);
   };
 
   useEffect(() => {
@@ -81,10 +74,8 @@ const GoogleTranslateDropdown = () => {
   }, []);
 
   return (
-    <div
-      ref={dropdownRef}
-      style={{ position: "relative", display: "inline-block", cursor: "pointer" }}
-    >
+    <div ref={dropdownRef} style={{ position: "relative", display: "inline-block" }}>
+      {/* Selected */}
       <div
         onClick={() => setOpen(!open)}
         style={{
@@ -92,28 +83,24 @@ const GoogleTranslateDropdown = () => {
           alignItems: "center",
           gap: "8px",
           fontSize: "14px",
-          padding: "4px 0",
+          cursor: "pointer",
         }}
       >
-        <img
-          src={selectedLang.flag}
-          alt={selectedLang.label}
-          style={{ width: "20px", height: "15px", objectFit: "cover", borderRadius: "2px" }}
-        />
+        <img src={selectedLang.flag} alt="" style={{ width: "20px" }} />
         <span>{selectedLang.label}</span>
       </div>
 
+      {/* Dropdown */}
       {open && (
         <div
           style={{
             position: "absolute",
             top: "100%",
             left: 0,
-            backgroundColor: "#fff",
-            border: "1px solid #ddd",
-            borderRadius: "6px",
+            background: "#fff",
             boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
             zIndex: 1000,
+            borderRadius: "6px",
             padding: "8px 0",
             minWidth: "250px",
             maxHeight: "300px",
@@ -133,29 +120,19 @@ const GoogleTranslateDropdown = () => {
                   lang.code === selectedLang.code && lang.label === selectedLang.label
                     ? "#f0f0f0"
                     : "transparent",
-                fontSize: "14px",
               }}
             >
-              <img
-                src={lang.flag}
-                alt={lang.label}
-                style={{
-                  width: "20px",
-                  height: "15px",
-                  marginRight: "10px",
-                  objectFit: "cover",
-                  borderRadius: "2px",
-                }}
-              />
-              <span style={{ flex: 1 }}>{lang.label}</span>
+              <img src={lang.flag} alt={lang.label} style={{ width: "20px", marginRight: "10px" }} />
+              <span>{lang.label}</span>
               {lang.code === selectedLang.code && lang.label === selectedLang.label && (
-                <span style={{ color: "green", fontWeight: "bold" }}>✓</span>
+                <span style={{ marginLeft: "auto", color: "green" }}>✓</span>
               )}
             </div>
           ))}
         </div>
       )}
 
+      {/* Hidden translate container */}
       <div id="hidden_translate_container" style={{ display: "none" }}></div>
     </div>
   );

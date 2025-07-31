@@ -29,7 +29,7 @@ const FeaturesSection = () => {
       }}
     >
       <h2 style={{ fontSize: "32px", marginBottom: "40px", fontWeight: "bold" }}>
-        Why MOO Business Cards?
+        Why Blue Link Business Cards?
       </h2>
       <div
         style={{

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { Star } from 'lucide-react';
 
 const GreetingCardDetails = () => {
+  // Images for product gallery
   const imageList = [
     '/assets/Stationery/image1.jpg',
     '/assets/Stationery/image2.jpg',
@@ -12,9 +13,10 @@ const GreetingCardDetails = () => {
     '/assets/Stationery/image5.jpg'
   ];
 
+  // Available color options
   const colors = ['Gold', 'Kraft', 'Red', 'Silver', 'White', 'White Luxe'];
-  const [selectedColor, setSelectedColor] = useState('Gold');
 
+  // Quantities with pricing
   const quantities = [
     { qty: 25, pricePerCard: 0.32, packPrice: 8.0 },
     { qty: 50, pricePerCard: 0.32, packPrice: 16.0 },
@@ -25,78 +27,100 @@ const GreetingCardDetails = () => {
     { qty: 175, pricePerCard: 0.32, packPrice: 56.0 }
   ];
 
+  // State variables
+  const [selectedColor, setSelectedColor] = useState('Gold');
   const [selectedQty, setSelectedQty] = useState(25);
   const [currentImage, setCurrentImage] = useState(0);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
+  // Get the selected pack object
   const selectedPack = quantities.find(q => q.qty === selectedQty);
 
-
+  // Image navigation
   const goToPrev = () => {
-  setCurrentImage((prev) => (prev === 0 ? imageList.length - 1 : prev - 1));
-};
+    setCurrentImage((prev) => (prev === 0 ? imageList.length - 1 : prev - 1));
+  };
 
-const goToNext = () => {
-  setCurrentImage((prev) => (prev === imageList.length - 1 ? 0 : prev + 1));
-};
+  const goToNext = () => {
+    setCurrentImage((prev) => (prev === imageList.length - 1 ? 0 : prev + 1));
+  };
 
+  // Watch for screen resize to toggle layout
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
+  // Final rendered JSX
   return (
     <div style={{ fontFamily: 'sans-serif', width: '90%', margin: '0 auto' }}>
       <Header />
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', marginTop: 30, gap: 30 }}>
-        {/* Left Image & Thumbnails */}
+      {/* Main layout wrapper */}
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: isMobile ? 'column' : 'row',
+          gap: 30,
+          marginTop: 30,
+          height: isMobile ? 'auto' : 'calc(100vh - 160px)',
+          overflow: isMobile ? 'visible' : 'hidden'
+        }}
+      >
+        {/* Left: Image display */}
         <div style={{ flex: 1, minWidth: 300 }}>
-        <div style={{ position: 'relative' }}>
-  <img
-    src={imageList[currentImage]}
-    alt="Greeting Card"
-    style={{ width: '100%', borderRadius: 10 }}
-  />
+          <div style={{ position: 'relative' }}>
+            <img
+              src={imageList[currentImage]}
+              alt="Greeting Card"
+              style={{ width: '100%', borderRadius: 10 }}
+            />
 
-  {/* Left arrow */}
-  <button
-    onClick={goToPrev}
-    style={{
-      position: 'absolute',
-      top: '50%',
-      left: 10,
-      transform: 'translateY(-50%)',
-      background: '#fff',
-      border: '1px solid #ccc',
-      borderRadius: '50%',
-      width: 32,
-      height: 32,
-      fontSize: 18,
-      cursor: 'pointer',
-      boxShadow: '0 0 6px rgba(0,0,0,0.2)'
-    }}
-  >
-    ‹
-  </button>
+            {/* Prev button */}
+            <button
+              onClick={goToPrev}
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: 10,
+                transform: 'translateY(-50%)',
+                background: '#fff',
+                border: '1px solid #ccc',
+                borderRadius: '50%',
+                width: 32,
+                height: 32,
+                fontSize: 18,
+                cursor: 'pointer',
+                boxShadow: '0 0 6px rgba(0,0,0,0.2)'
+              }}
+            >
+              ‹
+            </button>
 
-  {/* Right arrow */}
-  <button
-    onClick={goToNext}
-    style={{
-      position: 'absolute',
-      top: '50%',
-      right: 10,
-      transform: 'translateY(-50%)',
-      background: '#fff',
-      border: '1px solid #ccc',
-      borderRadius: '50%',
-      width: 32,
-      height: 32,
-      fontSize: 18,
-      cursor: 'pointer',
-      boxShadow: '0 0 6px rgba(0,0,0,0.2)'
-    }}
-  >
-    ›
-  </button>
-</div>
+            {/* Next button */}
+            <button
+              onClick={goToNext}
+              style={{
+                position: 'absolute',
+                top: '50%',
+                right: 10,
+                transform: 'translateY(-50%)',
+                background: '#fff',
+                border: '1px solid #ccc',
+                borderRadius: '50%',
+                width: 32,
+                height: 32,
+                fontSize: 18,
+                cursor: 'pointer',
+                boxShadow: '0 0 6px rgba(0,0,0,0.2)'
+              }}
+            >
+              ›
+            </button>
+          </div>
 
+          {/* Thumbnail images */}
           <div style={{ display: 'flex', marginTop: 10, gap: 10, flexWrap: 'wrap' }}>
             {imageList.map((src, i) => (
               <img
@@ -117,11 +141,21 @@ const goToNext = () => {
           </div>
         </div>
 
-        {/* Right Panel */}
-        <div style={{ flex: 1.2, minWidth: 300 }}>
+        {/* Right: Details and scrollable content */}
+        <div
+          style={{
+            flex: 1.2,
+            minWidth: 300,
+            maxHeight: isMobile ? 'none' : 'calc(100vh - 160px)',
+            overflowY: isMobile ? 'visible' : 'auto',
+            paddingRight: 10
+          }}
+        >
           <h2 style={{ fontSize: 24, marginBottom: 4 }}>Small Envelopes</h2>
           <p style={{ color: '#666' }}>6.10” x 4.33” – Made from premium paper</p>
-          <p><strong>25 Envelopes</strong> from <strong>$8.00</strong></p>
+          <p>
+            <strong>25 Envelopes</strong> from <strong>$8.00</strong>
+          </p>
 
           {/* Reviews */}
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: 16 }}>
@@ -133,8 +167,10 @@ const goToNext = () => {
 
           {/* Description */}
           <p style={{ marginBottom: 10 }}>
-            Made with premium paper.<br />
-            Choose from red, gold, silver, white and White Luxe.<br />
+            Made with premium paper.
+            <br />
+            Choose from red, gold, silver, white and White Luxe.
+            <br />
             Perfect for Standard Postcards, Invitations, Flyers or Greeting Cards.
           </p>
 
@@ -187,14 +223,16 @@ const goToNext = () => {
                     <td>
                       ${q.packPrice.toFixed(2)}
                       {q.recommended && (
-                        <span style={{
-                          background: '#d0f2ea',
-                          color: '#00795c',
-                          fontSize: 12,
-                          padding: '2px 6px',
-                          borderRadius: 4,
-                          marginLeft: 8
-                        }}>
+                        <span
+                          style={{
+                            background: '#d0f2ea',
+                            color: '#00795c',
+                            fontSize: 12,
+                            padding: '2px 6px',
+                            borderRadius: 4,
+                            marginLeft: 8
+                          }}
+                        >
                           RECOMMENDED
                         </span>
                       )}
@@ -205,26 +243,40 @@ const goToNext = () => {
             </table>
           </div>
 
-          {/* Summary */}
+          {/* Summary section */}
           <div style={{ marginTop: 30, borderTop: '1px solid #ccc', paddingTop: 16 }}>
             <h4>Summary</h4>
-            <p><strong>Size:</strong> Small</p>
-            <p><strong>Color:</strong> {selectedColor}</p>
-            <p><strong>Envelope flap:</strong> Diamond</p>
-            <p><strong>Quantity:</strong> {selectedQty}</p>
-            <p><strong>Price:</strong> ${selectedPack.packPrice.toFixed(2)}</p>
+            <p>
+              <strong>Size:</strong> Small
+            </p>
+            <p>
+              <strong>Color:</strong> {selectedColor}
+            </p>
+            <p>
+              <strong>Envelope flap:</strong> Diamond
+            </p>
+            <p>
+              <strong>Quantity:</strong> {selectedQty}
+            </p>
+            <p>
+              <strong>Price:</strong> ${selectedPack.packPrice.toFixed(2)}
+            </p>
           </div>
 
-          <button style={{
-            marginTop: 20,
-            padding: '12px 24px',
-            background: '#00b388',
-            color: '#fff',
-            border: 'none',
-            borderRadius: 6,
-            fontSize: 16,
-            cursor: 'pointer'
-          }}>
+          {/* Add to Cart */}
+          <button
+            style={{
+              marginTop: 20,
+              padding: '12px 24px',
+              background: '#00b388',
+              color: '#fff',
+              border: 'none',
+              borderRadius: 6,
+              fontSize: 16,
+              cursor: 'pointer',
+              width: isMobile ? '100%' : 'auto'
+            }}
+          >
             Add to cart
           </button>
         </div>

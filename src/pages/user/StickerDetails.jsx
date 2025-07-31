@@ -106,7 +106,8 @@ const StickerDetails = () => {
         </div>
 
         {/* Right Panel */}
-        <div style={{ flex: 1.2, minWidth: 300 }}>
+        <div style={{ flex: 1.2, minWidth: 300, maxHeight: 'calc(100vh - 200px)', overflowY: 'auto',
+    paddingRight: 10,}}>
           <h2 style={{ fontSize: 24, marginBottom: 4 }}>Metallic Stickers</h2>
           <p style={{ color: '#00b388', fontWeight: 600, marginBottom: 8 }}>New</p>
           <p style={{ marginBottom: 16 }}>

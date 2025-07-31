@@ -25,6 +25,7 @@ import StickerDetails from "./pages/user/StickerDetails";
 import TShirtPrintingDetail from "./pages/user/TshirtPrintingDetail";
 import PersonalizedGiftDetails from "./pages/user/PersonalizedGiftDetails";
 import ButtonBadgesDetail from "./pages/user/ButtonBadgesDetail";
+import Checkout from "./pages/user/Checkout";
 
 
 
@@ -40,6 +41,8 @@ import Login from "./pages/admin/Login";
 
 
 function App() {
+
+  
   return (
     <Router>
       <Routes>
@@ -65,6 +68,7 @@ function App() {
        <Route path="/tshirtprintingdetail" element={<TShirtPrintingDetail/>}/>
        <Route path="/personalizedgiftDetails" element={<PersonalizedGiftDetails/>}/>
        <Route path="/buttonbadgesdetails" element={<ButtonBadgesDetail/>}/>
+       <Route path="/checkout" element={<Checkout/>}/>
 
 
 

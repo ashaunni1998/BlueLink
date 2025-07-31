@@ -2,10 +2,27 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import { jwtDecode } from "jwt-decode";
+
+import { useEffect } from "react";
+import GoogleLogin from "./GoogleLogin";
+
 
 const SignIn = () => {
   const [hasAccount, setHasAccount] = useState(true);
   const navigate = useNavigate();
+  useEffect(() => {
+    window.handleGoogleResponse = (response) => {
+      const userObject = jwtDecode(response.credential);
+      console.log("Google User:", userObject);
+
+      // Store user info
+      localStorage.setItem("user", JSON.stringify(userObject));
+
+      // Redirect
+      navigate("/dashboard"); // 👈 use React Router navigation instead of window.location
+    };
+  }, [navigate]);
 
   return (
     <div  style={{width:"90%"}} className="mx-auto">  
@@ -85,16 +102,29 @@ const SignIn = () => {
             <span>OR</span>
           </div>
 
-          {/* Facebook login */}
-          <p style={styles.facebookText}>Trying to sign in with Facebook?</p>
-          <p>
-            Please update your details <a href="#">here</a>
-          </p>
+       {/* Google login */}
+        {/* <p style={styles.facebookText}>Trying to sign in with google?</p>
+<div id="g_id_onload"
+     data-client_id="1234567890-abcxyz123456.apps.googleusercontent.com"
+     data-callback="handleGoogleResponse"
+     data-auto_prompt="false">
+</div>
+<div className="g_id_signin"
+     data-type="standard"
+     data-shape="rectangular"
+     data-theme="outline"
+     data-text="sign_in_with"
+     data-size="large"
+     data-logo_alignment="left">
+</div> */}
+
+   <GoogleLogin/>      
+         
         </form>
       </div>
 
       {/* FAQ Section */}
-      <div style={styles.faqContainer}>
+      {/* <div style={styles.faqContainer}>
         <h3>FAQ's</h3>
         <hr />
         <p>Can I still sign in with Facebook? <b>+</b></p>
@@ -102,7 +132,7 @@ const SignIn = () => {
         <p>Why do I need to sign in? <b>+</b></p>
         <hr />
         <p>I'm having problems logging in <b>+</b></p>
-      </div>
+      </div> */}
 </div>
 <Footer/>
     </div>

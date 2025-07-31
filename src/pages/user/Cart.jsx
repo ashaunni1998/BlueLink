@@ -166,9 +166,22 @@ const Cart = () => {
           }}
         >
           <a href="/" style={{ color: '#2563EB', fontSize: '0.875rem', textDecoration: 'underline' }}>
-            ← Continue Shopping
+            
+            <button
+            style={{
+              backgroundColor: '#2563EB',
+              color: '#fff',
+              padding: '0.5rem 1.5rem',
+              borderRadius: '0.375rem',
+              fontSize: '0.875rem',
+              cursor: 'pointer',
+              border: 'none',
+            }}
+          >
+      ← Continue Shopping
+          </button>
           </a>
-          <button
+         <a href="/checkout "> <button
             style={{
               backgroundColor: '#2563EB',
               color: '#fff',
@@ -181,6 +194,7 @@ const Cart = () => {
           >
             Proceed to Checkout
           </button>
+          </a>
         </div>
       </div>
     </div>

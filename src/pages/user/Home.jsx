@@ -249,34 +249,42 @@ const styles = {
       {
         image: "https://static.vecteezy.com/system/resources/previews/000/256/401/non_2x/abstract-wavy-visiting-card-template-vector.jpg",
         label: "Shop Business Cards",
+        link: "/businessCard",
       },
       {
         image: "https://img.elegantflyer.com/templates/preview/free-business-card-set-73923.jpg",
         label: "Shop Postcards",
+        link: "/postCards",
       },
       {
         image: "https://img.freepik.com/free-vector/modern-black-white-business-card-design_1017-14939.jpg?semt=ais_hybrid&w=740",
-        label: "Shop Brochures",
+        label: "Shop Flyers",
+        link: "/flyers",
       },
       {
         image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzzvpMzVl3soLGN18QJBgHPilLGuWNL1RVWw&s",
         label: "Shop Stickers & Labels",
+        link: "/stickers",
       },
       {
         image: "https://www.shutterstock.com/image-vector/professional-minimalist-business-card-design-600nw-2316957167.jpg",
-        label: "Shop Notepads",
+        label: "Shop Stationery",
+        link: "/stationery",
       },
       {
         image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKtxgvGY02u7_ujy2D-rhzSh9QRpa4UIIUVQ&s",
-        label: "Shop Flyers",
+        label: "Shop Personalized Gift",
+        link: "/personalized-gift",
       },
       {
         image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy45Tw4PCBCuwhdSXRMQu3WDpjInDCIG8jeA&s",
-        label: "Shop Drinkware",
+        label: "Shop Tshirt Printing",
+        link: "/tshirtprinting",
       },
       {
         image: "https://png.pngtree.com/template/20200714/ourmid/pngtree-blue-abstract-business-card-image_391818.jpg",
-        label: "Shop Notebooks & Planners",
+        label: "Shop Button Badges",
+        link: "/buttonbadges",
       },
     ].map((product, index) => (
       <div
@@ -303,7 +311,7 @@ const styles = {
         </div>
         <div style={{ padding: "12px", borderTop: "1px solid #eee", textAlign: "center" }}>
           <a
-            href="/businessCard"
+            href={product.link}
             style={{
               color: "#007a5e",
               textDecoration: "none",
@@ -318,6 +326,7 @@ const styles = {
     ))}
   </div>
 </section>
+
 
 
 
@@ -369,15 +378,15 @@ const styles = {
 
 
    {/* Reviews Section */}
-      <section style={styles.section}>
-        {/* Logos Row */}
+      {/* <section style={styles.section}>
+      
         <div style={styles.logosRow}>
           {logos.map((logo) => (
             <img key={logo.alt} src={logo.src} alt={logo.alt}  style={{ ...styles.logo, ...logo.style }} height="40" />
           ))}
         </div>
 
-        {/* Trustpilot Block */}
+      
         <div style={styles.trustpilotBlock}>
           <h2 style={{ fontSize: "20px", margin: "10px 0" }}>Excellent</h2>
           <div style={styles.trustpilotStars}>
@@ -394,7 +403,7 @@ const styles = {
           <div style={{ color: "#00b67a", fontWeight: "bold" }}>★ Trustpilot</div>
         </div>
 
-        {/* Review Cards */}
+        
         <div style={styles.reviewCards}>
           {reviews.map((review, index) => (
             <div key={index} style={styles.card}>
@@ -411,7 +420,96 @@ const styles = {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
+
+
+<section
+  style={{
+    backgroundColor: "#f5f5f5",
+    padding: "60px 20px",
+  }}
+>
+  <div
+    style={{
+      display: "flex",
+      flexWrap: "wrap",
+      gap: "30px",
+      justifyContent: "center",
+    }}
+  >
+    {/* Business Card Design Examples */}
+    <div
+      style={{
+        backgroundColor: "#fff",
+        maxWidth: "500px",
+        flex: "1 1 300px",
+        borderRadius: "8px",
+        overflow: "hidden",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+      }}
+    >
+      <img
+        src="/homeimages/business-cards-sample.jpg"
+        alt="Business Card Examples"
+        style={{ width: "100%", height: "auto" }}
+      />
+      <div style={{ padding: "24px" }}>
+        <h3 style={{ fontSize: "20px", fontWeight: "600", marginBottom: "10px" }}>
+          10 Business Card design examples
+        </h3>
+        <p style={{ fontSize: "15px", color: "#555", marginBottom: "16px" }}>
+          MOO’s designers share 10 standout business cards from different industries.
+        </p>
+        <a
+          href="#"
+          style={{
+            color: "#007a5e",
+            fontWeight: "600",
+            textDecoration: "none",
+          }}
+        >
+          Read more &gt;
+        </a>
+      </div>
+    </div>
+
+    {/* Invites Section */}
+    <div
+      style={{
+        backgroundColor: "#fff",
+        maxWidth: "500px",
+        flex: "1 1 300px",
+        borderRadius: "8px",
+        overflow: "hidden",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+      }}
+    >
+      <img
+        src="/homeimages/invites-sample.jpg"
+        alt="Event Invitations"
+        style={{ width: "100%", height: "auto" }}
+      />
+      <div style={{ padding: "24px" }}>
+        <h3 style={{ fontSize: "20px", fontWeight: "600", marginBottom: "10px" }}>
+          Invites they won’t ignore
+        </h3>
+        <p style={{ fontSize: "15px", color: "#555", marginBottom: "16px" }}>
+          How to create paper invites that actually get a “yes.”
+        </p>
+        <a
+          href="#"
+          style={{
+            color: "#007a5e",
+            fontWeight: "600",
+            textDecoration: "none",
+          }}
+        >
+          Read more &gt;
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section
   style={{
@@ -546,7 +644,7 @@ const styles = {
         <p style={{ fontSize: "18px", marginBottom: "25px" }}>
           Simple process. High-quality. Always on time.
         </p>
-        <button
+       <a href="/sign-in" ><button
           style={{
             padding: "10px 28px",
             fontSize: "16px",
@@ -558,7 +656,7 @@ const styles = {
           }}
         >
           Start Now
-        </button>
+        </button></a>
       </section>
 
     

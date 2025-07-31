@@ -51,7 +51,18 @@ const PostcardDetails = () => {
         `}
       </style>
 
-      <div className="details-container" style={{ display: 'flex', flexWrap: 'wrap', padding: 20, gap: 20 }}>
+     <div
+  className="details-container"
+  style={{
+    display: 'flex',
+    flexWrap: 'nowrap', // ensure horizontal layout
+    padding: 20,
+    gap: 20,
+    height: '80vh', // give full height for scroll behavior
+    overflow: 'hidden' // prevent container scroll
+  }}
+>
+
         {/* Left Image Section */}
         <div className="image-section" style={{ flex: 1, minWidth: 300, position: 'relative' }}>
           <img
@@ -92,7 +103,18 @@ const PostcardDetails = () => {
         </div>
 
         {/* Right Content Section */}
-        <div className="content-section" style={{ flex: 1.2, paddingLeft: 40, minWidth: 300 }}>
+       <div
+  className="content-section"
+  style={{
+    flex: 1.2,
+    paddingLeft: 40,
+    minWidth: 300,
+    overflowY: 'auto',
+    paddingRight: 16,
+    height: '100%' // so it fills the height and can scroll inside
+  }}
+>
+
           <h2 style={{ fontSize: '26px', marginBottom: 10 }}>Personalized Postcards</h2>
           <p style={{ fontWeight: 600, marginBottom: 4 }}>Glossy, full-color postcards for any occasion</p>
           <p style={{ marginBottom: 10 }}>
@@ -119,6 +141,89 @@ const PostcardDetails = () => {
           <p style={{ fontSize: 13, color: '#555', marginTop: 10 }}>
             Eco-friendly materials. Made with FSC® certified paper.
           </p>
+
+
+{/* Paper Type Selection */}
+<div style={{ marginTop: 40 }}>
+  <h4 style={{ fontWeight: 600, marginBottom: 16 }}>Choose your paper</h4>
+  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20 }}>
+    {[
+      {
+        title: 'Original',
+        description: ['16–17pt paper thickness', 'Available in matte or gloss', 'With a coating on one or both sides'],
+        image: '/assets/postcards/original.jpg'
+      },
+      {
+        title: 'Super',
+        description: ['18pt paper thickness', 'Silky smooth, strong and durable Postcards', 'Shine-free, so there’s no glare'],
+        image: '/assets/postcards/super.jpg'
+      },
+      {
+        title: 'Luxe',
+        description: ['32pt paper thickness', 'Choice of 8 colour seams', 'Uncoated and naturally textured Postcards'],
+        image: '/assets/postcards/luxe.jpg'
+      },
+      {
+        title: 'Special Finishes',
+        description: ['18pt paper thickness', 'Raised Gold or Silver Foil', 'Strong Super paper, Soft Touch coating'],
+        image: '/assets/postcards/special.jpg'
+      }
+    ].map((item, i) => (
+      <div key={i} style={{ flex: '1 1 220px', border: '1px solid #ccc', borderRadius: 10, padding: 16 }}>
+        <img src={item.image} alt={item.title} style={{ width: '100%', borderRadius: 6, marginBottom: 10 }} />
+        <h5 style={{ marginBottom: 10 }}>{item.title}</h5>
+        <ul style={{ fontSize: 14, paddingLeft: 18 }}>
+          {item.description.map((line, j) => (
+            <li key={j}>{line}</li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</div>
+
+{/* Design Method Selection */}
+{/* <div style={{ marginTop: 40 }}>
+  <h4 style={{ fontWeight: 600, marginBottom: 16 }}>How would you like to design your postcards?</h4>
+  <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
+    {[
+      {
+        title: 'Use our templates',
+        desc: ['Looking for inspiration', 'Want simple customization'],
+        image: '/assets/design/templates.png',
+        disabled: true
+      },
+      {
+        title: 'Design here online',
+        desc: ['Already have your logo', 'Customize every detail'],
+        image: '/assets/design/online.png',
+        active: true
+      },
+      {
+        title: 'Upload a full design',
+        desc: ['Have a complete design', 'Have your own designer'],
+        image: '/assets/design/upload.png'
+      }
+    ].map((option, i) => (
+      <div key={i} style={{
+        flex: '1 1 220px',
+        border: option.active ? '2px solid #00b388' : '1px solid #ccc',
+        borderRadius: 10,
+        padding: 16,
+        opacity: option.disabled ? 0.5 : 1,
+        background: option.active ? '#f9fffc' : '#fff'
+      }}>
+        <img src={option.image} alt={option.title} style={{ width: '100%', borderRadius: 6, marginBottom: 10 }} />
+        <h5>{option.title}</h5>
+        <ul style={{ fontSize: 14, paddingLeft: 18 }}>
+          {option.desc.map((line, j) => (
+            <li key={j}>{line}</li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</div> */}
 
           {/* Quantity Table */}
           <div style={{ marginTop: 30 }}>

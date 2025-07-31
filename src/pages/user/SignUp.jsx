@@ -98,6 +98,7 @@ const SignUp = () => {
   };
 
   return (
+       <div  style={{width:"90%"}} className="mx-auto">  
     <div style={{ width: "100%", boxSizing: "border-box" }}>
       <Header />
 
@@ -193,6 +194,8 @@ const SignUp = () => {
 
       <Footer />
     </div>
+
+</div>
   );
 };
 

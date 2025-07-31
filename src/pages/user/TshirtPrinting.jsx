@@ -34,35 +34,35 @@ const TShirtPrinting = () => {
           </div>
         </section>
 
-     
-<section style={{ maxWidth: "1200px", margin: "50px auto", padding: "0 20px" }}>
-  <h2 style={{ fontSize: "24px", marginBottom: "20px", textAlign: "center" }}>Shop by T-Shirt Type</h2>
-  <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "30px", padding: "20px" }}>
-    {[
-      { img: "round-neck.jpg", title: "Round Neck", desc: "Classic everyday tees", path: "/tshirtprintingdetail" },
-      { img: "polo.jpg", title: "Polo T-Shirts", desc: "Smart casual prints", path: "/tshirtprintingdetail" },
-      { img: "full-sleeve.jpg", title: "Full Sleeve", desc: "All-season comfort", path: "/tshirtpriningtdetail" },
-      { img: "crop-top.jpg", title: "Crop Tops", desc: "Trendy & stylish", path: "/tshirtprintingdetail" },
-      { img: "sports.jpg", title: "Sports Tees", desc: "Performance-ready prints", path: "/tshirtprintingdetail" },
-    ].map((item, index) => (
-      <div key={index} style={{ textAlign: "center", width: "200px", flex: "1 1 200px" }}>
-        <img
-          src={`/assets/tshirt/${item.img}`}
-          alt={item.title}
-          style={{ width: "100%", borderRadius: "10px", boxShadow: "0 2px 6px rgba(0,0,0,0.1)" }}
-        />
-        <h4 style={{ marginTop: "12px", fontSize: "16px", fontWeight: "600" }}>{item.title}</h4>
-        <p style={{ color: "#555", fontSize: "14px", margin: "4px 0" }}>{item.desc}</p>
-        <Link
-          to={item.path}
-          style={{ color: "#00704A", fontSize: "14px", textDecoration: "none", fontWeight: "500" }}
-        >
-          Shop {item.title}
-        </Link>
-      </div>
-    ))}
-  </div>
-</section>
+
+        <section style={{ maxWidth: "1200px", margin: "50px auto", padding: "0 20px" }}>
+          <h2 style={{ fontSize: "24px", marginBottom: "20px", textAlign: "center" }}>Shop by T-Shirt Type</h2>
+          <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "30px", padding: "20px" }}>
+            {[
+              { img: "round-neck.jpg", title: "Round Neck", desc: "Classic everyday tees", path: "/tshirtprintingdetail" },
+              { img: "polo.jpg", title: "Polo T-Shirts", desc: "Smart casual prints", path: "/tshirtprintingdetail" },
+              { img: "full-sleeve.jpg", title: "Full Sleeve", desc: "All-season comfort", path: "/tshirtpriningtdetail" },
+              { img: "crop-top.jpg", title: "Crop Tops", desc: "Trendy & stylish", path: "/tshirtprintingdetail" },
+              { img: "sports.jpg", title: "Sports Tees", desc: "Performance-ready prints", path: "/tshirtprintingdetail" },
+            ].map((item, index) => (
+              <div key={index} style={{ textAlign: "center", width: "200px", flex: "1 1 200px" }}>
+                <img
+                  src={`/assets/tshirt/${item.img}`}
+                  alt={item.title}
+                  style={{ width: "100%", borderRadius: "10px", boxShadow: "0 2px 6px rgba(0,0,0,0.1)" }}
+                />
+                <h4 style={{ marginTop: "12px", fontSize: "16px", fontWeight: "600" }}>{item.title}</h4>
+                <p style={{ color: "#555", fontSize: "14px", margin: "4px 0" }}>{item.desc}</p>
+                <Link
+                  to={item.path}
+                  style={{ color: "#00704A", fontSize: "14px", textDecoration: "none", fontWeight: "500" }}
+                >
+                  Shop {item.title}
+                </Link>
+              </div>
+            ))}
+          </div>
+        </section>
 
 
         {/* Themes or Use Cases */}
@@ -173,7 +173,7 @@ const TShirtPrinting = () => {
           </div>
         </section>
 
-      
+
         <Footer />
       </div>
     </div>

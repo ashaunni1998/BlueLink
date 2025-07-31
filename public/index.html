@@ -1,92 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="/assets/logo/logolight1.png" />
+   
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
     <title>Blue Link</title>
 
+    <!-- Your fonts and icon links -->
+    <link rel="stylesheet" href="..." />
+    <link href="..." rel="stylesheet" />
+ <link rel="icon" href="/assets/logo/logolight1.png" />
+    <!-- ✅ Place this block here -->
+    <style>
+      /* Fully hide Google Translate UI */
+      .goog-te-banner-frame.skiptranslate,
+      .goog-te-gadget,
+      .goog-te-balloon-frame,
+      #goog-gt-tt,
+      .goog-tooltip,
+      .goog-tooltip:hover,
+      .goog-te-menu-value,
+      .goog-te-menu-frame {
+        display: none !important;
+      }
 
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-  integrity="sha512-v1NxxbYyM1yxRAz9K2o8MSgTfq1+zZ2YmT+pWPKkJ9whvIqKcV/7BFb+F+XPY6Fw+AFvXfA1eZo1MFTxB7SjCw=="
-  crossorigin="anonymous"
-  referrerpolicy="no-referrer"
-/>
-<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500&display=swap" rel="stylesheet">
+      body {
+        top: 0px !important;
+      }
 
+      /* Sometimes injected iframe IDs start with colons */
+      iframe[id^=":"] {
+        display: none !important;
+      }
 
-<!-- Prevent full-width Google Translate banner -->
-<style>
-  .goog-te-banner-frame.skiptranslate {
-    display: none !important;
-  }
-  body {
-    top: 0px !important;
-  }
-  .goog-logo-link {
-    display: none !important;
-  }
-  .goog-te-gadget {
-    color: transparent !important;
-    font-size: 0 !important;
-  }
-  .goog-te-gadget span {
-    display: none !important;
-  }
-</style>
+      /* Prevent font corruption */
+      .translated-ltr {
+        font-family: inherit !important;
+      }
+    </style>
+    
+    <!-- Other head content -->
+    <script src="..."></script>
 
-<!-- Google Translate script -->
-<script type="text/javascript">
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-      pageLanguage: 'en',
-      includedLanguages: 'en,fr,de,it,nl,es',
-      layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-      autoDisplay: false
-    }, 'google_translate_element');
-  }
-</script>
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
   </head>
   <body>
-    <!-- Inside public/index.html <head> -->
-
-
-    <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
   </body>
 </html>

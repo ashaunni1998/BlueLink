@@ -107,7 +107,7 @@ export default function HomeSlider() {
           >
             <h2 style={{ fontSize: "32px", marginBottom: "15px" }}>{slide.title}</h2>
             <p style={{ fontSize: "16px", marginBottom: "25px" }}>{slide.description}</p>
-            <button
+          <a href="/businessCard">  <button
               style={{
                 padding: "10px 25px",
                 backgroundColor: "#007bff",
@@ -118,8 +118,9 @@ export default function HomeSlider() {
                 cursor: "pointer",
               }}
             >
-              Upload Your Blueprint
+              View Our Products
             </button>
+            </a>
           </div>
         )}
 

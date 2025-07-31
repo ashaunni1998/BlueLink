@@ -31,9 +31,12 @@ const BusinessCardDetails = () => {
     setCurrentIndex((prev) => (prev === imageList.length - 1 ? 0 : prev + 1));
   };
 
-  return (
-   <div style={{ fontFamily: 'sans-serif', width: '90%', margin: '0 auto' }}>
+  const [selectedSize, setSelectedSize] = useState("Standard");
+  const [selectedFinish, setSelectedFinish] = useState("Matte");
+  const [selectedCorner, setSelectedCorner] = useState("Square");
 
+  return (
+    <div style={{ fontFamily: 'sans-serif', width: '90%', margin: '0 auto' }}>
       <Header />
 
       <style>
@@ -46,35 +49,58 @@ const BusinessCardDetails = () => {
             .image-section, .content-section {
               padding: 0 !important;
               width: 100% !important;
+              position: static !important;
+              top: auto !important;
             }
             .quantity-table th, .quantity-table td {
               font-size: 13px;
               padding: 8px;
             }
+               .content-section > div {
+    overflow-x: hidden !important;
+  }
+
+  
           }
         `}
       </style>
 
       <div className="details-container" style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        padding: 20,
-        gap: 20
+          display: 'flex',
+    flexWrap: 'nowrap', // ensure horizontal layout
+    padding: 20,
+    gap: 20,
+    height: '80vh', // give full height for scroll behavior
+    overflow: 'hidden'
       }}>
-        {/* Left Image Slider Section */}
-        <div className="image-section" style={{ flex: 1, minWidth: 300, position: 'relative' }}>
+        {/* Left Sticky Image Section */}
+        <div
+          className="image-section"
+          style={{
+            flex: 1,
+            minWidth: 300,
+            maxWidth: 500,
+            position: 'sticky',
+            top: 80,
+            alignSelf: 'flex-start',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 10,
+            height: 'fit-content'
+          }}
+        >
           <img
             src={imageList[currentIndex]}
             alt={`Card ${currentIndex + 1}`}
             style={{
               width: '100%',
+              maxHeight: 350,
+              objectFit: 'cover',
               borderRadius: 10,
-              transition: '0.3s ease-in-out',
-              marginBottom: 10
+              transition: '0.3s ease-in-out'
             }}
           />
 
-          {/* Navigation Arrows */}
           <button onClick={goToPrev} style={{
             position: 'absolute',
             top: '45%',
@@ -105,7 +131,6 @@ const BusinessCardDetails = () => {
             boxShadow: '0 0 5px rgba(0,0,0,0.2)'
           }}>›</button>
 
-          {/* Thumbnails */}
           <div style={{
             display: 'flex',
             justifyContent: 'center',
@@ -132,15 +157,25 @@ const BusinessCardDetails = () => {
           </div>
         </div>
 
-        {/* Right Details Section */}
-        <div className="content-section" style={{ flex: 1.2, paddingLeft: 40, minWidth: 300 }}>
+        {/* Right Scrollable Section */}
+      <div
+  className="content-section"
+  style={{
+    flex: 1.2,
+    paddingLeft: 40,
+    minWidth: 300,
+    overflowY: 'auto',
+    paddingRight: 16,
+    height: '100%' // so it fills the height and can scroll inside
+  }}
+>
+
           <h2 style={{ fontSize: '26px', marginBottom: 10 }}>Original Business Cards</h2>
           <p style={{ fontWeight: 600, marginBottom: 4 }}>16pt, great quality paper business cards online</p>
           <p style={{ marginBottom: 10 }}>
             <strong>50</strong> cards from <strong>$22.00</strong>
           </p>
 
-          {/* Ratings */}
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
             {[...Array(5)].map((_, i) => (
               <Star key={i} size={16} color="#00b388" fill="#00b388" style={{ marginRight: 4 }} />
@@ -148,7 +183,6 @@ const BusinessCardDetails = () => {
             <span style={{ color: '#00b388', marginLeft: 8 }}>2916 reviews</span>
           </div>
 
-          {/* Description */}
           <h3 style={{ fontSize: 18, fontWeight: 600 }}>Premium as standard</h3>
           <p style={{ fontSize: 14, lineHeight: '1.6', color: '#333' }}>
             Thicker than your average card, Original Business Cards set a new standard for “standard” business cards.
@@ -163,34 +197,84 @@ const BusinessCardDetails = () => {
             Made from responsibly sourced FSC® certified material
           </p>
 
-          {/* Corner Options */}
-          <div style={{ marginTop: 20 }}>
-            <h4 style={{ fontWeight: 600 }}>Choose your corners</h4>
-            <div style={{ display: 'flex', gap: 10, marginTop: 10 }}>
-              <div style={{
-                border: '1px solid #ccc',
-                padding: '10px 16px',
-                borderRadius: 6,
-                cursor: 'pointer',
-                flex: 1
-              }}>
-                <strong>Square</strong><br />
-                <span style={{ fontSize: 12 }}>Sharp and Stylish</span>
-              </div>
-              <div style={{
-                border: '1px solid #ccc',
-                padding: '10px 16px',
-                borderRadius: 6,
-                cursor: 'pointer',
-                flex: 1
-              }}>
-                <strong>Rounded</strong><br />
-                <span style={{ fontSize: 12 }}>Smooth & Rounded</span>
-              </div>
+          <div style={{ marginTop: 30 }}>
+            <h4 style={{ fontWeight: 600 }}>Choose your size</h4>
+            <div style={{ display: 'flex', gap: 10, marginTop: 10, flexWrap: 'wrap' }}>
+              {[
+                { label: 'Standard', desc: '2.0″ x 3.5″' },
+                { label: 'MOO', desc: '2.16″ x 3.3″' },
+                { label: 'Square', desc: '2.56″ x 2.56″' }
+              ].map((size) => (
+                <div
+                  key={size.label}
+                  onClick={() => setSelectedSize(size.label)}
+                  style={{
+                    border: selectedSize === size.label ? '2px solid #00b388' : '1px solid #ccc',
+                    borderRadius: 6,
+                    padding: 12,
+                    cursor: 'pointer',
+                    flex: 1,
+                    minWidth: 120
+                  }}
+                >
+                  <strong>{size.label}</strong><br />
+                  <span style={{ fontSize: 12 }}>{size.desc}</span>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Quantity Table */}
+          <div style={{ marginTop: 30 }}>
+            <h4 style={{ fontWeight: 600 }}>Choose your finish</h4>
+            <div style={{ display: 'flex', gap: 10, marginTop: 10, flexWrap: 'wrap' }}>
+              {[
+                { label: 'Matte', desc: 'With a smooth feel. Shine-free so no glare.' },
+                { label: 'Gloss', desc: 'Eye-catchingly shiny. Makes color photos pop.' }
+              ].map((finish) => (
+                <div
+                  key={finish.label}
+                  onClick={() => setSelectedFinish(finish.label)}
+                  style={{
+                    border: selectedFinish === finish.label ? '2px solid #00b388' : '1px solid #ccc',
+                    borderRadius: 6,
+                    padding: 12,
+                    cursor: 'pointer',
+                    flex: 1,
+                    minWidth: 140
+                  }}
+                >
+                  <strong>{finish.label}</strong><br />
+                  <span style={{ fontSize: 12 }}>{finish.desc}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ marginTop: 30 }}>
+            <h4 style={{ fontWeight: 600 }}>Choose your corners</h4>
+            <div style={{ display: 'flex', gap: 10, marginTop: 10 }}>
+              {[
+                { label: 'Square', desc: 'Sharp and Stylish' },
+                { label: 'Rounded', desc: 'Smooth & Rounded' }
+              ].map((corner) => (
+                <div
+                  key={corner.label}
+                  onClick={() => setSelectedCorner(corner.label)}
+                  style={{
+                    border: selectedCorner === corner.label ? '2px solid #00b388' : '1px solid #ccc',
+                    padding: '10px 16px',
+                    borderRadius: 6,
+                    cursor: 'pointer',
+                    flex: 1
+                  }}
+                >
+                  <strong>{corner.label}</strong><br />
+                  <span style={{ fontSize: 12 }}>{corner.desc}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
           <div style={{ marginTop: 30 }}>
             <h4 style={{ fontWeight: 600 }}>Choose your quantity</h4>
             <table className="quantity-table" style={{ width: '100%', marginTop: 10, borderCollapse: 'collapse' }}>
@@ -241,21 +325,28 @@ const BusinessCardDetails = () => {
             </table>
           </div>
 
-          {/* Continue Button */}
+          <div style={{ marginTop: 20, fontSize: 14, color: '#555' }}>
+            <p><strong>Selected Size:</strong> {selectedSize}</p>
+            <p><strong>Selected Finish:</strong> {selectedFinish}</p>
+            <p><strong>Selected Corner:</strong> {selectedCorner}</p>
+          </div>
+
           <div style={{ marginTop: 30 }}>
-            <button style={{
-              background: '#00b388',
-              color: '#fff',
-              padding: '12px 24px',
-              border: 'none',
-              borderRadius: 6,
-              fontSize: 16,
-              cursor: 'pointer',
-              width: '100%',
-              maxWidth: 300
-            }}>
-              Continue
-            </button>
+            <a href="/checkout">
+              <button style={{
+                background: '#00b388',
+                color: '#fff',
+                padding: '12px 24px',
+                border: 'none',
+                borderRadius: 6,
+                fontSize: 16,
+                cursor: 'pointer',
+                width: '100%',
+                maxWidth: 300
+              }}>
+                Continue
+              </button>
+            </a>
           </div>
         </div>
       </div>
