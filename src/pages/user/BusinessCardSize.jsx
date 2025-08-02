@@ -23,10 +23,10 @@ const cardSizes = [
     image: "/assets/businesssize/temp3.png",
   },
   {
-    title: "MOO Size Business Cards",
+    title: "Size Business Cards",
     dimensions: '3.3" × 2.16"',
     price: "50 cards from $22.00",
-    linkText: "Shop MOO Size Business Cards ›",
+    linkText: "Shop  Size Business Cards ›",
     image: "/assets/businesssize/temp4.png",
   },
 ];
@@ -58,7 +58,7 @@ const BusinessCardSizes = () => {
           marginBottom: "40px",
         }}
       >
-        From Standard, to Mini, to MOO Cards, find the perfect fit for your business.
+        From Standard, to Mini, to Blue Link Cards, find the perfect fit for your business.
       </p>
 
       <div

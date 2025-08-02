@@ -187,7 +187,7 @@ const BusinessCardDetails = () => {
           <p style={{ fontSize: 14, lineHeight: '1.6', color: '#333' }}>
             Thicker than your average card, Original Business Cards set a new standard for “standard” business cards.
             With a smooth, uniform finish and excellent print quality, it’s the great value paper that FEELS great.
-            Design and print your business cards online in Standard, Square and MOO Sizes.
+            Design and print your business cards online in Standard, Square and Sizes.
           </p>
           <ul style={{ marginTop: 10, paddingLeft: 20, fontSize: 14 }}>
             <li>130lb weight, 16pt thickness</li>
@@ -202,7 +202,7 @@ const BusinessCardDetails = () => {
             <div style={{ display: 'flex', gap: 10, marginTop: 10, flexWrap: 'wrap' }}>
               {[
                 { label: 'Standard', desc: '2.0″ x 3.5″' },
-                { label: 'MOO', desc: '2.16″ x 3.3″' },
+                { label: 'Normal', desc: '2.16″ x 3.3″' },
                 { label: 'Square', desc: '2.56″ x 2.56″' }
               ].map((size) => (
                 <div
@@ -224,6 +224,52 @@ const BusinessCardDetails = () => {
             </div>
           </div>
 
+
+{/* Paper Type Selection */}
+<div style={{ marginTop: 40 }}>
+  <h4 style={{ fontWeight: 600, marginBottom: 16 }}>Choose your paper</h4>
+ <div
+  style={{
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+    gap: 20
+  }}
+>
+
+    {[
+      {
+        title: 'Original',
+        description: ['16–17pt paper thickness', 'Available in matte or gloss', 'With a coating on one or both sides'],
+        image: '/assets/postcards/original.jpg'
+      },
+      {
+        title: 'Super',
+        description: ['18pt paper thickness', 'Silky smooth, strong and durable Postcards', 'Shine-free, so there’s no glare'],
+        image: '/assets/postcards/super.jpg'
+      },
+      {
+        title: 'Luxe',
+        description: ['32pt paper thickness', 'Choice of 8 colour seams', 'Uncoated and naturally textured Postcards'],
+        image: '/assets/postcards/luxe.jpg'
+      },
+      {
+        title: 'Special Finishes',
+        description: ['18pt paper thickness', 'Raised Gold or Silver Foil', 'Strong Super paper, Soft Touch coating'],
+        image: '/assets/postcards/special.jpg'
+      }
+    ].map((item, i) => (
+      <div key={i} style={{ flex: '1 1 220px', border: '1px solid #ccc', borderRadius: 10, padding: 16 }}>
+        <img src={item.image} alt={item.title} style={{ width: '100%', borderRadius: 6, marginBottom: 10 }} />
+        <h5 style={{ marginBottom: 10 }}>{item.title}</h5>
+        <ul style={{ fontSize: 14, paddingLeft: 18 }}>
+          {item.description.map((line, j) => (
+            <li key={j}>{line}</li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</div>
           <div style={{ marginTop: 30 }}>
             <h4 style={{ fontWeight: 600 }}>Choose your finish</h4>
             <div style={{ display: 'flex', gap: 10, marginTop: 10, flexWrap: 'wrap' }}>
@@ -330,6 +376,8 @@ const BusinessCardDetails = () => {
             <p><strong>Selected Finish:</strong> {selectedFinish}</p>
             <p><strong>Selected Corner:</strong> {selectedCorner}</p>
           </div>
+
+
 
           <div style={{ marginTop: 30 }}>
             <a href="/checkout">

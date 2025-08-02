@@ -34,7 +34,7 @@ const menuItems = [
     subItems: [
       { label: "All Business Cards", link: "/businessCard" },
       { label: "Business Cards", link: "/BusinessCardDetails" },
-      { label: "Super Business Cards", link: "/BusinessCardDetails" },
+      { label: "Special Business Cards", link: "/BusinessCardDetails" },
       { label: "Ice White Pearl Business Cards", link: "/BusinessCardDetails" },
       { label: "Folded Business Cards", link: "/BusinessCardDetails" },
 

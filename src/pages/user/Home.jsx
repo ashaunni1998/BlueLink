@@ -118,8 +118,8 @@ const styles = {
     },
     {
       stars: 5,
-      title: "Moo’s platform is easy to navigate",
-      text: "Moo’s platform is easy to navigate. I love the cards I designed. Having my art o...",
+      title: "BlueLink’s platform is easy to navigate",
+      text: "BlueLink’s platform is easy to navigate. I love the cards I designed. Having my art o...",
       author: "Kimberly Brayman",
       time: "12 hours ago",
     },
@@ -458,7 +458,7 @@ const styles = {
           10 Business Card design examples
         </h3>
         <p style={{ fontSize: "15px", color: "#555", marginBottom: "16px" }}>
-          MOO’s designers share 10 standout business cards from different industries.
+          Blue Links’s designers share 10 standout business cards from different industries.
         </p>
         <a
           href="#"

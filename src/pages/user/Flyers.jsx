@@ -163,7 +163,7 @@ const Flyer = () => {
 
       {/* Templates */}
       <section style={{ maxWidth: "1200px", margin: "50px auto", padding: "0 20px" }}>
-        <h2 style={{ fontSize: "24px", marginBottom: "20px", textAlign: "center" }}>MOO Flyer Templates</h2>
+        <h2 style={{ fontSize: "24px", marginBottom: "20px", textAlign: "center" }}>BlueLink Flyer Templates</h2>
         <p style={{ textAlign: "center", color: "#555", marginBottom: "30px" }}>
           Use our unique, modern Flyer designs straight out of the box or customise to suit your style.
         </p>
@@ -183,7 +183,7 @@ const Flyer = () => {
         </div>
         <div style={{ textAlign: "center", marginTop: "30px" }}>
           <button style={{ backgroundColor: "#003D2B", color: "white", padding: "10px 20px", borderRadius: "5px", border: "none" }}>
-            Browse MOO Flyer Templates
+            Browse Blue link Flyer Templates
           </button>
         </div>
       </section>
