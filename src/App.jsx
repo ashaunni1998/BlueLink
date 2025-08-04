@@ -26,6 +26,7 @@ import TShirtPrintingDetail from "./pages/user/TshirtPrintingDetail";
 import PersonalizedGiftDetails from "./pages/user/PersonalizedGiftDetails";
 import ButtonBadgesDetail from "./pages/user/ButtonBadgesDetail";
 import Checkout from "./pages/user/Checkout";
+import AccountPage from "./pages/user/AccountPage";
 
 
 
@@ -69,6 +70,7 @@ function App() {
        <Route path="/personalizedgiftDetails" element={<PersonalizedGiftDetails/>}/>
        <Route path="/buttonbadgesdetails" element={<ButtonBadgesDetail/>}/>
        <Route path="/checkout" element={<Checkout/>}/>
+       <Route path="/account" element={<AccountPage/>}/>
 
 
 

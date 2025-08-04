@@ -28,6 +28,31 @@ const FlyerDetails = () => {
     setCurrentIndex((prev) => (prev === imageList.length - 1 ? 0 : prev + 1));
   };
 
+
+  const [review, setReview] = useState('');
+const [rating, setRating] = useState(0);
+
+const [showReviews, setShowReviews] = useState(false);
+const [submittedReviews, setSubmittedReviews] = useState([]);
+
+const handleSubmitReview = () => {
+  if (review.trim() === '' || rating === 0) {
+    alert('Please add a review and select a rating.');
+    return;
+  }
+
+  const newReview = {
+    text: review,
+    rating,
+    date: new Date().toLocaleDateString()
+  };
+
+  setSubmittedReviews((prev) => [newReview, ...prev]);
+  setReview('');
+  setRating(0);
+  alert('Review submitted successfully!');
+};
+
   return (
     <div style={{ fontFamily: 'sans-serif', width: '90%', margin: '0 auto' }}>
       <Header />
@@ -250,6 +275,114 @@ const FlyerDetails = () => {
           </div>
         </div>
       </div>
+<div style={{ marginTop: 40 }}>
+  <h3 style={{ fontWeight: 600, marginBottom: 10 }}>Write a Review</h3>
+
+  {/* Star Rating */}
+  <div style={{ display: 'flex', gap: 5, marginBottom: 10 }}>
+    {[1, 2, 3, 4, 5].map((star) => (
+      <Star
+        key={star}
+        size={24}
+        color={star <= rating ? '#FFD700' : '#ccc'}
+        fill={star <= rating ? '#FFD700' : 'none'}
+        onClick={() => setRating(star)}
+        style={{ cursor: 'pointer' }}
+      />
+    ))}
+  </div>
+
+  {/* Textarea */}
+  <textarea
+    value={review}
+    onChange={(e) => setReview(e.target.value)}
+    placeholder="Write your review here..."
+    rows={4}
+    style={{
+      width: '100%',
+      maxWidth: 500,
+      padding: 10,
+      border: '1px solid #ccc',
+      borderRadius: 6,
+      fontSize: 14,
+      marginBottom: 10
+    }}
+  />
+
+  {/* Submit Button */}
+ <div style={{
+  display: 'flex',
+  gap: '12px',
+  marginTop: '20px',
+  flexWrap: 'wrap'
+}}>
+  {/* Submit Review Button */}
+  <button
+    onClick={handleSubmitReview}
+    style={{
+      background: '#00b388',
+      color: '#fff',
+      padding: '10px 16px',
+      border: 'none',
+      borderRadius: 6,
+      cursor: 'pointer',
+      fontSize: 14
+    }}
+  >
+    Submit Review
+  </button>
+
+  {/* View Reviews Toggle Button */}
+  <button
+    onClick={() => setShowReviews(!showReviews)}
+    style={{
+      background: '#f0f0f0',
+      color: '#333',
+      padding: '10px 16px',
+      border: '1px solid #ccc',
+      borderRadius: 6,
+      cursor: 'pointer',
+      fontSize: 14
+    }}
+  >
+    {showReviews ? 'Hide Reviews' : 'View Reviews'}
+  </button>
+</div>
+ {showReviews && (
+  <div style={{ marginTop: 20 }}>
+    {submittedReviews.length === 0 ? (
+      <p>No reviews yet.</p>
+    ) : (
+      submittedReviews.map((r, idx) => (
+        <div
+          key={idx}
+          style={{
+            border: '1px solid #ddd',
+            borderRadius: 6,
+            padding: 12,
+            marginBottom: 10,
+            maxWidth: 500
+          }}
+        >
+          <div style={{ display: 'flex', gap: 4, marginBottom: 4 }}>
+            {[1, 2, 3, 4, 5].map((i) => (
+              <Star
+                key={i}
+                size={16}
+                color={i <= r.rating ? '#FFD700' : '#ccc'}
+                fill={i <= r.rating ? '#FFD700' : 'none'}
+              />
+            ))}
+          </div>
+          <p style={{ margin: 0 }}>{r.text}</p>
+          <small style={{ color: '#777' }}>{r.date}</small>
+        </div>
+      ))
+    )}
+  </div>
+)}
+
+</div>
 
       <Footer />
     </div>

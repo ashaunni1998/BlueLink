@@ -27,6 +27,31 @@ const ButtonBadgesDetail = () => {
     if (mainImageIndex < imagePreviews.length - 1) setMainImageIndex(mainImageIndex + 1);
   };
 
+
+  const [reviewText, setReviewText] = useState('');
+const [showReviews, setShowReviews] = useState(false);
+
+const [rating, setRating] = useState(0);
+const handleSubmitReview = () => {
+  if (!reviewText.trim()) {
+    alert("Please enter your review before submitting.");
+    return;
+  }
+
+  if (rating === 0) {
+    alert("Please select a star rating.");
+    return;
+  }
+
+  // Simulate submission
+  console.log("Submitted review:", { reviewText, rating });
+  alert(`Thank you! You rated us ${rating} star(s).`);
+
+  setReviewText("");
+  setRating(0);
+};
+
+
   return (
     <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
       <div style={{ width: '90%', margin: '0 auto' }}>
@@ -181,6 +206,92 @@ const ButtonBadgesDetail = () => {
             Minimum order: 10 pieces.
           </p>
         </section>
+
+
+{/* Review Section */}
+<section style={{ marginTop: '40px' }}>
+  <h3 style={{ fontSize: '22px', marginBottom: '10px' }}>Add Your Review</h3>
+ <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px', gap: '6px' }}>
+    {[1, 2, 3, 4, 5].map((star) => (
+      <Star
+        key={star}
+        size={24}
+        color={star <= rating ? '#FFD700' : '#ccc'}
+        fill={star <= rating ? '#FFD700' : 'none'}
+        style={{ cursor: 'pointer' }}
+        onClick={() => setRating(star)}
+      />
+    ))}
+  </div>
+  <textarea
+    value={reviewText}
+    onChange={(e) => setReviewText(e.target.value)}
+    rows={4}
+    placeholder="Write your review here..."
+    style={{
+      width: '100%',
+      padding: '12px',
+      borderRadius: '6px',
+      border: '1px solid #ccc',
+      marginBottom: '20px',
+      fontSize: '15px',
+    }}
+  />
+
+  <div
+    style={{
+      display: 'flex',
+      justifyContent: 'flex-start',
+      gap: '12px',
+      flexWrap: 'wrap',
+      marginBottom: '20px'
+    }}
+  >
+    {/* Submit Review Button */}
+    <button
+      onClick={handleSubmitReview}
+      style={{
+        background: '#007BFF',
+        color: '#fff',
+        padding: '10px 16px',
+        border: 'none',
+        borderRadius: 6,
+        cursor: 'pointer',
+        fontSize: 14,
+      }}
+    >
+      Submit Review
+    </button>
+
+    {/* View Reviews Button */}
+    <button
+      onClick={() => setShowReviews(!showReviews)}
+      style={{
+        background: '#f0f0f0',
+        color: '#333',
+        padding: '10px 16px',
+        border: '1px solid #ccc',
+        borderRadius: 6,
+        cursor: 'pointer',
+        fontSize: 14,
+      }}
+    >
+      {showReviews ? 'Hide Reviews' : 'View Reviews'}
+    </button>
+  </div>
+
+  {/* Mock Review List */}
+  {showReviews && (
+    <div style={{ borderTop: '1px solid #ddd', paddingTop: '20px' }}>
+      <p style={{ fontWeight: 'bold', marginBottom: '8px' }}>Customer Reviews:</p>
+      <div style={{ fontSize: '15px', color: '#444' }}>
+        ⭐⭐⭐⭐⭐ "Great quality and fast delivery!"
+        <br />
+        ⭐⭐⭐⭐ "Loved the print and finish."
+      </div>
+    </div>
+  )}
+</section>
 
         <Footer />
       </div>

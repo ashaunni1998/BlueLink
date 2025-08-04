@@ -35,6 +35,58 @@ const BusinessCardDetails = () => {
   const [selectedFinish, setSelectedFinish] = useState("Matte");
   const [selectedCorner, setSelectedCorner] = useState("Square");
 
+
+ 
+
+
+
+const [rating, setRating] = useState(0);
+const [reviewText, setReviewText] = useState('');
+const handleReviewSubmit = () => {
+  if (!rating || !reviewText.trim()) {
+    alert('Please select a rating and write a review.');
+    return;
+  }
+
+  // Replace this with API call to save review
+  console.log('Submitted review:', {
+    rating,
+    review: reviewText
+    // name/user ID from backend context (not needed in frontend)
+  });
+
+  alert('Thank you for your review!');
+  setRating(0);
+  setReviewText('');
+};
+
+
+
+const [showReviews, setShowReviews] = useState(false);
+
+// Sample dummy reviews (replace with backend data later)
+const reviews = [
+  { id: 1, rating: 5, text: 'Excellent quality cards and fast delivery!' },
+  { id: 2, rating: 4, text: 'Great print, but packaging could improve.' },
+  { id: 3, rating: 5, text: 'Loved the matte finish and smooth texture.' }
+];
+
+
+
+const handleSubmitReview = () => {
+  if (!reviewText.trim()) {
+    alert("Please enter your review before submitting.");
+    return;
+  }
+
+  // You can add your actual submit logic here
+  console.log("Submitting review:", reviewText);
+  setReviewText(""); // Clear input after successful submit
+  alert("Review submitted successfully!");
+};
+
+
+
   return (
     <div style={{ fontFamily: 'sans-serif', width: '90%', margin: '0 auto' }}>
       <Header />
@@ -397,7 +449,120 @@ const BusinessCardDetails = () => {
             </a>
           </div>
         </div>
+     
       </div>
+{/* Review Section */}
+<div style={{ marginTop: 50 }}>
+  <h3 style={{ fontSize: 20, marginBottom: 10 }}>Leave a Review</h3>
+
+  <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 16 }}>
+    {[1, 2, 3, 4, 5].map((star) => (
+      <Star
+        key={star}
+        size={28}
+        onClick={() => setRating(star)}
+        style={{ 
+          cursor: 'pointer', 
+          fill: rating >= star ? '#facc15' : 'none', 
+          stroke: '#facc15' 
+        }}
+      />
+    ))}
+  </div>
+
+  <textarea
+    placeholder="Write your review here..."
+    value={reviewText}
+    onChange={(e) => setReviewText(e.target.value)}
+    rows={4}
+    style={{
+      width: '100%',
+      maxWidth: 500,
+      padding: 12,
+      borderRadius: 6,
+      border: '1px solid #ccc',
+      marginBottom: 16,
+      fontFamily: 'inherit',
+      fontSize: 14
+    }}
+  />
+<div
+  style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    marginTop: '30px',
+    marginBottom: '20px',
+    flexWrap: 'nowrap', // prevent wrapping
+  }}
+>
+  {/* Submit Review Button */}
+  <button
+    onClick={handleSubmitReview}
+    style={{
+      background: '#007BFF',
+      color: '#fff',
+      padding: '10px 16px',
+      border: 'none',
+      borderRadius: 6,
+      cursor: 'pointer',
+      fontSize: 14,
+      whiteSpace: 'nowrap',
+    }}
+  >
+    Submit Review
+  </button>
+
+  {/* View Reviews Button */}
+  <button
+    onClick={() => setShowReviews(!showReviews)}
+    style={{
+      background: '#f0f0f0',
+      color: '#333',
+      padding: '10px 16px',
+      border: '1px solid #ccc',
+      borderRadius: 6,
+      cursor: 'pointer',
+      fontSize: 14,
+      whiteSpace: 'nowrap',
+    }}
+  >
+    {showReviews ? 'Hide Reviews' : 'View Reviews'}
+  </button>
+</div>
+</div>
+
+{showReviews && (
+  <div style={{ marginTop: 20 }}>
+    <h3 style={{ fontSize: 18, marginBottom: 10 }}>Customer Reviews</h3>
+
+    {reviews.length === 0 ? (
+      <p style={{ fontSize: 14, color: '#777' }}>No reviews yet.</p>
+    ) : (
+      reviews.map((review) => (
+        <div key={review.id} style={{
+          border: '1px solid #ddd',
+          borderRadius: 6,
+          padding: 12,
+          marginBottom: 12,
+          backgroundColor: '#fafafa'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginBottom: 6 }}>
+            {[...Array(5)].map((_, i) => (
+              <Star
+                key={i}
+                size={16}
+                fill={i < review.rating ? '#facc15' : 'none'}
+                stroke="#facc15"
+              />
+            ))}
+          </div>
+          <p style={{ fontSize: 14 }}>{review.text}</p>
+        </div>
+      ))
+    )}
+  </div>
+)}
 
       <Footer />
     </div>

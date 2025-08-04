@@ -28,6 +28,21 @@ const PostcardDetails = () => {
     setCurrentIndex((prev) => (prev === imageList.length - 1 ? 0 : prev + 1));
   };
 
+
+  const [rating, setRating] = useState(0);
+const [reviewText, setReviewText] = useState('');
+const [showReviews, setShowReviews] = useState(false);
+
+const handleSubmitReview = () => {
+  if (rating === 0 || reviewText.trim() === '') {
+    alert('Please provide both a star rating and a review.');
+    return;
+  }
+  alert(`Review submitted!\nRating: ${rating} stars\nComment: ${reviewText}`);
+  setRating(0);
+  setReviewText('');
+};
+
   return (
     <div style={{ fontFamily: 'sans-serif', width: '90%', margin: '0 auto' }}>
       <Header />
@@ -248,6 +263,86 @@ const PostcardDetails = () => {
           </div>
         </div>
       </div>
+{/* Review Section */}
+<div style={{ marginTop: 60, paddingBottom: 60 }}>
+  <h3 style={{ fontSize: 20, marginBottom: 12 }}>Leave a Review</h3>
+
+  {/* Star Rating */}
+  <div style={{ display: 'flex', gap: 6, marginBottom: 10 }}>
+    {[...Array(5)].map((_, i) => (
+      <Star
+        key={i}
+        size={28}
+        color={i < rating ? '#FFD700' : '#ccc'}
+        fill={i < rating ? '#FFD700' : 'none'}
+        style={{ cursor: 'pointer' }}
+        onClick={() => setRating(i + 1)}
+      />
+    ))}
+  </div>
+
+  {/* Textarea */}
+  <textarea
+    value={reviewText}
+    onChange={(e) => setReviewText(e.target.value)}
+    placeholder="Write your review here..."
+    rows={4}
+    style={{
+      width: '100%',
+      maxWidth: 600,
+      padding: 12,
+      fontSize: 16,
+      borderRadius: 6,
+      border: '1px solid #ccc',
+      resize: 'none',
+      marginBottom: 16
+    }}
+  />
+
+  {/* Buttons */}
+  <div style={{
+    display: 'flex',
+    gap: 12,
+    flexWrap: 'wrap'
+  }}>
+    <button
+      onClick={handleSubmitReview}
+      style={{
+        backgroundColor: '#00b388',
+        color: '#fff',
+        border: 'none',
+        borderRadius: 6,
+        padding: '10px 20px',
+        cursor: 'pointer',
+        fontSize: 14
+      }}
+    >
+      Submit Review
+    </button>
+
+    <button
+      onClick={() => setShowReviews(!showReviews)}
+      style={{
+        backgroundColor: '#f0f0f0',
+        color: '#333',
+        border: '1px solid #ccc',
+        borderRadius: 6,
+        padding: '10px 20px',
+        cursor: 'pointer',
+        fontSize: 14
+      }}
+    >
+      {showReviews ? 'Hide Reviews' : 'View Reviews'}
+    </button>
+  </div>
+
+  {/* Placeholder for Reviews */}
+  {showReviews && (
+    <div style={{ marginTop: 20 }}>
+      <p style={{ fontStyle: 'italic', color: '#666' }}>Customer reviews will be displayed here...</p>
+    </div>
+  )}
+</div>
 
       <Footer />
     </div>

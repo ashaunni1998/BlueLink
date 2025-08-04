@@ -51,12 +51,12 @@ const ButtonBadges = () => {
                 />
                 <h4 style={{ marginTop: "12px", fontSize: "16px", fontWeight: "600" }}>{item.title}</h4>
                 <p style={{ color: "#555", fontSize: "14px", margin: "4px 0" }}>{item.desc}</p>
-               <Link
-  to={item.link}
-  style={{ color: "#00704A", fontSize: "14px", textDecoration: "none", fontWeight: "500" }}
->
-  Shop {item.title}
-</Link>
+                <Link
+                  to={item.link}
+                  style={{ color: "#00704A", fontSize: "14px", textDecoration: "none", fontWeight: "500" }}
+                >
+                  Shop {item.title}
+                </Link>
 
               </div>
             ))}

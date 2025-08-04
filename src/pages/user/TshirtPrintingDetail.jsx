@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import { Star } from 'lucide-react';
 
 const TShirtPrintingDetail = () => {
   const images = [
@@ -20,6 +21,20 @@ const TShirtPrintingDetail = () => {
   const [quantity, setQuantity] = useState(1);
 
   const totalPrice = (quantity * pricePerShirt).toFixed(2);
+
+   const [review, setReview] = useState('');
+  const [rating, setRating] = useState(0);
+  const [showReviews, setShowReviews] = useState(false);
+   const handleSubmitReview = () => {
+    if (!review.trim() || rating === 0) {
+      alert('Please provide a star rating and write a review before submitting.');
+      return;
+    }
+    alert('Review submitted!');
+    setReview('');
+    setRating(0);
+  };
+
 
   return (
     <div style={{ fontFamily: 'sans-serif', width: '90%', margin: '0 auto' }}>
@@ -182,6 +197,61 @@ const TShirtPrintingDetail = () => {
           </button>
         </div>
       </div>
+ <div style={{ marginTop: 40 }}>
+            <h3>Leave a Review</h3>
+            <div style={{ display: 'flex', gap: 5, margin: '10px 0' }}>
+              {[1, 2, 3, 4, 5].map((num) => (
+                <Star
+                  key={num}
+                  fill={num <= rating ? '#ffc107' : 'none'}
+                  color={num <= rating ? '#ffc107' : '#ccc'}
+                  onClick={() => setRating(num)}
+                  style={{ cursor: 'pointer' }}
+                />
+              ))}
+            </div>
+            <textarea
+              value={review}
+              onChange={(e) => setReview(e.target.value)}
+              placeholder="Write your review..."
+              style={{ width: '100%', padding: 10, minHeight: 80, borderRadius: 6, border: '1px solid #ccc' }}
+            />
+            <div style={{ display: 'flex', gap: 12, marginTop: 20 }}>
+              <button
+                onClick={handleSubmitReview}
+                style={{
+                  background: '#007BFF',
+                  color: '#fff',
+                  padding: '10px 16px',
+                  border: 'none',
+                  borderRadius: 6,
+                  cursor: 'pointer'
+                }}
+              >
+                Submit Review
+              </button>
+              <button
+                onClick={() => setShowReviews(!showReviews)}
+                style={{
+                  background: '#f0f0f0',
+                  color: '#333',
+                  padding: '10px 16px',
+                  border: '1px solid #ccc',
+                  borderRadius: 6,
+                  cursor: 'pointer'
+                }}
+              >
+                {showReviews ? 'Hide Reviews' : 'View Reviews'}
+              </button>
+            </div>
+            {showReviews && (
+              <div style={{ marginTop: 20 }}>
+                <p><strong>Reviews will appear here.</strong></p>
+              </div>
+            )}
+          </div>
+        
+      
 
       <Footer />
     </div>

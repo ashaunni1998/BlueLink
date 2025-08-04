@@ -28,6 +28,24 @@ const PersonalizedGiftDetails = () => {
     if (mainImageIndex < imagePreviews.length - 1) setMainImageIndex(mainImageIndex + 1);
   };
 
+
+  const [rating, setRating] = useState(0);
+const [reviewText, setReviewText] = useState('');
+
+const handleSubmitReview = () => {
+  if (rating === 0 || reviewText.trim() === '') {
+    alert('Please provide a star rating and a review before submitting.');
+    return;
+  }
+
+  // Simulate review submission (could be a POST request)
+  alert(`Review submitted:\nRating: ${rating} stars\nComment: "${reviewText}"`);
+
+  // Reset
+  setRating(0);
+  setReviewText('');
+};
+
   return (
     <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
       <div style={{ width: '90%', margin: '0 auto' }}>
@@ -183,6 +201,72 @@ const PersonalizedGiftDetails = () => {
             Microwave and dishwasher safe. 11 oz. capacity.
           </p>
         </section>
+{/* Review Section */}
+<section style={{ marginTop: '60px' }}>
+  <h3 style={{ fontSize: '22px', marginBottom: '10px' }}>Leave a Review</h3>
+
+  {/* Star Rating */}
+  <div style={{ display: 'flex', gap: '6px', marginBottom: '10px' }}>
+    {[...Array(5)].map((_, i) => (
+      <Star
+        key={i}
+        size={24}
+        color={i < rating ? '#FFD700' : '#ccc'}
+        fill={i < rating ? '#FFD700' : 'none'}
+        onClick={() => setRating(i + 1)}
+        style={{ cursor: 'pointer' }}
+      />
+    ))}
+  </div>
+
+  {/* Text Review */}
+  <textarea
+    placeholder="Write your review here..."
+    value={reviewText}
+    onChange={(e) => setReviewText(e.target.value)}
+    rows={4}
+    style={{
+      width: '100%',
+      padding: '10px',
+      fontSize: '16px',
+      borderRadius: '6px',
+      border: '1px solid #ccc',
+      resize: 'none',
+    }}
+  />
+
+  {/* Submit Review Button */}
+  <div style={{ marginTop: '15px', display: 'flex', gap: '10px' }}>
+    <button
+      onClick={handleSubmitReview}
+      style={{
+        padding: '10px 20px',
+        backgroundColor: '#00b388',
+        color: '#fff',
+        border: 'none',
+        borderRadius: '6px',
+        cursor: 'pointer',
+      }}
+    >
+      Submit Review
+    </button>
+
+    {/* View Reviews Button */}
+    <button
+      onClick={() => alert('Redirecting to reviews...')}
+      style={{
+        padding: '10px 20px',
+        backgroundColor: '#ccc',
+        color: '#000',
+        border: 'none',
+        borderRadius: '6px',
+        cursor: 'pointer',
+      }}
+    >
+      View Reviews
+    </button>
+  </div>
+</section>
 
         <Footer />
       </div>
