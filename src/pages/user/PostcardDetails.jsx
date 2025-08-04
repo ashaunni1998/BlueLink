@@ -13,9 +13,9 @@ const PostcardDetails = () => {
   ];
 
   const imageList = [
-    `${process.env.PUBLIC_URL}/assets/postcards/Template1.jpg`,
-    `${process.env.PUBLIC_URL}/assets/postcards/Template2.jpg`,
-    `${process.env.PUBLIC_URL}/assets/postcards/Template3.jpg`
+    `${process.env.PUBLIC_URL}/assets/postcards/template1.jpg`,
+    `${process.env.PUBLIC_URL}/assets/postcards/template2.jpg`,
+    `${process.env.PUBLIC_URL}/assets/postcards/template3.jpg`
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
