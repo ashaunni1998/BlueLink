@@ -3,7 +3,6 @@ import React, { useEffect, useState, useRef } from "react";
 const languages = [
   { code: "en", label: "New Zealand", flag: "https://flagcdn.com/w40/nz.png" },
   { code: "fr", label: "Canada", flag: "https://flagcdn.com/w40/ca.png" },
-  { code: "en", label: "Europe", flag: "https://flagcdn.com/w40/eu.png" },
   { code: "fr", label: "France", flag: "https://flagcdn.com/w40/fr.png" },
   { code: "de", label: "Germany | Deutschland", flag: "https://flagcdn.com/w40/de.png" },
   { code: "it", label: "Italy | Italia", flag: "https://flagcdn.com/w40/it.png" },
@@ -20,49 +19,57 @@ const GoogleTranslateDropdown = () => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Load Google Translate script
+  // Force default language to New Zealand English on first load
   useEffect(() => {
-  window.googleTranslateElementInit = () => {
-    new window.google.translate.TranslateElement(
-      {
-        pageLanguage: "en",
-        includedLanguages: "en,fr,de,it,nl,es",
-        autoDisplay: false,
-      },
-      "hidden_translate_container"
-    );
-  };
+    document.cookie = "googtrans=/en/en; path=/; domain=" + window.location.hostname;
 
-  const script = document.createElement("script");
-  script.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-  script.async = true;
-  script.crossOrigin = "anonymous";
-  document.body.appendChild(script);
-}, []);
+    window.googleTranslateElementInit = () => {
+      new window.google.translate.TranslateElement(
+        {
+          pageLanguage: "en",
+          includedLanguages: "en,fr,de,it,nl,es",
+          autoDisplay: false,
+        },
+        "hidden_translate_container"
+      );
+    };
 
-
-  // Change language when dropdown item is selected
-  useEffect(() => {
-  const tryTranslate = () => {
-    const select = document.querySelector("select.goog-te-combo");
-    if (select) {
-      select.value = selectedLang.code;
-      const event = new Event("change", { bubbles: true });
-      select.dispatchEvent(event);
-    } else {
-      setTimeout(tryTranslate, 500); // Keep checking until ready
+    if (!document.querySelector("script[src*='translate_a/element.js']")) {
+      const script = document.createElement("script");
+      script.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+      script.async = true;
+      document.body.appendChild(script);
     }
-  };
+  }, []);
 
-  tryTranslate();
-}, [selectedLang]);
+  // Translate on language change
+  useEffect(() => {
+    const translate = () => {
+      const select = document.querySelector(".goog-te-combo");
+      if (select) {
+        select.value = selectedLang.code;
+        select.dispatchEvent(new Event("change"));
+      } else {
+        setTimeout(translate, 300);
+      }
+    };
+    translate();
+  }, [selectedLang]);
 
+  // Handle user language selection
+ const handleSelect = (lang) => {
+  // Set language cookie for translation
+  document.cookie = `googtrans=/en/${lang.code}; path=/; domain=${window.location.hostname}`;
 
-  const handleSelect = (lang) => {
-    setSelectedLang(lang);
-    setOpen(false);
-  };
+  // Store user choice to avoid defaulting back
+  localStorage.setItem("bluelink_selected_lang", lang.code);
 
+  setSelectedLang(lang);
+  setOpen(false);
+};
+ 
+
+  // Handle dropdown outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -75,7 +82,7 @@ const GoogleTranslateDropdown = () => {
 
   return (
     <div ref={dropdownRef} style={{ position: "relative", display: "inline-block" }}>
-      {/* Selected */}
+      {/* Dropdown trigger */}
       <div
         onClick={() => setOpen(!open)}
         style={{
@@ -90,7 +97,7 @@ const GoogleTranslateDropdown = () => {
         <span>{selectedLang.label}</span>
       </div>
 
-      {/* Dropdown */}
+      {/* Dropdown menu */}
       {open && (
         <div
           style={{
@@ -132,7 +139,7 @@ const GoogleTranslateDropdown = () => {
         </div>
       )}
 
-      {/* Hidden translate container */}
+      {/* Hidden Translate Element */}
       <div id="hidden_translate_container" style={{ display: "none" }}></div>
     </div>
   );

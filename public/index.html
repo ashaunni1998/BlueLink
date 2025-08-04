@@ -1,49 +1,65 @@
 <!DOCTYPE html>
 <html lang="en" >
-  <head>
-    <meta charset="utf-8" />
-   
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Blue Link</title>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blue Link</title>
 
-    <!-- Your fonts and icon links -->
-    <link rel="stylesheet" href="..." />
-    <link href="..." rel="stylesheet" />
- <link rel="icon" href="/assets/logo/logolight1.png" />
-    <!-- ✅ Place this block here -->
-    <style>
-      /* Fully hide Google Translate UI */
-      .goog-te-banner-frame.skiptranslate,
-      .goog-te-gadget,
-      .goog-te-balloon-frame,
-      #goog-gt-tt,
-      .goog-tooltip,
-      .goog-tooltip:hover,
-      .goog-te-menu-value,
-      .goog-te-menu-frame {
-        display: none !important;
-      }
+  <link rel="stylesheet" href="..." />
+  <link href="..." rel="stylesheet" />
+  <link rel="icon" href="/assets/logo/logolight1.png" />
 
-      body {
-        top: 0px !important;
-      }
+  <!-- ✅ Hide unwanted Google Translate UI -->
+  <style>
+    .goog-te-banner-frame.skiptranslate,
+    .goog-te-gadget,
+    .goog-te-balloon-frame,
+    #goog-gt-tt,
+    .goog-tooltip,
+    .goog-tooltip:hover,
+    .goog-te-menu-value,
+    .goog-te-menu-frame {
+      display: none !important;
+    }
 
-      /* Sometimes injected iframe IDs start with colons */
-      iframe[id^=":"] {
-        display: none !important;
-      }
+    body {
+      top: 0px !important;
+    }
 
-      /* Prevent font corruption */
-      .translated-ltr {
-        font-family: inherit !important;
-      }
-    </style>
-    
-    <!-- Other head content -->
-    <script src="..."></script>
+    iframe[id^=":"] {
+      display: none !important;
+    }
 
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-  </head>
+    .translated-ltr {
+      font-family: inherit !important;
+    }
+  </style>
+
+  <!-- Google Sign-In -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+  <!-- ✅ Prevent auto-translate by Google -->
+  <meta name="google" content="notranslate" />
+
+  <!-- ✅ ✅ ✅ Kill previous translations and force English -->
+ <script>
+  // Remove old translate cookie
+  document.cookie = "googtrans=;path=/;expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+  document.cookie = "googtrans=;path=/;domain=" + window.location.hostname + ";expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+
+  // If no user interaction, force default English on every page load
+  const hasUserLangChoice = localStorage.getItem("bluelink_selected_lang");
+
+  if (!hasUserLangChoice) {
+    document.cookie = "googtrans=/en/en; path=/;";
+    document.cookie = "googtrans=/en/en; path=/; domain=" + window.location.hostname;
+  }
+</script>
+
+</head>
+
+
+
   <body>
     <div id="root"></div>
   </body>
