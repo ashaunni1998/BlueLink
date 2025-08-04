@@ -10,10 +10,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './i18n'; // ← this must come BEFORE App is rendered
 
 
+import { TranslateProvider } from './context/TranslateProvider';
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <TranslateProvider>
     <App />
+    </TranslateProvider>
   </React.StrictMode>
 );
 <link

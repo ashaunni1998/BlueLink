@@ -11,35 +11,42 @@
 
   <!-- ✅ Hide unwanted Google Translate UI -->
   <style>
-    .goog-te-banner-frame.skiptranslate,
-    .goog-te-gadget,
-    .goog-te-balloon-frame,
-    #goog-gt-tt,
-    .goog-tooltip,
-    .goog-tooltip:hover,
-    .goog-te-menu-value,
-    .goog-te-menu-frame {
-      display: none !important;
-    }
+  .goog-te-banner-frame.skiptranslate,
+  .goog-te-gadget,
+  .goog-te-balloon-frame,
+  #goog-gt-tt,
+  .goog-tooltip,
+  .goog-tooltip:hover,
+  .goog-te-menu-value,
+  .goog-te-menu-frame {
+    display: none !important;
+  }
 
-    body {
-      top: 0px !important;
-    }
+  iframe[id^=":"] {
+    display: none !important;
+  }
 
-    iframe[id^=":"] {
-      display: none !important;
-    }
+  body { top: 0px !important; }
+  .translated-ltr { font-family: inherit !important; }
+</style>
 
-    .translated-ltr {
-      font-family: inherit !important;
-    }
-  </style>
 
   <!-- Google Sign-In -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 
   <!-- ✅ Prevent auto-translate by Google -->
   <meta name="google" content="notranslate" />
+
+
+  <script>
+  const savedLang = localStorage.getItem("bluelink_selected_lang");
+
+  if (!savedLang) {
+    // Force New Zealand English on first load if no selection yet
+    document.cookie = "googtrans=/en/en; path=/;";
+    document.cookie = "googtrans=/en/en; path=/; domain=" + window.location.hostname;
+  }
+</script>
 
   <!-- ✅ ✅ ✅ Kill previous translations and force English -->
  <script>
