@@ -1,16 +1,31 @@
-
 import React, { createContext, useEffect, useState } from "react";
 
 export const TranslateContext = createContext();
 
+const languages = [
+  { code: "en", label: "New Zealand" },
+  { code: "en", label: "United Kingdom" },
+  { code: "en", label: "United States (English)" },
+  { code: "fr", label: "Canada" },
+  { code: "fr", label: "France" },
+  { code: "de", label: "Germany" },
+  { code: "it", label: "Italy" },
+  { code: "nl", label: "Netherlands" },
+  { code: "es", label: "Spain" },
+  { code: "es", label: "United States (Español)" },
+  { code: "fr", label: "United States (Français)" },
+];
+
 export const TranslateProvider = ({ children }) => {
-  const [selectedLang, setSelectedLang] = useState("en");
+  const [selectedLang, setSelectedLang] = useState("New Zealand");
 
   useEffect(() => {
-    const savedLang = localStorage.getItem("bluelink_selected_lang") || "en";
-    setSelectedLang(savedLang);
+    const savedLangLabel = localStorage.getItem("bluelink_selected_lang") || "New Zealand";
+    setSelectedLang(savedLangLabel);
 
-    document.cookie = `googtrans=/en/${savedLang}; path=/; domain=${window.location.hostname}`;
+    const langObj = languages.find(l => l.label === savedLangLabel) || languages[0];
+
+    document.cookie = `googtrans=/en/${langObj.code}; path=/; domain=${window.location.hostname}`;
 
     if (!window.googleTranslateElementInit) {
       window.googleTranslateElementInit = () => {
@@ -34,8 +49,10 @@ export const TranslateProvider = ({ children }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       const select = document.querySelector(".goog-te-combo");
-      if (select) {
-        select.value = selectedLang;
+      const langObj = languages.find((l) => l.label === selectedLang);
+
+      if (select && langObj) {
+        select.value = langObj.code;
         select.dispatchEvent(new Event("change"));
         clearInterval(interval);
       }
