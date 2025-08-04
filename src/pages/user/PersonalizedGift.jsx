@@ -2,6 +2,8 @@ import React from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import BusinessCardOptions from "./BusinessCardOptions";
+import { Link } from "react-router-dom";
+
 
 const PersonalizedGift = () => {
   return (
@@ -62,31 +64,34 @@ const PersonalizedGift = () => {
 
 
       {/* Shop by Category */}
-      <section style={{ maxWidth: "1200px", margin: "50px auto", padding: "0 20px" }}>
-        <h2 style={{ fontSize: "24px", marginBottom: "20px", textAlign: "center" }}>Shop by Gift Type</h2>
-        <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "30px", padding: "20px" }}>
-          {[
-            { img: "mugs.jpg", title: "Photo Mugs", desc: "Custom printed mugs", link: "/personalizedgiftDetails" },
-            { img: "pillows.jpg", title: "Cushions", desc: "Personalized pillows", link: "/personalizedgiftDetails" },
-            { img: "keychains.jpg", title: "Keychains", desc: "Engraved & printed", link: "#" },
-            { img: "frames.jpg", title: "Photo Frames", desc: "Customized memories", link: "#" },
-            { img: "notebooks.jpg", title: "Notebooks", desc: "Printed covers & pages", link: "#" },
-          ].map((item, index) => (
-            <div key={index} style={{ textAlign: "center", width: "200px", flex: "1 1 200px" }}>
-              <img
-                src={`/assets/gifts/${item.img}`}
-                alt={item.title}
-                style={{ width: "100%", borderRadius: "10px", boxShadow: "0 2px 6px rgba(0,0,0,0.1)" }}
-              />
-              <h4 style={{ marginTop: "12px", fontSize: "16px", fontWeight: "600" }}>{item.title}</h4>
-              <p style={{ color: "#555", fontSize: "14px", margin: "4px 0" }}>{item.desc}</p>
-              <a href={item.link} style={{ color: "#00704A", fontSize: "14px", textDecoration: "none", fontWeight: "500" }}>
-                Shop {item.title}
-              </a>
-            </div>
-          ))}
-        </div>
-      </section>
+     <section style={{ maxWidth: "1200px", margin: "50px auto", padding: "0 20px" }}>
+  <h2 style={{ fontSize: "24px", marginBottom: "20px", textAlign: "center" }}>Shop by Gift Type</h2>
+  <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "30px", padding: "20px" }}>
+    {[
+      { img: "mugs.jpg", title: "Photo Mugs", desc: "Custom printed mugs", link: "/personalizedgiftDetails" },
+      { img: "pillows.jpg", title: "Cushions", desc: "Personalized pillows", link: "/personalizedgiftDetails" },
+      { img: "keychains.jpg", title: "Keychains", desc: "Engraved & printed", link: "#" },
+      { img: "frames.jpg", title: "Photo Frames", desc: "Customized memories", link: "#" },
+      { img: "notebooks.jpg", title: "Notebooks", desc: "Printed covers & pages", link: "#" },
+    ].map((item, index) => (
+      <div key={index} style={{ textAlign: "center", width: "200px", flex: "1 1 200px" }}>
+        <img
+          src={`/assets/gifts/${item.img}`}
+          alt={item.title}
+          style={{ width: "100%", borderRadius: "10px", boxShadow: "0 2px 6px rgba(0,0,0,0.1)" }}
+        />
+        <h4 style={{ marginTop: "12px", fontSize: "16px", fontWeight: "600" }}>{item.title}</h4>
+        <p style={{ color: "#555", fontSize: "14px", margin: "4px 0" }}>{item.desc}</p>
+        <Link
+          to={item.link}
+          style={{ color: "#00704A", fontSize: "14px", textDecoration: "none", fontWeight: "500" }}
+        >
+          Shop {item.title}
+        </Link>
+      </div>
+    ))}
+  </div>
+</section>
 
       {/* Gift Themes Section */}
       <section style={{ maxWidth: "1200px", margin: "50px auto", padding: "0 20px" }}>
