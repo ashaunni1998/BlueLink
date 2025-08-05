@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 const Cart = () => {
   const [items, setItems] = useState([
@@ -39,6 +41,9 @@ const Cart = () => {
   const total = subtotal + shipping;
 
   return (
+    <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
+       <div style={{ width: '90%', margin: '0 auto' }}>
+             <Header/>
     <div
       style={{
         minHeight: '100vh',
@@ -197,6 +202,9 @@ const Cart = () => {
           </a>
         </div>
       </div>
+    </div>
+    <Footer/>
+    </div>
     </div>
   );
 };

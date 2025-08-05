@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import GoogleTranslateDropdown from "../GoogleTranslateDropdown.jsx";
-
+import { Heart } from 'lucide-react';
 
 
 // const languages = [
@@ -371,6 +371,14 @@ const toggleSubMenu = (key) => {
                 {t("cart") || "Cart"}
               </Link>
             </span>
+
+<span style={topLink}>
+  <Link to="/wishlist" style={{ color: "#333", textDecoration: "none" }}>
+    <i className="fa-solid fa-heart" style={{ marginRight: "5px" }}></i>
+    {t("wishlist") || "Wishlist"}
+  </Link>
+</span>
+
 
             <div className="search-wrapper" style={searchWrapper}>
               <input type="text" placeholder={t("search") || "Search"} style={searchInput} />
@@ -749,6 +757,22 @@ const toggleSubMenu = (key) => {
                 Cart
               </Link>
             </div>
+<div style={{
+  padding: "12px",
+  backgroundColor: "#10B981",
+  textAlign: "center",
+  borderRadius: "6px",
+  fontWeight: "bold",
+  color: "white",
+  marginTop: "10px" // Optional spacing below Cart
+}}>
+  <Link to="/wishlist" style={{ color: "white", textDecoration: "none" }}>
+    <i className="fas fa-heart" style={{ marginRight: "8px" }}></i>
+    Wishlist
+  </Link>
+</div>
+
+
           </div>
 
 

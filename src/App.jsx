@@ -29,7 +29,7 @@ import Checkout from "./pages/user/Checkout";
 import AccountPage from "./pages/user/AccountPage";
 import EmailVerificationPage from "./pages/user/EmailVerificationPage";
 import ForgotPassword from "./pages/user/ForgotPassword";
-
+import Wishlist from "./pages/user/Wishlist";
 
 
 import AdminHeader from "./pages/admin/components/AdminHeader";
@@ -51,6 +51,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />  
+        <Route path="/wishlist" element={<Wishlist/>}/>
         <Route path="/Signup" element={<SignUp/>} />
         <Route path="/businessCard" element={<BusinessCards/>} /> 
         <Route path="/postCards"  element={<PostCards/>}/>

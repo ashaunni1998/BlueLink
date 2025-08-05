@@ -1,5 +1,6 @@
 import React from "react";
-import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube, FaWhatsapp } from "react-icons/fa";
+
 import GoogleTranslateDropdown from "../GoogleTranslateDropdown";
 
 const Footer = () => {
@@ -85,11 +86,24 @@ const Footer = () => {
           <span style={{ color: "#00B67A" }}>★★★★☆</span>
           <span>4.6/5</span>
         </div>
-        <div style={{ display: "flex", gap: "16px", fontSize: "18px" }}>
-          <FaFacebookF />
-          <FaInstagram />
-          <FaTwitter />
-        </div>
+       <div style={{ display: "flex", gap: "16px", fontSize: "18px" }}>
+  <a href="https://www.facebook.com/YourPage" target="_blank" rel="noopener noreferrer" style={{ color: "#4267B2" }}>
+    <FaFacebookF />
+  </a>
+  <a href="https://www.instagram.com/YourPage" target="_blank" rel="noopener noreferrer" style={{ color: "#C13584" }}>
+    <FaInstagram />
+  </a>
+  <a href="https://twitter.com/YourPage" target="_blank" rel="noopener noreferrer" style={{ color: "#1DA1F2" }}>
+    <FaTwitter />
+  </a>
+  <a href="https://www.youtube.com/YourChannel" target="_blank" rel="noopener noreferrer" style={{ color: "#FF0000" }}>
+    <FaYoutube />
+  </a>
+  <a href="https://wa.me/YourNumber" target="_blank" rel="noopener noreferrer" style={{ color: "#25D366" }}>
+    <FaWhatsapp />
+  </a>
+</div>
+
       </div>
 
       {/* Language selector */}
