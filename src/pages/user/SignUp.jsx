@@ -132,7 +132,8 @@ const SignUp = () => {
           country: 'India',
           countryCode: '+91',
         });
-        navigate("/sign-in");
+       navigate("/emailverification", { state: { email: formData.email } });
+
       } else {
         if (data.errors) {
           setErrors(data.errors);

@@ -27,6 +27,8 @@ import PersonalizedGiftDetails from "./pages/user/PersonalizedGiftDetails";
 import ButtonBadgesDetail from "./pages/user/ButtonBadgesDetail";
 import Checkout from "./pages/user/Checkout";
 import AccountPage from "./pages/user/AccountPage";
+import EmailVerificationPage from "./pages/user/EmailVerificationPage";
+import ForgotPassword from "./pages/user/ForgotPassword";
 
 
 
@@ -54,6 +56,7 @@ function App() {
         <Route path="/postCards"  element={<PostCards/>}/>
         <Route path="/flyers" element={<Flyers/>}/>
         <Route path="/sign-in" element={<SignIn/>}/>
+        <Route path="/forgotpassword" element={<ForgotPassword/>}/>
         <Route path="/reset-password" element={<ResetPassword/>}/>
         <Route path="/stickers" element={<Stickers/>}/>
         <Route path="/businesscardDetails" element={<BusinessCardDetails/>}/>
@@ -71,6 +74,7 @@ function App() {
        <Route path="/buttonbadgesdetails" element={<ButtonBadgesDetail/>}/>
        <Route path="/checkout" element={<Checkout/>}/>
        <Route path="/account" element={<AccountPage/>}/>
+       <Route path="/emailverification" element={<EmailVerificationPage/>}/>
 
 
 
