@@ -1,13 +1,40 @@
 import React, { useState } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
 
 const AccountPage = () => {
-  const [activeSection, setActiveSection] = useState('dashboard');
+  const location = useLocation();
+const queryParams = new URLSearchParams(location.search);
+const normalizeTab = (tab) => {
+  const mapping = {
+    orders: 'orderhistory',
+    overview: 'overview',
+    address: 'address',
+    logout: 'logout',
+  };
+  return mapping[tab?.toLowerCase()] || 'overview';
+};
+
+const defaultTab = normalizeTab(queryParams.get('tab'));
+
+const [activeSection, setActiveSection] = useState(defaultTab);
+
+useEffect(() => {
+  const newTab = new URLSearchParams(location.search).get('tab');
+  if (newTab && normalizeTab(newTab) !== activeSection) {
+    setActiveSection(normalizeTab(newTab));
+  }
+}, [location]);
+
+
 
   const sections = {
-    dashboard: 'Welcome to your Blue Link Printing dashboard.From your account dashboard you can view your recent orders, manage your shipping and billing addresses,manage your order return,view your orders and edit your password and account details.',
-    orders: 'Here you can view and track your orders.',
+    overview: 'Welcome to your Blue Link Printing dashboard.From your account dashboard you can view your recent orders, manage your shipping and billing addresses,manage your order return,view your orders and edit your password and account details.',
+    orderhistory: 'Here you can view and track your orders.',
     address: 'Manage your shipping and billing addresses.',
     // returns: 'Submit or track your return requests.',
     logout: 'You have been logged out.',
@@ -123,8 +150,8 @@ const AccountPage = () => {
               style={buttonStyle(activeSection === key)}
               onClick={() => setActiveSection(key)}
             >
-              {key === 'dashboard' && 'Dashboard'}
-              {key === 'orders' && 'Orders'}
+              {key === 'overview' && 'Overview'}
+              {key === 'orderhistory' && 'Order History'}
               {key === 'address' && 'Address'}
               {key === 'returns' && 'Return Request'}
               {key === 'logout' && 'Logout'}
@@ -139,7 +166,7 @@ const AccountPage = () => {
           </h2>
 
 
-      {activeSection === 'orders' ? (
+      {activeSection === 'orderhistory' ? (
   <table style={tableStyle}>
     <thead>
       <tr>
@@ -150,19 +177,21 @@ const AccountPage = () => {
         <th style={thTdStyle}>Action</th>
       </tr>
     </thead>
-    <tbody>
-      {orders.map((order) => (
-        <tr key={order.id}>
-          <td style={thTdStyle}>{order.id}</td>
-          <td style={thTdStyle}>{order.product}</td>
-          <td style={thTdStyle}>{order.date}</td>
-          <td style={thTdStyle}>{order.amount}</td>
-          <td style={thTdStyle}>
-            <button style={viewButtonStyle}>View</button>
-          </td>
-        </tr>
-      ))}
-    </tbody>
+   <tbody>
+  {orders.map((order) => (
+    <tr key={order.id}>
+      <td style={thTdStyle}>{order.id}</td>
+      <td style={thTdStyle}>{order.product}</td>
+      <td style={thTdStyle}>{order.date}</td>
+      <td style={thTdStyle}>{order.amount}</td>
+      <td style={thTdStyle}>
+        <Link to={`/orders/${order.id}`}>
+          <button style={viewButtonStyle}>View</button>
+        </Link>
+      </td>
+    </tr>
+  ))}
+</tbody>
   </table>
 ) : activeSection === 'address' ? (
   <div style={{ fontSize: '16px', color: '#333', lineHeight: '1.8' }}>

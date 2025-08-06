@@ -92,7 +92,7 @@ const menuItems = [
         label: "Stickers And Labels",
         link: "/stickers",
         subItems: [
-           { label: "All Stickers", link: "/stickers" },
+          { label: "All Stickers", link: "/stickers" },
           { label: "Metallic Round Stickers", link: "/stickerdetails" },
           { label: "Metallic Rectangular Stickers", link: "/stickers-labels/rect-metallic" },
           { label: "Coated Paper Round Stickers", link: "/stickers-labels/coated-paper" },
@@ -120,16 +120,16 @@ const menuItems = [
     title: "T-shirt Printing",
     subItems: [
       { label: "T-Shirt Printing", link: "/tshirtprinting" },
-     
+
     ],
   },
 
   {
     title: "Button Badgets",
     subItems: [
-      
+
       { label: "Button Badgets", link: "/buttonbadges" },
-     
+
     ],
   },
 
@@ -215,35 +215,35 @@ export default function Header() {
   //   }));
   // };
 
-//   const toggleSubMenu = (key) => {
+  //   const toggleSubMenu = (key) => {
 
-//   setExpandedMenus((prev) => ({
-//     ...prev,
-//     [key]: !prev[key],
-//   }));
-// };
+  //   setExpandedMenus((prev) => ({
+  //     ...prev,
+  //     [key]: !prev[key],
+  //   }));
+  // };
 
 
 
-const toggleSubMenu = (key) => {
-  setExpandedMenus((prev) => {
-    const newExpanded = { ...prev };
-    const isExpanding = !prev[key];
+  const toggleSubMenu = (key) => {
+    setExpandedMenus((prev) => {
+      const newExpanded = { ...prev };
+      const isExpanding = !prev[key];
 
-    // Collapse children if parent is collapsing
-    if (!isExpanding) {
-      Object.keys(newExpanded).forEach(k => {
-        if (k.startsWith(`${key} >`) || k === key) {
-          delete newExpanded[k];
-        }
-      });
-    } else {
-      newExpanded[key] = true;
-    }
+      // Collapse children if parent is collapsing
+      if (!isExpanding) {
+        Object.keys(newExpanded).forEach(k => {
+          if (k.startsWith(`${key} >`) || k === key) {
+            delete newExpanded[k];
+          }
+        });
+      } else {
+        newExpanded[key] = true;
+      }
 
-    return newExpanded;
-  });
-};
+      return newExpanded;
+    });
+  };
 
 
 
@@ -273,7 +273,7 @@ const toggleSubMenu = (key) => {
             <img
               src="/assets/logo/logo2.jpg"
               alt="Logo"
-              style={{ height: "50px", objectFit: "contain",width:"115px" }}
+              style={{ height: "50px", objectFit: "contain", width: "115px" }}
             />
           </a>
         </div>
@@ -348,13 +348,23 @@ const toggleSubMenu = (key) => {
                     Sign up
                   </Link>
                   <div style={dropdownDivider}></div>
-                  <div style={accountItem}>Overview</div>
+                  <Link to="/account?tab=overview" style={{ ...accountItem, textDecoration: "none", color: "inherit" }}>
+                    Overview
+                  </Link>
 
-                  <div style={accountItem}>Re-order</div>
-                  <div style={accountItem}>Order History</div>
-                  <div style={accountItem}>Saved Projects</div>
-                  <div style={accountItem}>Refer and Earn</div>
-                  <div style={accountItem}>Redeem Gift Cards</div>
+                  {/* <div style={accountItem}>Re-order</div> */}
+                  <Link to="/account?tab=orders" style={{ ...accountItem, textDecoration: "none", color: "inherit" }}>
+                    Order History
+                  </Link>
+
+                  <Link to="/account?tab=address" style={{ ...accountItem, textDecoration: "none", color: "inherit" }}>
+                    Address Details
+                  </Link>
+
+                  <Link to="/account?tab=logout" style={{ ...accountItem, textDecoration: "none", color: "inherit" }}>
+                    Logout
+                  </Link>
+                  {/* <div style={accountItem}>Redeem Gift Cards</div> */}
                 </div>
               )}
             </div>
@@ -372,12 +382,12 @@ const toggleSubMenu = (key) => {
               </Link>
             </span>
 
-<span style={topLink}>
-  <Link to="/wishlist" style={{ color: "#333", textDecoration: "none" }}>
-    <i className="fa-solid fa-heart" style={{ marginRight: "5px" }}></i>
-    {t("wishlist") || "Wishlist"}
-  </Link>
-</span>
+            <span style={topLink}>
+              <Link to="/wishlist" style={{ color: "#333", textDecoration: "none" }}>
+                <i className="fa-solid fa-heart" style={{ marginRight: "5px" }}></i>
+                {t("wishlist") || "Wishlist"}
+              </Link>
+            </span>
 
 
             <div className="search-wrapper" style={searchWrapper}>
@@ -410,67 +420,67 @@ const toggleSubMenu = (key) => {
                   ) : (
                     <span style={navLink}>{item.title}</span>
                   )}
-              {item.subItems && hoveredMenu === item.title && (
-  <div style={dropdownMenu}>
-    {item.subItems.map((subItem, i) => {
-      const hasNested = subItem.subItems && subItem.subItems.length > 0;
-      return (
-        <div
-          key={i}
-          style={{
-            position: "relative",
-            display: "flex",
-            flexDirection: "column",
-          }}
-          onMouseEnter={() => setActiveSubItem(subItem.label)}
-          onMouseLeave={() => setActiveSubItem(null)}
-        >
-          <Link
-            to={subItem.link}
-            style={{
-              ...dropdownItem,
-              fontWeight: hasNested ? "bold" : "normal",
-              display: "block",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {subItem.label}
-          </Link>
+                  {item.subItems && hoveredMenu === item.title && (
+                    <div style={dropdownMenu}>
+                      {item.subItems.map((subItem, i) => {
+                        const hasNested = subItem.subItems && subItem.subItems.length > 0;
+                        return (
+                          <div
+                            key={i}
+                            style={{
+                              position: "relative",
+                              display: "flex",
+                              flexDirection: "column",
+                            }}
+                            onMouseEnter={() => setActiveSubItem(subItem.label)}
+                            onMouseLeave={() => setActiveSubItem(null)}
+                          >
+                            <Link
+                              to={subItem.link}
+                              style={{
+                                ...dropdownItem,
+                                fontWeight: hasNested ? "bold" : "normal",
+                                display: "block",
+                                whiteSpace: "nowrap",
+                              }}
+                            >
+                              {subItem.label}
+                            </Link>
 
-          {hasNested && activeSubItem === subItem.label && (
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                left: "100%",
-                background: "#fff",
-                border: "1px solid #ddd",
-                boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-                whiteSpace: "nowrap",
-                zIndex: 300,
-                minWidth: "220px",
-              }}
-            >
-              {subItem.subItems.map((nestedItem, j) => (
-                <Link
-                  key={j}
-                  to={nestedItem.link}
-                  style={{
-                    ...dropdownItem,
-                    padding: "10px 16px",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {nestedItem.label}
-                </Link>
-              ))}
-            </div>
-          )}
-        </div>
-      );
-    })}
-  </div>
-)}
+                            {hasNested && activeSubItem === subItem.label && (
+                              <div
+                                style={{
+                                  position: "absolute",
+                                  top: 0,
+                                  left: "100%",
+                                  background: "#fff",
+                                  border: "1px solid #ddd",
+                                  boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+                                  whiteSpace: "nowrap",
+                                  zIndex: 300,
+                                  minWidth: "220px",
+                                }}
+                              >
+                                {subItem.subItems.map((nestedItem, j) => (
+                                  <Link
+                                    key={j}
+                                    to={nestedItem.link}
+                                    style={{
+                                      ...dropdownItem,
+                                      padding: "10px 16px",
+                                      whiteSpace: "nowrap",
+                                    }}
+                                  >
+                                    {nestedItem.label}
+                                  </Link>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
 
                 </div>
               ))}
@@ -512,18 +522,32 @@ const toggleSubMenu = (key) => {
             borderBottom: "1px solid #eee",
             backgroundColor: "#fff"
           }}>
-            <input
-              type="text"
-              placeholder="Search"
-              style={{
-                flex: 1,
-                marginRight: "10px",
-                padding: "8px 12px",
-                fontSize: "16px",
-                border: "1px solid #ccc",
-                borderRadius: "4px"
-              }}
-            />
+           <div style={{
+  position: "relative",
+  flex: 1,
+  marginRight: "10px"
+}}>
+  <input
+    type="text"
+    placeholder="Search"
+    style={{
+      width: "100%",
+      padding: "8px 36px 8px 12px",
+      fontSize: "16px",
+      border: "1px solid #ccc",
+      borderRadius: "4px"
+    }}
+  />
+  <span style={{
+    position: "absolute",
+    right: "10px",
+    top: "50%",
+    transform: "translateY(-50%)",
+    fontSize: "16px",
+    color: "#888"
+  }}>🔍</span>
+</div>
+
             <i
               className="fas fa-times"
               onClick={handleCloseMobileMenu}
@@ -579,64 +603,64 @@ const toggleSubMenu = (key) => {
 
 
           {/* Navigation Items */}
-         
 
 
-{menuItems.map((item) => (
-  <div key={item.title}>
-    <div
-     onClick={() => toggleSubMenu(item.title)}
+
+          {menuItems.map((item) => (
+            <div key={item.title}>
+              <div
+                onClick={() => toggleSubMenu(item.title)}
 
 
-      style={{
-        ...mobileNavLink,
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
-      <span>{item.title}</span>
-      {item.subItems && (
-        <span>
-          {expandedMenus[item.title] ? (
-            <i className="fa-solid fa-angle-up"></i>
-          ) : (
-            <i className="fa-solid fa-angle-down"></i>
-          )}
-        </span>
-      )}
-    </div>
+                style={{
+                  ...mobileNavLink,
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <span>{item.title}</span>
+                {item.subItems && (
+                  <span>
+                    {expandedMenus[item.title] ? (
+                      <i className="fa-solid fa-angle-up"></i>
+                    ) : (
+                      <i className="fa-solid fa-angle-down"></i>
+                    )}
+                  </span>
+                )}
+              </div>
 
-    {/* Show subItems in column style */}
-    {expandedMenus[item.title] && item.subItems && (
-      <div style={{ paddingLeft: "16px" }}>
-        {item.subItems.map((subItem, i) => (
-          <div key={i}>
-          {subItem.subItems ? (
-            <div>
-  <div
-   onClick={() => toggleSubMenu(`${item.title} > ${subItem.label}`)}
+              {/* Show subItems in column style */}
+              {expandedMenus[item.title] && item.subItems && (
+                <div style={{ paddingLeft: "16px" }}>
+                  {item.subItems.map((subItem, i) => (
+                    <div key={i}>
+                      {subItem.subItems ? (
+                        <div>
+                          <div
+                            onClick={() => toggleSubMenu(`${item.title} > ${subItem.label}`)}
 
-    style={{
-      ...mobileSubItem,
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      fontWeight: "bold",
-      cursor: "pointer"
-    }}
-  >
-    <span>{subItem.label}</span>
-    <span>
-      {expandedMenus[subItem.label] ? (
-        <i className="fa-solid fa-angle-up"></i>
-      ) : (
-        <i className="fa-solid fa-angle-down"></i>
-      )}
-    </span>
-  </div>
+                            style={{
+                              ...mobileSubItem,
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                              fontWeight: "bold",
+                              cursor: "pointer"
+                            }}
+                          >
+                            <span>{subItem.label}</span>
+                            <span>
+                              {expandedMenus[subItem.label] ? (
+                                <i className="fa-solid fa-angle-up"></i>
+                              ) : (
+                                <i className="fa-solid fa-angle-down"></i>
+                              )}
+                            </span>
+                          </div>
 
-     {/* {expandedMenus[subItem.label] && (
+                          {/* {expandedMenus[subItem.label] && (
                   <div style={{ paddingLeft: "20px", display: "flex", flexDirection: "column", gap: "8px", marginTop: "8px" }}>
                     {subItem.subItems.map((child, j) => (
                       <Link
@@ -650,44 +674,44 @@ const toggleSubMenu = (key) => {
                     ))}
                   </div>
                 )} */}
-              </div>
+                        </div>
 
 
-) : (
-  <Link
-    to={subItem.link}
-    style={{
-      ...mobileSubItem,
-      fontWeight: "bold",
-      display: "block",
-      padding: "10px 12px",
-      textDecoration: "none",
-      color: "#000"
-    }}
-    onClick={handleCloseMobileMenu}
-  >
-    {subItem.label}
-  </Link>
-)}
- 
+                      ) : (
+                        <Link
+                          to={subItem.link}
+                          style={{
+                            ...mobileSubItem,
+                            fontWeight: "bold",
+                            display: "block",
+                            padding: "10px 12px",
+                            textDecoration: "none",
+                            color: "#000"
+                          }}
+                          onClick={handleCloseMobileMenu}
+                        >
+                          {subItem.label}
+                        </Link>
+                      )}
 
-          {expandedMenus[`${item.title} > ${subItem.label}`] && subItem.subItems && (
 
-            <div style={{ paddingLeft: "20px", display: "flex", flexDirection: "column", gap: "8px", marginTop: "8px" }}>
+                      {expandedMenus[`${item.title} > ${subItem.label}`] && subItem.subItems && (
 
-                {subItem.subItems.map((child, j) => (
-                  <Link key={j} to={child.link} style={mobileSubItem}>
-                    {child.label}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-    )}
-  </div>
-))}
+                        <div style={{ paddingLeft: "20px", display: "flex", flexDirection: "column", gap: "8px", marginTop: "8px" }}>
+
+                          {subItem.subItems.map((child, j) => (
+                            <Link key={j} to={child.link} style={mobileSubItem}>
+                              {child.label}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
 
 
           {/* ✅ Account & Cart at the bottom */}
@@ -733,12 +757,14 @@ const toggleSubMenu = (key) => {
                 }}>
                   <Link to="/sign-in" style={accountItem}>Sign up</Link>
                   <div style={dropdownDivider}></div>
-                  <div style={accountItem}>Overview</div>
-                  <div style={accountItem}>Re-order</div>
-                  <div style={accountItem}>Order History</div>
-                  <div style={accountItem}>Saved Projects</div>
-                  <div style={accountItem}>Refer and Earn</div>
-                  <div style={accountItem}>Redeem Gift Cards</div>
+                  <Link to="/account?tab=overview" style={accountItem}>Overview</Link>
+                  {/* <div style={accountItem}>Re-order</div> */}
+                  <Link to="/account?tab=orders" style={accountItem}>Order History</Link>
+                  <Link to="/account?tab=address" style={accountItem}>Address Details</Link>
+                  <Link to="/account?tab=logout" style={accountItem}>Logout</Link>
+
+                  {/* <div style={accountItem}>Refer and Earn</div>
+                  <div style={accountItem}>Redeem Gift Cards</div> */}
                 </div>
               )}
             </div>
@@ -757,20 +783,20 @@ const toggleSubMenu = (key) => {
                 Cart
               </Link>
             </div>
-<div style={{
-  padding: "12px",
-  backgroundColor: "#10B981",
-  textAlign: "center",
-  borderRadius: "6px",
-  fontWeight: "bold",
-  color: "white",
-  marginTop: "10px" // Optional spacing below Cart
-}}>
-  <Link to="/wishlist" style={{ color: "white", textDecoration: "none" }}>
-    <i className="fas fa-heart" style={{ marginRight: "8px" }}></i>
-    Wishlist
-  </Link>
-</div>
+            <div style={{
+              padding: "12px",
+              backgroundColor: "#10B981",
+              textAlign: "center",
+              borderRadius: "6px",
+              fontWeight: "bold",
+              color: "white",
+              marginTop: "10px" // Optional spacing below Cart
+            }}>
+              <Link to="/wishlist" style={{ color: "white", textDecoration: "none" }}>
+                <i className="fas fa-heart" style={{ marginRight: "8px" }}></i>
+                Wishlist
+              </Link>
+            </div>
 
 
           </div>

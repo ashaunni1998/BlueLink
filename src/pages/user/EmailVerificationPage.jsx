@@ -36,36 +36,40 @@ const EmailVerificationPage = () => {
     sendInitialOtp();
   }, [email]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError('');
 
-    if (otp.trim().length !== 6) {
-      setError('Please enter a valid 6-digit OTP.');
-      return;
+  if (otp.trim().length !== 6) {
+    alert('Please enter a valid 6-digit OTP.');
+    return;
+  }
+
+  try {
+    const response = await fetch('https://kerala-digital-park-server.vercel.app/api/user/verifyOtp', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, otp }),
+    });
+
+    const data = await response.json();
+
+  if (response.ok && data.success) {
+  navigate('/');
+  setTimeout(() => {
+    alert('OTP verified successfully!');
+  }, 100); // alert after navigation
+} else {
+      // ❌ OTP is invalid
+      alert(data.message || 'OTP is not valid.');
     }
-
-    try {
-      const response = await fetch('https://kerala-digital-park-server.vercel.app/api/user/verifyOtp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, otp }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok && data.success) {
-        navigate('/signin');
-      } else {
-        setError(data.message || 'Invalid OTP. Please try again.');
-      }
-    } catch (err) {
-      setError('Something went wrong. Please try again later.');
-      console.error('OTP verification error:', err);
-    }
-  };
+  } catch (err) {
+    alert('Something went wrong. Please try again later.');
+    console.error('OTP verification error:', err);
+  }
+};
 
   const handleResend = async () => {
     if (resendDisabled || !email) return;

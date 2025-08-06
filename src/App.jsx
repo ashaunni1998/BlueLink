@@ -30,6 +30,26 @@ import AccountPage from "./pages/user/AccountPage";
 import EmailVerificationPage from "./pages/user/EmailVerificationPage";
 import ForgotPassword from "./pages/user/ForgotPassword";
 import Wishlist from "./pages/user/Wishlist";
+import Success from "./pages/user/Success";
+import Cancel from "./pages/user/Cancel";
+import OrderDetails from "./pages/user/OrderDetails";
+import OrderConfirmation from "./pages/user/OrderConfirmation";
+import Returns from "./pages/user/Returns";
+import Blog from "./pages/user/Blog";
+import HelpAndFaqPage from "./pages/user/HelpAndFaqPage";
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 import AdminHeader from "./pages/admin/components/AdminHeader";
@@ -76,6 +96,19 @@ function App() {
        <Route path="/checkout" element={<Checkout/>}/>
        <Route path="/account" element={<AccountPage/>}/>
        <Route path="/emailverification" element={<EmailVerificationPage/>}/>
+       <Route path="/success" element={<Success/>}/>
+       <Route path="/cancel" element={<Cancel/>}/>
+       <Route path="/orders/:id" element={<OrderDetails/>}/>
+       <Route path="/orderconfirmation" element={<OrderConfirmation/>}/>
+       <Route path="/returns" element={<Returns/>}/>
+       <Route path="blog" element={<Blog/>}/>
+      <Route path="/help" element={<HelpAndFaqPage/>}/>
+
+
+
+
+
+
 
 
 
