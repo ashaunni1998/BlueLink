@@ -360,6 +360,18 @@ const renderMenuItem = (title, link, subItems) => {
     </div>
   );
 };
+useEffect(() => {
+  if (isMobile && menuOpen) {
+    document.body.style.overflow = 'hidden';  // Disable background scroll
+  } else {
+    document.body.style.overflow = 'auto';    // Re-enable scroll
+  }
+
+  // Clean up on unmount
+  return () => {
+    document.body.style.overflow = 'auto';
+  };
+}, [menuOpen, isMobile]);
 
 
 
@@ -481,12 +493,12 @@ const renderMenuItem = (title, link, subItems) => {
               </Link>
             </span>
 
-            <span style={topLink}>
+            {/* <span style={topLink}>
               <Link to="/wishlist" style={{ color: "#333", textDecoration: "none" }}>
                 <i className="fa-solid fa-heart" style={{ marginRight: "5px" }}></i>
                 {t("wishlist") || "Wishlist"}
               </Link>
-            </span>
+            </span> */}
 
 
             <div className="search-wrapper" style={searchWrapper}>
@@ -632,6 +644,7 @@ const renderMenuItem = (title, link, subItems) => {
       {/* Mobile Hamburger Menu Expanded */}
       {isMobile && menuOpen && (
         <div style={mobileMenu}>
+            <div style={{ flex: 1, overflowY: "auto", padding: "20px" }}>
           {/* Close Icon */}
           {/* <div style={{ display: "flex", justifyContent: "flex-end", padding: "10px" }}>
   <button
@@ -878,7 +891,7 @@ const renderMenuItem = (title, link, subItems) => {
 
           {/* ✅ Account & Cart at the bottom */}
           <div style={{
-            marginTop: "auto",
+            // marginTop: "auto",
             backgroundColor: "#374151",
             color: "white",
             padding: "10px 15px",
@@ -945,7 +958,7 @@ const renderMenuItem = (title, link, subItems) => {
                 Cart
               </Link>
             </div>
-            <div style={{
+            {/* <div style={{
               padding: "12px",
               backgroundColor: "#10B981",
               textAlign: "center",
@@ -953,12 +966,12 @@ const renderMenuItem = (title, link, subItems) => {
               fontWeight: "bold",
               color: "white",
               marginTop: "10px" // Optional spacing below Cart
-            }}>
-              <Link to="/wishlist" style={{ color: "white", textDecoration: "none" }}>
+            }}> */}
+              {/* <Link to="/wishlist" style={{ color: "white", textDecoration: "none" }}>
                 <i className="fas fa-heart" style={{ marginRight: "8px" }}></i>
                 Wishlist
-              </Link>
-            </div>
+              </Link> */}
+            {/* </div> */}
 
 
           </div>
@@ -988,6 +1001,7 @@ const renderMenuItem = (title, link, subItems) => {
             <i className="fa-solid fa-cart-shopping" style={{ marginRight: "5px" }}></i>
             {t("cart") || "Cart"}
           </Link> */}
+        </div>
         </div>
       )}
       {/* Offer Bar */}
@@ -1219,15 +1233,18 @@ const mobileMenu = {
   position: "fixed",
   top: 0,
   right: 0,
-  // height: "100vh",
+  bottom: 0,
+   maxHeight: "100vh",
   width: "80%",
   backgroundColor: "#fff",
   zIndex: 999,
   // transform: menuOpen ? "translateX(0)" : "translateX(100%)",
   transition: "transform 0.3s ease-in-out",
   boxShadow: "-2px 0 8px rgba(0,0,0,0.2)",
-  overflowY: "auto",
-  padding: "20px",
+   overflowY: "scroll",
+  // padding: "20px",
+  display: "flex",
+  flexDirection: "column",
 };
 
 

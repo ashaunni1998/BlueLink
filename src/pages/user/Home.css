@@ -1,0 +1,13 @@
+
+ .responsive-container {
+  font-family: Arial, sans-serif;
+  width: 90%;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .responsive-container {
+    width: 100%;
+  }
+}
+ 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { Star } from 'lucide-react';
+import './Home.css';
 
 const TShirtPrintingDetail = () => {
   const images = [
@@ -37,7 +38,7 @@ const TShirtPrintingDetail = () => {
 
 
   return (
-    <div style={{ fontFamily: 'sans-serif', width: '90%', margin: '0 auto' }}>
+   <div className="responsive-container">
       <Header />
 
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 30, marginTop: 40 }}>

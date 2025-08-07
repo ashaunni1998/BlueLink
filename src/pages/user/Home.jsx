@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import HomeSlider from "./HomeSlider";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import "./Home.css";
 
 
 
@@ -153,9 +154,10 @@ const styles = {
     </g>
   </svg>
   );
+
+ 
   return (
-    <div style={{ fontFamily: "Arial, sans-serif",   width:"90%" , margin: '0 auto'}} >
-      {/* Navbar */}
+   <div className="responsive-container">
       {/* <nav
         style={{
           display: "flex",
@@ -661,7 +663,11 @@ const styles = {
 
     
       <Footer/>
+
+      
+
     </div>
+
 
   );
 };

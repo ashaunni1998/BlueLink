@@ -7,6 +7,7 @@ import BusinessCardGrid from "./BusinessCardGrid";
 import FeaturesSection from "./FeaturesSection";
 import BusinessCardOptions from "./BusinessCardOptions";
 import BusinessCardSizes from "./BusinessCardSize";
+import "./Home.css";
 
 
 const businessCards = [
@@ -70,8 +71,7 @@ const businessCards = [
 
 const BusinessCards = () => {
   return (
-    <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
-    <div style={{ width: '90%', margin: '0 auto' }}>
+    <div className="responsive-container">
           <Header/>
        <BusinessHero/>
        <BusinessCardGrid />
@@ -93,7 +93,7 @@ const BusinessCards = () => {
     
      <Footer/>
      </div>
-     </div>
+     
   );
 };
 

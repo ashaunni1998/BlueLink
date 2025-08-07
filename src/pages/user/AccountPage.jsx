@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import './Home.css';
 
 
 const AccountPage = () => {
@@ -136,9 +137,7 @@ useEffect(() => {
 
 
   return (
-     <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
-    <div style={{ width: '90%', margin: '0 auto' }}>
-    <div style={containerStyle}>
+      <div className="responsive-container">
         <Header/>
       <div style={layoutStyle}>
 
@@ -211,10 +210,10 @@ useEffect(() => {
           
           </main>
       </div>
-      </div>
+      
       <Footer/>
       </div>
-    </div>
+    
   );
 };
 

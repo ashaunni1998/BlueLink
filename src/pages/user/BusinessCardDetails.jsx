@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Star } from 'lucide-react';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import './Home.css';
 
 const BusinessCardDetails = () => {
   const quantities = [
@@ -88,7 +89,7 @@ const handleSubmitReview = () => {
 
 
   return (
-    <div style={{ fontFamily: 'sans-serif', width: '90%', margin: '0 auto' }}>
+    <div className="responsive-container">
       <Header />
 
       <style>

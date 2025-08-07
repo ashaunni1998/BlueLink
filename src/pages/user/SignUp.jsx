@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import './Home.css';
 
 const countryOptions = [
   { name: "India", code: "+91" },
@@ -149,8 +150,7 @@ const SignUp = () => {
   };
 
   return (
-    <div style={{ width: "90%" }} className="mx-auto">
-      <div style={{ width: "100%", boxSizing: "border-box" }}>
+    <div className="responsive-container">
         <Header />
 
         <div style={{
@@ -264,7 +264,7 @@ const SignUp = () => {
 
         <Footer />
       </div>
-    </div>
+    
   );
 };
 

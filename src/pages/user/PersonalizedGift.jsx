@@ -3,12 +3,12 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import BusinessCardOptions from "./BusinessCardOptions";
 import { Link } from "react-router-dom";
+import './Home.css';
 
 
 const PersonalizedGift = () => {
   return (
-    <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
-  <div style={{ width: '90%', margin: '0 auto' }}>
+    <div className="responsive-container">
       <Header />
 
       {/* Hero Section */}
@@ -205,7 +205,7 @@ const PersonalizedGift = () => {
       <BusinessCardOptions />
       <Footer />
     </div>
-    </div>
+    
   );
 };
 

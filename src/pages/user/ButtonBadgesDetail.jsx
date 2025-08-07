@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Star } from 'lucide-react';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import './Home.css';
 
 const ButtonBadgesDetail = () => {
   const badgeOptions = [
@@ -53,8 +54,7 @@ const handleSubmitReview = () => {
 
 
   return (
-    <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
-      <div style={{ width: '90%', margin: '0 auto' }}>
+     <div className="responsive-container">
         <Header />
 
         {/* Product Info Section */}
@@ -295,7 +295,7 @@ const handleSubmitReview = () => {
 
         <Footer />
       </div>
-    </div>
+    
   );
 };
 

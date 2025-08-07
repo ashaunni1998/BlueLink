@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import './Home.css';
 
 const stationeryData = {
   customBusiness: [
@@ -284,8 +285,7 @@ const StationerySection = ({ title, subtitle, data }) => (
 );
 
 const Stationery = () => (
-    <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
-  <div style={{ width: '90%', margin: '0 auto' }}>
+    <div className="responsive-container">
     <Header />
 
     <section
@@ -360,7 +360,7 @@ Shop our Personalized Stationery collection, including Customizable Postcards, S
     </div>
     <Footer />
   </div>
-  </div>
+  
 );
 
 export default Stationery;

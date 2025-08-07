@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import './Home.css';
 
 const blogPosts = [
   {
@@ -26,8 +27,7 @@ const blogPosts = [
 
 const Blog = () => {
   return (
-    <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
-        <div style={{ width: '90%', margin: '0 auto' }}>
+    <div className="responsive-container">
               <Header/>
       <div style={{ width: '90%', maxWidth: '1200px', margin: '0 auto', padding: '40px 0' }}>
         <h2 style={{ textAlign: 'center' }}>📚 Blue Link Blog</h2>
@@ -65,7 +65,7 @@ const Blog = () => {
       </div>
       <Footer />
     </div>
-    </div>
+    
   );
 };
 

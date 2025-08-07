@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { Star } from 'lucide-react';
+import './Home.css';
 
 const GreetingCardDetails = () => {
   // Images for product gallery
@@ -80,7 +81,7 @@ const handleSubmitReview = () => {
 
   // Final rendered JSX
   return (
-    <div style={{ fontFamily: 'sans-serif', width: '90%', margin: '0 auto' }}>
+    <div className="responsive-container">
       <Header />
 
       {/* Main layout wrapper */}

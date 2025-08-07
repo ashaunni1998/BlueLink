@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import BusinessCardOptions from './BusinessCardOptions';
+import './Home.css';
 
 const styles = {
   container: {
@@ -162,8 +163,7 @@ const sizes = [
 
 const PostCards = () => {
   return (
-    <div style={{ maxWidth: "100%", overflowX: "hidden" }}>
-    <div style={styles.container} >
+    <div className="responsive-container">
       <Header/>
 
       {/* Hero */}
@@ -259,7 +259,7 @@ const PostCards = () => {
       <BusinessCardOptions/>
 <Footer/>
     </div>
-    </div>
+    
   );
 };
 

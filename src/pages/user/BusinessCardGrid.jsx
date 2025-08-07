@@ -28,7 +28,6 @@ const BusinessCardGrid = () => {
   const navigate = useNavigate();
 
   const handleNavigate = (card) => {
-    // You could pass state or params if needed
     navigate("/businesscardDetails", { state: { card } });
   };
 
@@ -44,33 +43,62 @@ const BusinessCardGrid = () => {
         }}
       >
         {cards.map((card, index) => (
-          <div key={index} style={{ textAlign: "center" }}>
+          <div
+            key={index}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              textAlign: "center",
+              height: "100%",
+              backgroundColor: "#f9f9f9",
+              borderRadius: "12px",
+              overflow: "hidden",
+              boxShadow: "0 4px 10px rgba(0,0,0,0.06)",
+            }}
+          >
             <img
               src={card.image}
               alt={card.title}
-              style={{ width: "100%", borderRadius: "12px" }}
-            />
-            <h3 style={{ fontSize: "20px", marginTop: "15px", fontWeight: "600" }}>
-              {card.title}
-            </h3>
-            <p style={{ fontSize: "14px", color: "#555", marginTop: "8px" }}>
-              {card.description}
-            </p>
-            <button
-              onClick={() => handleNavigate(card)}
               style={{
-                marginTop: "10px",
-                padding: "8px 20px",
-                backgroundColor: "#00B0B9",
-                color: "#fff",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-                fontSize: "14px",
+                width: "100%",
+                height: "200px",
+                objectFit: "cover",
+              }}
+            />
+
+            {/* Content section */}
+            <div
+              style={{
+                flex: 1,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                padding: "20px",
               }}
             >
-              Shop BusinessCards
-            </button>
+              <div>
+                <h3 style={{ fontSize: "20px", fontWeight: "600", marginBottom: "10px" }}>
+                  {card.title}
+                </h3>
+                <p style={{ fontSize: "14px", color: "#555" }}>{card.description}</p>
+              </div>
+
+              <button
+                onClick={() => handleNavigate(card)}
+                style={{
+                  marginTop: "20px",
+                  padding: "10px",
+                  backgroundColor: "#00B0B9",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  fontSize: "14px",
+                }}
+              >
+                Shop BusinessCards
+              </button>
+            </div>
           </div>
         ))}
       </div>

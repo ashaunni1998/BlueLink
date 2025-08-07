@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import './Home.css'
 
 const ResetPassword = () => {
   const [searchParams] = useSearchParams();
@@ -92,7 +93,7 @@ const ResetPassword = () => {
   };
 
   return (
-    <div style={{ width: "90%" }} className="mx-auto">
+    <div className="responsive-container">
       <Header />
       <div style={styles.container}>
         <div style={styles.card}>

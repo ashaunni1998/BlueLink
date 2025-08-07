@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { Star } from 'lucide-react';
+import './Home.css';
 
 const StickerDetails = () => {
   const images = [
@@ -47,7 +48,7 @@ const StickerDetails = () => {
   };
 
   return (
-    <div style={{ fontFamily: 'sans-serif', width: '90%', margin: '0 auto' }}>
+    <div className="responsive-container">
       <Header />
 
       <div style={{ display: 'flex', flexWrap: 'wrap', marginTop: 30, gap: 30 }}>

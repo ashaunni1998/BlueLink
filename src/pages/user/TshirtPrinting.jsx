@@ -3,10 +3,11 @@ import Header from "./components/Header";
 import { Link } from "react-router-dom";
 import Footer from "./components/Footer";
 import BusinessCardOptions from "./BusinessCardOptions";
+
+import './Home.css';
 const TShirtPrinting = () => {
   return (
-    <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
-      <div style={{ width: '90%', margin: '0 auto' }}>
+     <div className="responsive-container">
         <Header />
 
         {/* Hero Section */}
@@ -176,7 +177,7 @@ const TShirtPrinting = () => {
 
         <Footer />
       </div>
-    </div>
+    
   );
 };
 

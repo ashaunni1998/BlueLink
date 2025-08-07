@@ -2,12 +2,12 @@ import React from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { Link } from 'react-router-dom';
+import './Home.css';
 
 
 const ButtonBadges = () => {
   return (
-    <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
-      <div style={{ width: '90%', margin: '0 auto' }}>
+    <div className="responsive-container">
         <Header />
 
         {/* Hero Section */}
@@ -173,7 +173,7 @@ const ButtonBadges = () => {
 
         <Footer />
       </div>
-    </div>
+    
   );
 };
 

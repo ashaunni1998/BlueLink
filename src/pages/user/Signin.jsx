@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { jwtDecode } from "jwt-decode";
 import GoogleLogin from "./GoogleLogin";
+import './Home.css';
 
 const SignIn = () => {
   const [hasAccount, setHasAccount] = useState(true);
@@ -56,7 +57,7 @@ const SignIn = () => {
 
 
   return (
-    <div style={{ width: "90%" }} className="mx-auto">
+    <div className="responsive-container">
       <Header />
       <div style={styles.container}>
         <div style={styles.formContainer}>
