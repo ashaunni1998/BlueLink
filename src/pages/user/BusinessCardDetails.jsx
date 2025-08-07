@@ -92,31 +92,53 @@ const handleSubmitReview = () => {
     <div className="responsive-container">
       <Header />
 
-      <style>
-        {`
-          @media (max-width: 768px) {
-            .details-container {
-              flex-direction: column;
-              padding: 16px;
-            }
-            .image-section, .content-section {
-              padding: 0 !important;
-              width: 100% !important;
-              position: static !important;
-              top: auto !important;
-            }
-            .quantity-table th, .quantity-table td {
-              font-size: 13px;
-              padding: 8px;
-            }
-               .content-section > div {
-    overflow-x: hidden !important;
-  }
+    <style>
+  {`
+    @media (max-width: 768px) {
+      .details-container {
+        flex-direction: column;
+        padding: 16px;
+        height: auto !important;
+        overflow-y: visible !important;
+      }
 
-  
-          }
-        `}
-      </style>
+      .image-section, .content-section {
+        padding: 0 !important;
+        width: 100% !important;
+        position: static !important;
+        top: auto !important;
+      }
+
+      .content-section {
+        height: auto !important;
+        overflow-y: visible !important;
+      }
+
+      .quantity-table th, .quantity-table td {
+        font-size: 13px;
+        padding: 8px;
+      }
+
+      .content-section > div {
+        overflow-x: hidden !important;
+      }
+
+      .review-wrapper {
+        max-width: 90%;
+        margin: 0 auto;
+        padding: 0 12px;
+      }
+
+      .customer-reviews {
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 16px;
+      }
+    }
+  `}
+</style>
+
 
       <div className="details-container" style={{
           display: 'flex',
@@ -452,8 +474,16 @@ const handleSubmitReview = () => {
         </div>
      
       </div>
+
 {/* Review Section */}
-<div style={{ marginTop: 50 }}>
+<div className="review-wrapper" style={{
+  marginTop: 50,
+  maxWidth: 600,
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  padding: '0 16px'
+}}>
+
   <h3 style={{ fontSize: 20, marginBottom: 10 }}>Leave a Review</h3>
 
   <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 16 }}>
@@ -534,7 +564,13 @@ const handleSubmitReview = () => {
 </div>
 
 {showReviews && (
-  <div style={{ marginTop: 20 }}>
+  <div className="customer-reviews" style={{
+    marginTop: 20,
+    maxWidth: 600,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    padding: '0 16px'
+  }}>
     <h3 style={{ fontSize: 18, marginBottom: 10 }}>Customer Reviews</h3>
 
     {reviews.length === 0 ? (

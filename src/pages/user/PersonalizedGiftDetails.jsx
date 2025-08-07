@@ -48,7 +48,7 @@ const handleSubmitReview = () => {
 };
 
   return (
-    <div className="responsive-container">
+    <div className="responsive-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
         <Header />
 
         {/* Product Info Section */}
@@ -202,7 +202,7 @@ const handleSubmitReview = () => {
           </p>
         </section>
 {/* Review Section */}
-<section style={{ marginTop: '60px' }}>
+<section style={{ marginTop: '60px' , paddingBottom:'80px' }}>
   <h3 style={{ fontSize: '22px', marginBottom: '10px' }}>Leave a Review</h3>
 
   {/* Star Rating */}

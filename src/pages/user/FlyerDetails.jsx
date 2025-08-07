@@ -58,24 +58,39 @@ const handleSubmitReview = () => {
      <div className="responsive-container">
       <Header />
 
-      <style>
-        {`
-          @media (max-width: 768px) {
-            .details-container {
-              flex-direction: column;
-              padding: 16px;
-            }
-            .image-section, .content-section {
-              padding: 0 !important;
-              width: 100% !important;
-            }
-            .quantity-table th, .quantity-table td {
-              font-size: 13px;
-              padding: 8px;
-            }
-          }
-        `}
-      </style>
+  <style>
+  {`
+    @media (max-width: 768px) {
+       .details-container {
+    flex-direction: column !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+      .image-section, .content-section {
+        padding: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+      }
+
+       .content-section {
+    overflow-y: visible !important;
+    height: auto !important;
+  }
+      .quantity-table th, .quantity-table td {
+        font-size: 13px;
+        padding: 8px;
+      }
+
+      .review-wrapper {
+        max-width: 90%;
+        padding: 0 12px;
+      }
+    }
+  `}
+</style>
+
+
 
       <div
   className="details-container"
@@ -276,7 +291,15 @@ const handleSubmitReview = () => {
           </div>
         </div>
       </div>
-<div style={{ marginTop: 40 }}>
+<div className="review-wrapper" style={{
+  marginTop: 60,
+  marginBottom: 100, // space above footer
+  maxWidth: 600,
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  padding: '0 16px'
+}}>
+
   <h3 style={{ fontWeight: 600, marginBottom: 10 }}>Write a Review</h3>
 
   {/* Star Rating */}
