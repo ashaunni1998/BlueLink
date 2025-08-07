@@ -5,84 +5,54 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const [expanded, setExpanded] = useState(null); // Accordion control
 
   useEffect(() => {
-    const checkWidth = () => setIsMobile(window.innerWidth <= 768);
-    checkWidth();
-    window.addEventListener("resize", checkWidth);
-    return () => window.removeEventListener("resize", checkWidth);
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const styles = {
-    container: {
-      fontFamily: "Arial, sans-serif",
-      backgroundColor: "#fff",
-      color: "#333",
-      fontSize: "14px",
-      lineHeight: "1.6",
-      borderTop: "1px solid #eee",
-    },
-    topBar: {
-      backgroundColor: "#2c3e50",
-      color: "#fff",
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      padding: "12px 20px",
-      flexWrap: "wrap",
-    },
-    rating: {
-      display: "flex",
-      alignItems: "center",
-      gap: "8px",
-      fontSize: "14px",
-    },
-    socialIcons: {
-      display: "flex",
-      gap: "16px",
-      fontSize: "20px",
-    },
-    mainRow: {
-      display: "flex",
-      justifyContent: "space-between",
-      padding: "40px 20px",
-      backgroundColor: "#f9f9f9",
-      flexWrap: "wrap",
-      gap: '20px',
-    },
-    column: {
-      flex: "1 1 200px",
-      margin: "10px",
-    },
-    columnTitle: {
-      fontWeight: "bold",
-      fontSize: "16px",
-      marginBottom: "12px",
-      color: "#222",
-    },
-    link: {
-      display: "block",
-      color: "#555",
-      textDecoration: "none",
-      margin: "6px 0",
-      fontSize: "15px",
-      transition: "color 0.3s",
-    },
-    legalLinks: {
-      display: "flex",
-      flexWrap: "wrap",
-      gap: "16px",
-      padding: "20px",
-      fontSize: "13px",
-      color: "#666",
-      borderTop: "1px solid #eee",
-    },
+  const toggleAccordion = (index) => {
+    setExpanded(expanded === index ? null : index);
   };
 
-  const hoverLinkStyle = {
-    textDecoration: "underline",
-    color: "#00754a",
-  };
+  const sections = [
+    {
+      title: "Products",
+      links: [
+        { label: "All Products", path: "/" },
+        { label: "Business Cards", path: "/businessCard" },
+        { label: "Flyers", path: "/flyers" },
+        { label: "Postcards", path: "/postcards" },
+        { label: "Stickers and Labels", path: "/stickers" },
+        { label: "Personalized Gift", path: "/personalized-gift" },
+        { label: "Stationery", path: "/stationery" },
+        { label: "Button Badges", path: "/buttonbadges" },
+      ],
+    },
+    {
+      title: "About Us",
+      links: [{ label: "About Blue Link", path: "/about" }],
+    },
+    {
+      title: "Help",
+      links: [
+        { label: "Contact us", path: "/contact" },
+        { label: "FAQs", path: "/help" },
+      ],
+    },
+  ];
+
+  const legalLinks = [
+    { label: "Terms & Conditions", path: "/terms" },
+    { label: "Privacy Policy", path: "/privacy" },
+    // { label: "Fonts", path: "#" },
+    // { label: "Sitemap", path: "#" },
+    // { label: "Company information", path: "#" },
+    // { label: "Cookie Preferences", path: "#" },
+  ];
 
   const socialColors = {
     facebook: "#4267B2",
@@ -93,138 +63,94 @@ const Footer = () => {
   };
 
   return (
-    <footer style={styles.container}>
+    <footer style={{ fontFamily: "Arial, sans-serif", backgroundColor: "#fff", color: "#333" }}>
       {/* Top Bar */}
-      <div style={styles.topBar} className="footer-topbar">
-        <div style={styles.rating}>
+      <div style={{ backgroundColor: "#2c3e50", color: "#fff", padding: "12px 20px", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <span style={{ fontWeight: "bold", color: "#F37934" }}>🟧 TRUSTPILOT</span>
           <span style={{ color: "#00B67A" }}>★★★★☆</span>
           <span>4.6/5</span>
         </div>
-
-        <div style={styles.socialIcons} className="footer-social">
-          <a href="https://www.facebook.com/YourPage" target="_blank" rel="noopener noreferrer" style={{ color: socialColors.facebook }}>
-            <FaFacebookF />
-          </a>
-          <a href="https://www.instagram.com/YourPage" target="_blank" rel="noopener noreferrer" style={{ color: socialColors.instagram }}>
-            <FaInstagram />
-          </a>
-          <a href="https://twitter.com/YourPage" target="_blank" rel="noopener noreferrer" style={{ color: socialColors.twitter }}>
-            <FaTwitter />
-          </a>
-          <a href="https://www.youtube.com/YourChannel" target="_blank" rel="noopener noreferrer" style={{ color: socialColors.youtube }}>
-            <FaYoutube />
-          </a>
-          <a href="https://wa.me/YourNumber" target="_blank" rel="noopener noreferrer" style={{ color: socialColors.whatsapp }}>
-            <FaWhatsapp />
-          </a>
+        <div style={{ display: "flex", gap: "16px", fontSize: "20px" }}>
+          <a href="#" target="_blank" rel="noopener noreferrer" style={{ color: socialColors.facebook }}><FaFacebookF /></a>
+          <a href="#" target="_blank" rel="noopener noreferrer" style={{ color: socialColors.instagram }}><FaInstagram /></a>
+          <a href="#" target="_blank" rel="noopener noreferrer" style={{ color: socialColors.twitter }}><FaTwitter /></a>
+          <a href="#" target="_blank" rel="noopener noreferrer" style={{ color: socialColors.youtube }}><FaYoutube /></a>
+          <a href="#" target="_blank" rel="noopener noreferrer" style={{ color: socialColors.whatsapp }}><FaWhatsapp /></a>
         </div>
       </div>
 
-      {/* Google Translate Dropdown */}
+      {/* Translate */}
       <div style={{ padding: "16px 20px", borderBottom: "1px solid #ddd" }}>
         <GoogleTranslateDropdown />
       </div>
 
-      {/* Main Link Grid */}
-      <div style={styles.mainRow} className="footer-columns">
-        {/* Products */}
-        <div style={styles.column} className="footer-column">
-          <div style={styles.columnTitle}>Products</div>
-          {[
-            { label: "All Products", path: "/" },
-            { label: "Business Cards", path: "/businessCard" },
-            { label: "Flyers", path: "/flyers" },
-            { label: "Postcards", path: "/postcards" },
-            { label: "Stickers and Labels", path: "/stickers" },
-            { label: "Personalized Gift", path: "/personalized-gift" },
-            { label: "Stationery", path: "/stationery" },
-            { label: "Button Badges", path: "/buttonbadges" },
-          ].map((item) => (
-            <Link to={item.path} key={item.label} style={styles.link} onMouseOver={(e) => (e.target.style.color = "#00754a")} onMouseOut={(e) => (e.target.style.color = "#555")}>
-              {item.label}
-            </Link>
-          ))}
-        </div>
-
-        {/* About */}
-        <div style={styles.column} className="footer-column">
-          <div style={styles.columnTitle}>About Us</div>
-          {[
-            { label: "About Blue Link", path: "/about" },
-          ].map((item) => (
-            <Link to={item.path} key={item.label} style={styles.link} onMouseOver={(e) => (e.target.style.color = "#00754a")} onMouseOut={(e) => (e.target.style.color = "#555")}>
-              {item.label}
-            </Link>
-          ))}
-        </div>
-
-        {/* Help */}
-        <div style={styles.column} className="footer-column">
-          <div style={styles.columnTitle}>Help</div>
-          {[
-            { label: "Contact us", path: "/contact" },
-            { label: "FAQs", path: "/help" },
-          ].map((item) => (
-            <Link to={item.path} key={item.label} style={styles.link} onMouseOver={(e) => (e.target.style.color = "#00754a")} onMouseOut={(e) => (e.target.style.color = "#555")}>
-              {item.label}
-            </Link>
-          ))}
-        </div>
+      {/* Main Section */}
+      <div style={{ backgroundColor: "#f9f9f9", padding: isMobile ? "0" : "40px 20px" }}>
+        {!isMobile ? (
+          <div style={{ display: "flex", justifyContent: "space-between", gap: "20px", flexWrap: "wrap" }}>
+            {sections.map((section, index) => (
+              <div key={index} style={{ flex: "1 1 200px" }}>
+                <div style={{ fontWeight: "bold", fontSize: "16px", marginBottom: "12px", color: "#222" }}>{section.title}</div>
+                {section.links.map((item) => (
+                  <Link key={item.label} to={item.path} style={{ display: "block", color: "#555", textDecoration: "none", margin: "6px 0" }}>{item.label}</Link>
+                ))}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div>
+            {sections.map((section, index) => (
+              <div key={index} style={{ borderBottom: "1px solid #ccc" }}>
+                <button
+                  onClick={() => toggleAccordion(index)}
+                  style={{
+                    width: "100%",
+                    padding: "16px",
+                    background: "#e9ecef",
+                    border: "none",
+                    textAlign: "left",
+                    fontWeight: "bold",
+                    fontSize: "15px",
+                    cursor: "pointer",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  {section.title}
+                  <span>{expanded === index ? "−" : "+"}</span>
+                </button>
+                {expanded === index && (
+                  <div style={{ padding: "0 16px 16px" }}>
+                    {section.links.map((item) => (
+                      <Link key={item.label} to={item.path} style={{ display: "block", color: "#00754a", textDecoration: "none", padding: "6px 0" }}>
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* Legal Links */}
-     <div style={styles.legalLinks} className="footer-legal">
-  {[
-    { label: "Terms & Conditions", path: "/terms" },
-    { label: "Privacy Policy", path: "/privacy" },
-  ].map((item) => (
-    <Link
-      key={item.label}
-      to={item.path}
-      style={styles.link}
-      onMouseOver={(e) => (e.target.style.color = "#00754a")}
-      onMouseOut={(e) => (e.target.style.color = "#555")}
-    >
-      {item.label}
-    </Link>
-  ))}
-</div>
-
-
-      {/* Mobile CSS */}
-      <style>{`
-        @media (max-width: 768px) {
-          .footer-topbar {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 12px;
-          }
-
-          .footer-social {
-            justify-content: flex-start;
-            padding-left: 2px;
-          }
-
-          .footer-legal {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 10px;
-    margin-top: 20px;
-  }
-
-
-  .footer-columns {
-      flex-direction: column !important;
-    }
-
-    .footer-column {
-      width: 100%;
-      padding: 0;
-    }
-        }
-      `}</style>
+      {/* Legal Section */}
+      <div style={{ padding: "20px", borderTop: "1px solid #eee", fontSize: "13px", color: "#666", textAlign: "center" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "12px", marginBottom: "10px" }}>
+          {legalLinks.map((item) => (
+            <Link key={item.label} to={item.path} style={{ color: "#00754a", textDecoration: "none" }}>
+              {item.label}
+            </Link>
+          ))}
+        </div>
+        <div>
+          <span style={{ fontSize: "12px" }}>
+            © Blue Link, 123 Main St, YourCity.
+          </span>
+        </div>
+      </div>
     </footer>
   );
 };

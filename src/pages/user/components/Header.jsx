@@ -1297,6 +1297,10 @@ const responsiveStyle = `
   }
 
   @media (max-width: 768px) {
+    .top-bar {
+      padding: 10px 16px !important; /* ✅ Add horizontal padding for mobile */
+    }
+
     .mobileRow1,
     .mobileRow2 {
       flex-direction: row !important;
