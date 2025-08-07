@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import GoogleTranslateDropdown from "../GoogleTranslateDropdown.jsx";
 import { Heart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 
 // const languages = [
@@ -177,18 +178,18 @@ export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
 
   // Dummy search data
-  const dummyResults = [
-    "Business Card Templates",
-    "Premium Business Cards",
-    "Business Card Designs",
-    "Business Card Printing",
-    "Modern Business Cards",
-  ];
+  // const dummyResults = [
+  //   "Business Card Templates",
+  //   "Premium Business Cards",
+  //   "Business Card Designs",
+  //   "Business Card Printing",
+  //   "Modern Business Cards",
+  // ];
 
   // Filter results based on query
-  const filteredResults = dummyResults.filter(item =>
-    item.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // const filteredResults = dummyResults.filter(item =>
+  //   item.toLowerCase().includes(searchQuery.toLowerCase())
+  // );
 
 
 
@@ -262,6 +263,104 @@ export default function Header() {
   const handleCloseMobileMenu = () => {
     setMenuOpen(false);
   };
+
+
+
+  const searchItems = [
+  "Business Cards",
+  "Postcards",
+  "Stickers",
+  "Flyers",
+  "Labels",
+  "Brochures",
+  "Packaging",
+  "Signs",
+  "Promo Products",
+  "Stationery",
+  "Invitation Cards",
+  "Gift Cards"
+];
+
+const filteredResults = searchItems.filter((item) =>
+  item.toLowerCase().includes(searchQuery.toLowerCase())
+);
+
+
+
+
+const renderMenuItem = (title, link, subItems) => {
+  const isExpanded = expandedMenus[title];
+
+  // ✅ CASE 1: No subItems → Direct Link (like Help or Blog)
+  if (!subItems || subItems.length === 0) {
+    return (
+      <Link
+        key={title}
+        to={link}
+        style={{
+          ...mobileSubItem,
+          display: "block",
+          padding: "12px",
+          borderRadius: "10px",
+          marginBottom: "10px",
+          backgroundColor: "#f9f9f9",
+          fontWeight: "bold",
+          textDecoration: "none",
+          color: "#111",
+        }}
+        onClick={() => setMenuOpen(false)} // ✅ close menu
+      >
+        {title}
+      </Link>
+    );
+  }
+
+  // ✅ CASE 2: Has SubItems (Business Cards, etc.)
+  return (
+    <div key={title}>
+      <div
+        onClick={() => toggleSubMenu(title)}
+        style={{
+          ...mobileSubItem,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "12px",
+          borderRadius: "10px",
+          marginBottom: "10px",
+          backgroundColor: "#f9f9f9",
+          fontWeight: "bold",
+          cursor: "pointer",
+        }}
+      >
+        <span>{title}</span>
+        <i className={`fa-solid fa-angle-${isExpanded ? "up" : "down"}`}></i>
+      </div>
+
+      {isExpanded && (
+        <div style={{ paddingLeft: "16px" }}>
+          {subItems.map((item, i) => (
+            <Link
+              key={i}
+              to={item.link}
+              style={{
+                ...mobileSubItem,
+                display: "block",
+                padding: "10px 12px",
+                textDecoration: "none",
+                color: "#000",
+              }}
+              onClick={() => setMenuOpen(false)} // ✅ close on sub link too
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 
 
   return (
@@ -391,8 +490,49 @@ export default function Header() {
 
 
             <div className="search-wrapper" style={searchWrapper}>
-              <input type="text" placeholder={t("search") || "Search"} style={searchInput} />
+             <input
+  type="text"
+  placeholder={t("search") || "Search"}
+  value={searchQuery}
+  onChange={(e) => setSearchQuery(e.target.value)}
+  style={searchInput}
+/>
+
               <span style={searchIcon}>🔍</span>
+
+              {searchQuery && (
+  <div style={{
+    position: "absolute",
+    top: "38px",
+    left: 0,
+    right: 0,
+    backgroundColor: "#fff",
+    border: "1px solid #ccc",
+    zIndex: 1000,
+    maxHeight: "200px",
+    overflowY: "auto"
+  }}>
+    {filteredResults.length ? filteredResults.map((item, i) => (
+      <div
+        key={i}
+        style={{
+          padding: "10px",
+          borderBottom: "1px solid #eee",
+          cursor: "pointer"
+        }}
+        onClick={() => {
+          setSearchQuery(item);
+          // You can also navigate to another page here
+        }}
+      >
+        {item}
+      </div>
+    )) : (
+      <div style={{ padding: "10px", color: "#999" }}>No results found</div>
+    )}
+  </div>
+)}
+
             </div>
           </div>
         )}
@@ -606,62 +746,112 @@ export default function Header() {
 
 
 
-          {menuItems.map((item) => (
-            <div key={item.title}>
-              <div
-                onClick={() => toggleSubMenu(item.title)}
+        {menuItems.map((item) => {
+  const hasSubItems = item.subItems && item.subItems.length > 0;
 
+  // ✅ Case 1: No subItems (like Help & Blog)
+  if (!hasSubItems) {
+    return (
+      <Link
+        key={item.title}
+        to={item.link}
+        style={{
+          ...mobileSubItem,
+          fontWeight: "bold",
+          display: "block",
+          padding: "12px",
+          marginBottom: "10px",
+          backgroundColor: "#f9f9f9",
+          borderRadius: "8px",
+          textDecoration: "none",
+          color: "#111",
+        }}
+        onClick={handleCloseMobileMenu}
+      >
+        {item.title}
+      </Link>
+    );
+  }
 
-                style={{
-                  ...mobileNavLink,
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <span>{item.title}</span>
-                {item.subItems && (
-                  <span>
-                    {expandedMenus[item.title] ? (
-                      <i className="fa-solid fa-angle-up"></i>
-                    ) : (
-                      <i className="fa-solid fa-angle-down"></i>
-                    )}
-                  </span>
-                )}
-              </div>
+  // ✅ Case 2: Has subItems (like Business Cards)
+  return (
+    <div key={item.title}>
+      <div
+        onClick={() => toggleSubMenu(item.title)}
+        style={{
+          ...mobileNavLink,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <span>{item.title}</span>
+        <span>
+          {expandedMenus[item.title] ? (
+            <i className="fa-solid fa-angle-up"></i>
+          ) : (
+            <i className="fa-solid fa-angle-down"></i>
+          )}
+        </span>
+      </div>
 
-              {/* Show subItems in column style */}
-              {expandedMenus[item.title] && item.subItems && (
-                <div style={{ paddingLeft: "16px" }}>
-                  {item.subItems.map((subItem, i) => (
-                    <div key={i}>
-                      {subItem.subItems ? (
-                        <div>
-                          <div
-                            onClick={() => toggleSubMenu(`${item.title} > ${subItem.label}`)}
+      {expandedMenus[item.title] && (
+        <div style={{ paddingLeft: "16px" }}>
+          {item.subItems.map((subItem, i) => (
+            <div key={i}>
+              {subItem.subItems ? (
+                <>
+                  <div
+                    onClick={() =>
+                      toggleSubMenu(`${item.title} > ${subItem.label}`)
+                    }
+                    style={{
+                      ...mobileSubItem,
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      fontWeight: "bold",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <span>{subItem.label}</span>
+                    <span>
+                      {expandedMenus[subItem.label] ? (
+                        <i className="fa-solid fa-angle-up"></i>
+                      ) : (
+                        <i className="fa-solid fa-angle-down"></i>
+                      )}
+                    </span>
+                  </div>
+                </>
+              ) : (
+                <Link
+                  to={subItem.link}
+                  style={{
+                    ...mobileSubItem,
+                    fontWeight: "bold",
+                    display: "block",
+                    padding: "10px 12px",
+                    textDecoration: "none",
+                    color: "#000",
+                  }}
+                  onClick={handleCloseMobileMenu}
+                >
+                  {subItem.label}
+                </Link>
+              )}
 
-                            style={{
-                              ...mobileSubItem,
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                              fontWeight: "bold",
-                              cursor: "pointer"
-                            }}
-                          >
-                            <span>{subItem.label}</span>
-                            <span>
-                              {expandedMenus[subItem.label] ? (
-                                <i className="fa-solid fa-angle-up"></i>
-                              ) : (
-                                <i className="fa-solid fa-angle-down"></i>
-                              )}
-                            </span>
-                          </div>
-
-                          {/* {expandedMenus[subItem.label] && (
-                  <div style={{ paddingLeft: "20px", display: "flex", flexDirection: "column", gap: "8px", marginTop: "8px" }}>
+              {expandedMenus[`${item.title} > ${subItem.label}`] &&
+                subItem.subItems && (
+                  <div
+                    style={{
+                      paddingLeft: "20px",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "8px",
+                      marginTop: "8px",
+                    }}
+                  >
                     {subItem.subItems.map((child, j) => (
                       <Link
                         key={j}
@@ -673,45 +863,17 @@ export default function Header() {
                       </Link>
                     ))}
                   </div>
-                )} */}
-                        </div>
-
-
-                      ) : (
-                        <Link
-                          to={subItem.link}
-                          style={{
-                            ...mobileSubItem,
-                            fontWeight: "bold",
-                            display: "block",
-                            padding: "10px 12px",
-                            textDecoration: "none",
-                            color: "#000"
-                          }}
-                          onClick={handleCloseMobileMenu}
-                        >
-                          {subItem.label}
-                        </Link>
-                      )}
-
-
-                      {expandedMenus[`${item.title} > ${subItem.label}`] && subItem.subItems && (
-
-                        <div style={{ paddingLeft: "20px", display: "flex", flexDirection: "column", gap: "8px", marginTop: "8px" }}>
-
-                          {subItem.subItems.map((child, j) => (
-                            <Link key={j} to={child.link} style={mobileSubItem}>
-                              {child.label}
-                            </Link>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
+                )}
             </div>
           ))}
+        </div>
+      )}
+    </div>
+  );
+})}
+
+
+
 
 
           {/* ✅ Account & Cart at the bottom */}
@@ -1057,7 +1219,7 @@ const mobileMenu = {
   position: "fixed",
   top: 0,
   right: 0,
-  height: "100vh",
+  // height: "100vh",
   width: "80%",
   backgroundColor: "#fff",
   zIndex: 999,

@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube, FaWhatsapp } from "react-icons/fa";
 
 import GoogleTranslateDropdown from "../GoogleTranslateDropdown";
 
+import { Link } from "react-router-dom";
+
 const Footer = () => {
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkWidth = () => setIsMobile(window.innerWidth <= 768);
+    checkWidth(); // initial
+    window.addEventListener("resize", checkWidth);
+    return () => window.removeEventListener("resize", checkWidth);
+  }, []);
+
+
+
   const styles = {
     container: {
       fontFamily: "Arial, sans-serif",
@@ -75,18 +89,55 @@ const Footer = () => {
       flexWrap: "wrap",
       gap: "12px",
     },
+
+
+     socialIcons: {
+      display: "flex",
+      gap: "16px",
+      fontSize: "20px",
+    },
+
+    mainRow: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: '40px 20px',
+    backgroundColor: '#f4f4f4',
+    flexWrap: 'wrap', // for responsiveness
+  },
+  column: {
+    flex: '1 1 30%',
+    margin: '10px',
+    minWidth: '200px',
+  },
+  columnTitle: {
+    fontWeight: 'bold',
+    fontSize: '18px',
+    marginBottom: '10px',
+    color: '#222',
+  },
+  link: {
+    display: 'block',
+    color: '#333',
+    textDecoration: 'none',
+    margin: '5px 0',
+    fontSize: '15px',
+  },
   };
 
+
+ 
   return (
     <footer style={styles.container}>
       {/* Top bar */}
-      <div style={styles.topBar}>
+     <div style={styles.topBar} className="footer-topbar">
+
         <div style={styles.rating}>
-          <span>🟧 TRUSTPILOT</span>
+        <span style={{ fontWeight: "bold", color: "#F37934" }}>🟧 TRUSTPILOT</span>
           <span style={{ color: "#00B67A" }}>★★★★☆</span>
           <span>4.6/5</span>
         </div>
-       <div style={{ display: "flex", gap: "16px", fontSize: "18px" }}>
+    
+<div style={styles.socialIcons} className="footer-social">
   <a href="https://www.facebook.com/YourPage" target="_blank" rel="noopener noreferrer" style={{ color: "#4267B2" }}>
     <FaFacebookF />
   </a>
@@ -117,95 +168,89 @@ const Footer = () => {
       <GoogleTranslateDropdown/>
 
       {/* Main link grid */}
-      <div style={styles.mainGrid}>
-        {/* Column 1: Products */}
-        <div style={styles.column}>
-          <div style={styles.columnTitle}>Products</div>
-          {[
-            "All Products",
-            "Business Cards",
-            "Flyers",
-            "Postcards",
-            "Stickers and Labels",
-            "Letterheads",
-            "Stationery",
-            
-          ].map((item) => (
-            <a key={item} style={styles.link}>{item}</a>
-          ))}
-        </div>
+<div style={styles.mainRow}>
+  {/* Column 1: Products */}
+  <div style={styles.column}>
+    <div style={styles.columnTitle}>Products</div>
+    {[
+      { label: "All Products", path: "/" },
+      { label: "Business Cards", path: "/businessCard" },
+      { label: "Flyers", path: "/flyers" },
+      { label: "Postcards", path: "/postcards" },
+      { label: "Stickers and Labels", path: "/stickers" },
+      { label: "Personalized Gift", path: "/personalized-gift" },
+      { label: "Stationery", path: "/stationery" },
+       { label: "Button Badges", path: "/buttonbadges" },
+      
 
-        {/* Column 2: Paper Stocks */}
-        {/* <div style={styles.column}>
-          <div style={styles.columnTitle}>Paper Stocks</div>
-          {[
-            "Paper Stocks",
-            "MOO Eco",
-            "MOO Luxe",
-            "MOO Super",
-            "MOO Cotton",
-            "MOO Original",
-            "MOO Letterpress",
-            "Sample Packs",
-          ].map((item) => (
-            <a key={item} style={styles.link}>{item}</a>
-          ))}
-        </div> */}
+    ].map((item) => (
+      <a href={item.path} key={item.label} style={styles.link}>
+        {item.label}
+      </a>
+    ))}
+  </div>
 
-        {/* Column 3: About Us */}
-        <div style={styles.column}>
-          <div style={styles.columnTitle}>About Us</div>
-          {[
-            "About Blue Link",
-            // "Media resources",
-            // "People, products and the planet",
-            // "Who we are",
-            // "Careers",
-            // "The Drop",
-            // "Business Services",
-            // "Reseller",
-            // "Printfinity",
-            // "The MOO Promise",
-            // "Packaging",
-            // "Partner with MOO",
-          ].map((item) => (
-            <a key={item} style={styles.link}>{item}</a>
-          ))}
-        </div>
+  {/* Column 2: About Us */}
+  <div style={styles.column}>
+    <div style={styles.columnTitle}>About Us</div>
+    {[
+      { label: "About Blue Link", path: "/about" },
+    ].map((item) => (
+      <a href={item.path} key={item.label} style={styles.link}>
+        {item.label}
+      </a>
+    ))}
+  </div>
 
-        {/* Column 4: Help */}
-        <div style={styles.column}>
-          <div style={styles.columnTitle}>Help</div>
-          {[
-            "Contact us",
-            "Next Day Delivery",
-            "FAQs",
-            // "Pricing",
-            // "Artwork guidelines",
-            // "Affiliates",
-            // "Refer and Earn",
-            // "Do not sell or share my personal information",
-            // "Vulnerability Disclosure",
-          ].map((item) => (
-            <a key={item} style={styles.link}>{item}</a>
-          ))}
-        </div>
-      </div>
+  {/* Column 3: Help */}
+  <div style={styles.column}>
+    <div style={styles.columnTitle}>Help</div>
+    {[
+      { label: "Contact us", path: "/contact" },
+      // { label: "Next Day Delivery", path: "/delivery" },
+      { label: "FAQs", path: "/help" },
+    ].map((item) => (
+      <a href={item.path} key={item.label} style={styles.link}>
+        {item.label}
+      </a>
+    ))}
+  </div>
+</div>
+
+ 
 
       {/* Legal strip */}
-      <div style={styles.bottomStrip}>
-        <p>
-         Blue Link Printing
-        </p>
-        <div style={styles.legalLinks}>
-          <span style={styles.link}>Terms & Conditions</span>
-          <span style={styles.link}>Privacy Policy</span>
-          <span style={styles.link}>Fonts</span>
-          {/* <span style={styles.link}>Sitemap</span> */}
-          <span style={styles.link}>Company information</span>
-          <span style={styles.link}>Cookie Preferences</span>
-        </div>
-      </div>
+    <div style={styles.legalLinks}>
+  {[
+    { label: "Terms & Conditions", path: "/terms" },
+    { label: "Privacy Policy", path: "/privacy" },
+    // { label: "Fonts", path: "/fonts" },
+    // { label: "Company information", path: "/company" },
+    // { label: "Cookie Preferences", path: "/cookies" },
+  ].map((item) => (
+    <Link key={item.label} to={item.path} style={styles.link}>
+      {item.label}
+    </Link>
+  ))}
+</div>
+
+       <style>
+  {`
+    @media (max-width: 768px) {
+      .footer-topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .footer-social {
+        justify-content: flex-start;
+        padding-left: 2px;
+      }
+    }
+  `}
+</style>
+
     </footer>
   );
 };

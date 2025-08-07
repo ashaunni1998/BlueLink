@@ -26,28 +26,45 @@ const blogPosts = [
 
 const Blog = () => {
   return (
-  <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
-     <div style={{ width: '90%', margin: '0 auto' }}>
-           <Header/>
-        <h2>📚 Blue Link Blog</h2>
-        <p style={{ marginBottom: '30px', color: '#666' }}>
+    <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
+        <div style={{ width: '90%', margin: '0 auto' }}>
+              <Header/>
+      <div style={{ width: '90%', maxWidth: '1200px', margin: '0 auto', padding: '40px 0' }}>
+        <h2 style={{ textAlign: 'center' }}>📚 Blue Link Blog</h2>
+        <p style={{ textAlign: 'center', marginBottom: '40px', color: '#666' }}>
           Get tips, inspiration, and updates about printing and promotions.
         </p>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
           {blogPosts.map((post) => (
-            <div key={post.id} style={{ borderBottom: '1px solid #ccc', paddingBottom: '20px' }}>
+            <div
+              key={post.id}
+              style={{
+                border: '1px solid #ddd',
+                borderRadius: '8px',
+                padding: '20px',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+                backgroundColor: '#fff',
+                transition: 'transform 0.2s',
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-5px)')}
+              onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
+            >
               <h3>{post.title}</h3>
-              <p style={{ color: '#888' }}>{post.date}</p>
-              <p>{post.snippet}</p>
-              <Link to={`/blog/${post.id}`} style={{ color: '#007BFF', textDecoration: 'none', fontWeight: 'bold' }}>
+              <p style={{ color: '#999', fontSize: '14px' }}>{post.date}</p>
+              <p style={{ marginTop: '10px', color: '#444' }}>{post.snippet}</p>
+              <Link
+                to={`/blog/${post.id}`}
+                style={{ color: '#007BFF', fontWeight: 'bold', textDecoration: 'none', marginTop: '10px', display: 'inline-block' }}
+              >
                 Read More →
               </Link>
             </div>
           ))}
         </div>
-      <Footer />
       </div>
+      <Footer />
+    </div>
     </div>
   );
 };

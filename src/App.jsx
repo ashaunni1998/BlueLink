@@ -37,9 +37,10 @@ import OrderConfirmation from "./pages/user/OrderConfirmation";
 import Returns from "./pages/user/Returns";
 import Blog from "./pages/user/Blog";
 import HelpAndFaqPage from "./pages/user/HelpAndFaqPage";
-
-
-
+import Contact from "./pages/user/Contact";
+import Aboutus from "./pages/user/Aboutus";
+import TermsAndCondition from "./pages/user/TermsAndCondition";
+import PrivacyPolicy from "./pages/user/PrivacyPolicy";
 
 
 
@@ -103,8 +104,11 @@ function App() {
        <Route path="/returns" element={<Returns/>}/>
        <Route path="blog" element={<Blog/>}/>
       <Route path="/help" element={<HelpAndFaqPage/>}/>
+       <Route path="/contact" element={<Contact/>}/>
+       <Route path="/about" element={<Aboutus/>}/>
+       <Route path="/terms" element={<TermsAndCondition/>}/>
 
-
+<Route path="/privacy" element={<PrivacyPolicy/>}/>
 
 
 
