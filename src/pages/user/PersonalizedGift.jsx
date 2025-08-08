@@ -135,7 +135,7 @@ const PersonalizedGift = () => {
             { img: "gift-template4.jpg", title: "Photo Frame Template" },
           ].map((tpl, idx) => (
             <div key={idx} style={{ width: "200px", textAlign: "center" }}>
-              <img src={`/assets/gifts/${tpl.img}`} alt={tpl.title} style={{ width: "100%", borderRadius: "8px" }} />
+              <img src={`/assets/gifts/${tpl.img}`} alt={tpl.title} style={{ width: "100%", borderRadius: "8px",height:"160px",objectFit:"cover" }} />
               <h4 style={{ fontSize: "14px", marginTop: "10px" }}>{tpl.title}</h4>
               <a href="#" style={{ color: "#00704A", fontSize: "14px" }}>Start creating</a>
             </div>
@@ -149,7 +149,7 @@ const PersonalizedGift = () => {
       </section>
 
    {/* CTA Section */}
-<section style={{ backgroundColor: "#003D2B", color: "white", padding: "40px 20px" }}>
+{/* <section style={{ backgroundColor: "#003D2B", color: "white", padding: "40px 20px" }}>
   <div
     style={{
       maxWidth: "1000px",
@@ -199,7 +199,7 @@ const PersonalizedGift = () => {
       </button>
     </div>
   </div>
-</section>
+</section> */}
 
 
       <BusinessCardOptions />

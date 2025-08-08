@@ -134,14 +134,14 @@ const Stickers = () => (
           color: '#fff'
         }}
       >
-        <div style={{ maxWidth: '520px', backgroundColor: 'rgba(0, 0, 0, 0.5)', padding: 20, borderRadius: 8 }}>
+        {/* <div style={{ maxWidth: '520px', backgroundColor: 'rgba(0, 0, 0, 0.5)', padding: 20, borderRadius: 8 }}>
           <h1 style={{ fontSize: 36, marginBottom: 12 }}>Stickers & Labels</h1>
           <p style={{ fontSize: 18 }}>
             Add a pop of personality to your packaging or products.
             <br />
             Explore round, rectangular, waterproof, metallic and more sticker options.
           </p>
-        </div>
+        </div> */}
       </section>
 
       {/* Sticker Section */}

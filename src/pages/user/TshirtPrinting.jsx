@@ -50,7 +50,7 @@ const TShirtPrinting = () => {
                 <img
                   src={`/assets/tshirt/${item.img}`}
                   alt={item.title}
-                  style={{ width: "100%", borderRadius: "10px", boxShadow: "0 2px 6px rgba(0,0,0,0.1)" }}
+                  style={{ width: "100%", borderRadius: "10px", boxShadow: "0 2px 6px rgba(0,0,0,0.1)" , height: "180px",objectFit:"cover", }}
                 />
                 <h4 style={{ marginTop: "12px", fontSize: "16px", fontWeight: "600" }}>{item.title}</h4>
                 <p style={{ color: "#555", fontSize: "14px", margin: "4px 0" }}>{item.desc}</p>

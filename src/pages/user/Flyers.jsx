@@ -13,7 +13,8 @@ const Flyer = () => {
   style={{
     position: "relative",
     backgroundImage: "url('/assets/flyers/banners.jpeg')",
-    backgroundSize:" auto",
+    backgroundSize:" cover",
+    backgroundPosition:"center",
     backgroundRepeat: "no-repeat",
    
    
