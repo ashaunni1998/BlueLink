@@ -114,7 +114,7 @@ const menuItems = [
     title: "Personalized Gift",
     subItems: [
       { label: "Personalized Gift", link: "/personalized-gift" },
-      { label: "Option B", link: "/personalized-gift/option-b" },
+      
     ],
   },
   {

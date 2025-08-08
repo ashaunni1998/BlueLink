@@ -277,7 +277,7 @@ const handleSubmitReview = () => {
             <div style={{ display: 'flex', gap: 10, marginTop: 10, flexWrap: 'wrap' }}>
               {[
                 { label: 'Standard', desc: '2.0″ x 3.5″' },
-                { label: 'Normal', desc: '2.16″ x 3.3″' },
+               
                 { label: 'Square', desc: '2.56″ x 2.56″' }
               ].map((size) => (
                 <div

@@ -123,8 +123,12 @@ const SignIn = () => {
               Forgotten your password?
             </a>
 
+
+             {/* Google login */}
+            <GoogleLogin />
+
             {/* Remember Me */}
-            <div style={styles.checkboxGroup}>
+            {/* <div style={styles.checkboxGroup}>
               <label>
                 <input type="checkbox" defaultChecked />
                 <span style={styles.checkboxLabel}>
@@ -134,7 +138,7 @@ const SignIn = () => {
               <p style={styles.helperText}>
                 This feature requires cookies. <a href="#">What's this?</a>
               </p>
-            </div>
+            </div> */}
 
             {/* Submit Button */}
             <button type="submit" disabled={isSubmitting} style={styles.button}>
@@ -149,12 +153,11 @@ const SignIn = () => {
             </p>
 
             {/* Divider */}
-            <div style={styles.divider}>
+            {/* <div style={styles.divider}>
               <span>OR</span>
-            </div>
+            </div> */}
 
-            {/* Google login */}
-            <GoogleLogin />
+           
           </form>
         </div>
       </div>

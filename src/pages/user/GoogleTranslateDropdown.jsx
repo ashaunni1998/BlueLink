@@ -3,6 +3,7 @@ import { TranslateContext } from "../../context/TranslateProvider";
 
 const languages = [
   { code: "en", label: "New Zealand", flag: "https://flagcdn.com/w40/nz.png" },
+  { code: "en", label: "Australia", flag: "https://flagcdn.com/w40/au.png" },
   { code: "en", label: "United Kingdom", flag: "https://flagcdn.com/w40/gb.png" },
   { code: "en", label: "United States (English)", flag: "https://flagcdn.com/w40/us.png" },
   { code: "fr", label: "Canada", flag: "https://flagcdn.com/w40/ca.png" },
@@ -14,6 +15,7 @@ const languages = [
   { code: "es", label: "United States (Español)", flag: "https://flagcdn.com/w40/us.png" },
   { code: "fr", label: "United States (Français)", flag: "https://flagcdn.com/w40/us.png" },
 ];
+
 
 const GoogleTranslateDropdown = () => {
   const { selectedLang, setSelectedLang } = useContext(TranslateContext);

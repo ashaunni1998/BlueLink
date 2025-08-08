@@ -6,7 +6,7 @@ const homeSlides = [
     title: "Fast & Reliable Blueprint Printing",
     description: "Upload your files, customize your order, and we’ll deliver it to your door.",
     cardLinks:[
-             "Original Business Cards",
+             "Normal Business Cards",
               "Super Business Cards",
               "Luxe Business Cards",
               "Cotton Business Cards",
@@ -72,7 +72,7 @@ export default function HomeSlider() {
           backgroundImage: `url(${slide.image})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          height: isMobile ? "250px" : "400px",
+          height: isMobile ? "250px" : "500px",
           position: "relative",
           display: "flex",
           alignItems: "center",

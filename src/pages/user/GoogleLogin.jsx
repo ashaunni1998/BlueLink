@@ -33,7 +33,7 @@ const GoogleLogin = () => {
 
   return (
     <div>
-      <h3>Sign in with Google</h3>
+      {/* <h3>Sign in with Google</h3> */}
       <div id="googleSignInDiv"></div>
     </div>
   );
