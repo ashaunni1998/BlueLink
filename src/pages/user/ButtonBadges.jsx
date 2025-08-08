@@ -45,9 +45,9 @@ const ButtonBadges = () => {
             ].map((item, index) => (
               <div key={index} style={{ textAlign: "center", width: "200px", flex: "1 1 200px" }}>
                 <img
-                  src={`/assets/badges/${item.img}`}
+                  src={`/assets/badges/${item.img}` }
                   alt={item.title}
-                  style={{ width: "100%", borderRadius: "10px", boxShadow: "0 2px 6px rgba(0,0,0,0.1)" }}
+                  style={{ width: "100%", borderRadius: "10px", boxShadow: "0 2px 6px rgba(0,0,0,0.1)" ,height:"180px",objectFit:"cover"}}
                 />
                 <h4 style={{ marginTop: "12px", fontSize: "16px", fontWeight: "600" }}>{item.title}</h4>
                 <p style={{ color: "#555", fontSize: "14px", margin: "4px 0" }}>{item.desc}</p>
@@ -80,7 +80,7 @@ const ButtonBadges = () => {
               },
             ].map((purpose, idx) => (
               <div key={idx} style={{ width: "280px", textAlign: "center" }}>
-                <img src={`/assets/badges/${purpose.img}`} alt={purpose.title} style={{ width: "100%", borderRadius: "8px" }} />
+                <img src={`/assets/badges/${purpose.img}`} alt={purpose.title} style={{ width: "100%", borderRadius: "8px",height:"180px",objectFit:"cover" }} />
                 <h4 style={{ marginTop: "10px", fontSize: "16px" }}>{purpose.title}</h4>
                 <ul style={{ fontSize: "14px", textAlign: "left", paddingLeft: "20px" }}>
                   {purpose.bullets.map((b, i) => <li key={i}>{b}</li>)}
@@ -105,7 +105,7 @@ const ButtonBadges = () => {
               { img: "template4.jpg", title: "Funny Quote Badge" },
             ].map((tpl, idx) => (
               <div key={idx} style={{ width: "200px", textAlign: "center" }}>
-                <img src={`/assets/badges/${tpl.img}`} alt={tpl.title} style={{ width: "100%", borderRadius: "8px" }} />
+                <img src={`/assets/badges/${tpl.img}`} alt={tpl.title} style={{ width: "100%", borderRadius: "8px",height:"180px",objectFit:"cover" }} />
                 <h4 style={{ fontSize: "14px", marginTop: "10px" }}>{tpl.title}</h4>
                 <a href="#" style={{ color: "#00704A", fontSize: "14px" }}>Start creating</a>
               </div>

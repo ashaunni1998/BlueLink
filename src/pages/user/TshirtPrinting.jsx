@@ -108,7 +108,7 @@ const TShirtPrinting = () => {
               { img: "template4.jpg", title: "Funny Quote Tee" },
             ].map((tpl, idx) => (
               <div key={idx} style={{ width: "200px", textAlign: "center" }}>
-                <img src={`/assets/tshirt/${tpl.img}`} alt={tpl.title} style={{ width: "100%", borderRadius: "8px" }} />
+                <img src={`/assets/tshirt/${tpl.img}`} alt={tpl.title} style={{ width: "100%", borderRadius: "8px",height:"180px",objectFit:"cover"}} />
                 <h4 style={{ fontSize: "14px", marginTop: "10px" }}>{tpl.title}</h4>
                 <a href="/tshirtprintingdetail" style={{ color: "#00704A", fontSize: "14px" }}>Start creating</a>
               </div>
@@ -122,7 +122,7 @@ const TShirtPrinting = () => {
         </section>
 
         {/* CTA Section */}
-        <section style={{ backgroundColor: "#003D2B", color: "white", padding: "40px 20px" }}>
+        {/* <section style={{ backgroundColor: "#003D2B", color: "white", padding: "40px 20px" }}>
           <div
             style={{
               maxWidth: "1000px",
@@ -172,7 +172,7 @@ const TShirtPrinting = () => {
               </button>
             </div>
           </div>
-        </section>
+        </section> */}
 
 
         <Footer />
