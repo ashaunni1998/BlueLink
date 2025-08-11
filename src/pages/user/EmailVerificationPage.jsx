@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Swal from 'sweetalert2';
 
 const EmailVerificationPage = () => {
   const [otp, setOtp] = useState('');
@@ -9,67 +10,86 @@ const EmailVerificationPage = () => {
   const [resendDisabled, setResendDisabled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const hasSentOtp = useRef(false); // ✅ Prevent multiple sends in Strict Mode
 
   const email = location.state?.email || '';
 
-  // Automatically send OTP on page load
-  useEffect(() => {
-    const sendInitialOtp = async () => {
-      if (!email) return;
+  // Function to send OTP
+  const sendOtp = async () => {
+    if (!email) return;
 
-      try {
-        const res = await fetch('https://kerala-digital-park-server.vercel.app/api/user/sendVerifyOtp', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email }),
-        });
+    try {
+      const res = await fetch('https://kerala-digital-park-server.vercel.app/api/user/sendVerifyOtp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
 
-        const data = await res.json();
-        if (!res.ok || !data.success) {
-          console.error('OTP not sent:', data.message);
-        }
-      } catch (err) {
-        console.error('Failed to send OTP on load:', err);
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        console.error('OTP not sent:', data.message);
       }
-    };
+    } catch (err) {
+      console.error('Failed to send OTP on load:', err);
+    }
+  };
 
-    sendInitialOtp();
+  // ✅ Send OTP only once
+  useEffect(() => {
+    if (!email || hasSentOtp.current) return;
+    hasSentOtp.current = true;
+    sendOtp();
   }, [email]);
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError('');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
 
-  if (otp.trim().length !== 6) {
-    alert('Please enter a valid 6-digit OTP.');
-    return;
-  }
-
-  try {
-    const response = await fetch('https://kerala-digital-park-server.vercel.app/api/user/verifyOtp', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, otp }),
-    });
-
-    const data = await response.json();
-
-  if (response.ok && data.success) {
-  navigate('/');
-  setTimeout(() => {
-    alert('OTP verified successfully!');
-  }, 100); // alert after navigation
-} else {
-      // ❌ OTP is invalid
-      alert(data.message || 'OTP is not valid.');
+    if (otp.trim().length !== 6) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid OTP',
+        text: 'Please enter a valid 6-digit OTP.'
+      });
+      return;
     }
-  } catch (err) {
-    alert('Something went wrong. Please try again later.');
-    console.error('OTP verification error:', err);
-  }
-};
+
+    try {
+      const response = await fetch('https://kerala-digital-park-server.vercel.app/api/user/verifyOtp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, otp }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        Swal.fire({
+          icon: 'success',
+          title: 'OTP verified successfully!',
+          timer: 1500,
+          showConfirmButton: false
+        }).then(() => {
+          navigate('/'); // ✅ go to home page
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Verification Failed',
+          text: data.message || 'OTP is not valid.'
+        });
+      }
+    } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Server Error',
+        text: 'Something went wrong. Please try again later.'
+      });
+      console.error('OTP verification error:', err);
+    }
+  };
 
   const handleResend = async () => {
     if (resendDisabled || !email) return;
@@ -86,19 +106,33 @@ const handleSubmit = async (e) => {
       const data = await res.json();
 
       if (res.ok && data.success) {
-        alert('OTP has been resent to your email.');
+        Swal.fire({
+          icon: 'info',
+          title: 'OTP Resent',
+          text: 'OTP has been resent to your email.',
+          timer: 1500,
+          showConfirmButton: false
+        });
       } else {
-        alert(data.message || 'Failed to resend OTP.');
+        Swal.fire({
+          icon: 'error',
+          title: 'Failed',
+          text: data.message || 'Failed to resend OTP.'
+        });
       }
     } catch (err) {
       console.error('Resend error:', err);
-      alert('Something went wrong while resending the OTP.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Something went wrong while resending the OTP.'
+      });
     }
 
     setTimeout(() => setResendDisabled(false), 30000);
   };
 
-  // Inline styles
+  // ⬇️ All your original styles kept exactly the same
   const styles = {
     page: {
       display: 'flex',

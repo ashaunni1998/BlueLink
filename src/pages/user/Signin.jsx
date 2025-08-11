@@ -5,6 +5,8 @@ import Footer from "./components/Footer";
 import { jwtDecode } from "jwt-decode";
 import GoogleLogin from "./GoogleLogin";
 import './Home.css';
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 const SignIn = () => {
   const [hasAccount, setHasAccount] = useState(true);
@@ -13,6 +15,9 @@ const SignIn = () => {
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+   const { setIsLoggedIn } = useContext(AuthContext);
+
+   
 
   useEffect(() => {
     window.handleGoogleResponse = (response) => {
@@ -23,37 +28,55 @@ const SignIn = () => {
     };
   }, [navigate]);
 
-  const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError("");
-  setIsSubmitting(true);
+   const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setIsSubmitting(true);
 
-  try {
-    const response = await fetch("https://kerala-digital-park-server.vercel.app/api/user/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
+    try {
+      const response = await fetch(
+        "https://kerala-digital-park-server.vercel.app/api/user/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (response.ok && data.success) {
-      // Save token or user data
-      localStorage.setItem("user", JSON.stringify(data.user));
-      localStorage.setItem("token", data.token); // if token is returned
-      navigate("/dashboard");
-    } else {
-      setError(data.message || "Login failed. Please check your credentials.");
-    }
-  } catch (err) {
-    console.error("Login error:", err);
-    setError("Something went wrong. Please try again later.");
-  } finally {
-    setIsSubmitting(false);
+     if (response.ok && data.data) {
+  localStorage.setItem("user", JSON.stringify(data.data));
+
+  if (data.token) {
+    localStorage.setItem("token", data.token);
   }
-};
+
+  setIsLoggedIn(true);
+  navigate("/");
+} else {
+  setError(data.message || "Login failed. Please check your credentials.");
+}
+
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("Something went wrong. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+
+useEffect(() => {
+  const handleAuthChange = () => {
+    setIsLoggedIn(!!localStorage.getItem("token"));
+  };
+
+  window.addEventListener("authChange", handleAuthChange);
+  return () => {
+    window.removeEventListener("authChange", handleAuthChange);
+  };
+}, []);
 
 
   return (
@@ -119,7 +142,7 @@ const SignIn = () => {
                 required
               />
             </div>
-            <a href="/reset-password" style={styles.forgotPassword}>
+            <a href="/forgotpassword" style={styles.forgotPassword}>
               Forgotten your password?
             </a>
 

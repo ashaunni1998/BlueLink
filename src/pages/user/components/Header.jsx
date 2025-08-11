@@ -4,8 +4,15 @@ import { useTranslation } from "react-i18next";
 import GoogleTranslateDropdown from "../GoogleTranslateDropdown.jsx";
 import { Heart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from "react";
+import { AuthContext } from "../../../context/AuthContext";
 
 
+
+
+
+  
+ 
 // const languages = [
 //   { code: "us", label: "United States" },
 //   { code: "fr", label: "France" },
@@ -197,7 +204,7 @@ export default function Header() {
 
 
 
-
+const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   const accountTimeoutRef = useRef(null);
 
   useEffect(() => {
@@ -375,6 +382,24 @@ useEffect(() => {
 
 
 
+
+
+
+
+const navigate = useNavigate();
+const handleLogout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  setIsLoggedIn(false);
+  navigate("/");
+};
+
+
+
+
+
+
+
   return (
     <header style={headerWrapper}>
       {/* Top Section */}
@@ -445,6 +470,7 @@ useEffect(() => {
 
 
             {/* Account / Sign In */}
+            {isLoggedIn && (
             <div
               style={{ position: "relative", display: "inline-block" }}
               onMouseEnter={!isMobile ? handleAccountMouseEnter : undefined}
@@ -454,37 +480,39 @@ useEffect(() => {
                 <span style={topLink}>{t("account") || "Account"}</span>
               </div>
               {accountDropdown && (
-                <div style={accountDropdownStyle} className="accountDropdownStyle">
-                  <Link to="/sign-in" style={{ ...accountItem, textDecoration: "none", color: "inherit" }}>
-                    Sign up
-                  </Link>
-                  <div style={dropdownDivider}></div>
-                  <Link to="/account?tab=overview" style={{ ...accountItem, textDecoration: "none", color: "inherit" }}>
-                    Overview
-                  </Link>
-
-                  {/* <div style={accountItem}>Re-order</div> */}
-                  <Link to="/account?tab=orders" style={{ ...accountItem, textDecoration: "none", color: "inherit" }}>
-                    Order History
-                  </Link>
-
-                  <Link to="/account?tab=address" style={{ ...accountItem, textDecoration: "none", color: "inherit" }}>
-                    Address Details
-                  </Link>
-
-                  <Link to="/account?tab=logout" style={{ ...accountItem, textDecoration: "none", color: "inherit" }}>
-                    Logout
-                  </Link>
-                  {/* <div style={accountItem}>Redeem Gift Cards</div> */}
-                </div>
-              )}
+      <div style={accountDropdownStyle} className="accountDropdownStyle">
+        <Link to="/account?tab=overview" style={{ ...accountItem, textDecoration: "none", color: "inherit" }}>
+          Overview
+        </Link>
+        <Link to="/account?tab=orders" style={{ ...accountItem, textDecoration: "none", color: "inherit" }}>
+          Order History
+        </Link>
+        <Link to="/account?tab=address" style={{ ...accountItem, textDecoration: "none", color: "inherit" }}>
+          Address Details
+        </Link>
+        <button onClick={handleLogout} style={{ ...accountItem, background: "none", border: "none", cursor: "pointer" }}>
+          Logout
+        </button>
+      </div>
+    )}
             </div>
+            )}
 
-            <span style={topLink}>
-              <Link to="/sign-in" style={{ color: "#333", textDecoration: "none" }}>
-                {t("sign_in") || "Sign In"}
-              </Link>
-            </span>
+         <span style={topLink}>
+  {isLoggedIn ? (
+    <button
+      onClick={handleLogout}
+      style={{ background: "none", border: "none", color: "#333", cursor: "pointer" }}
+    >
+      Logout
+    </button>
+  ) : (
+    <Link to="/sign-in" style={{ color: "#333", textDecoration: "none" }}>
+      {t("sign_in") || "Sign In"}
+    </Link>
+  )}
+</span>
+
 
             <span style={topLink}>
               <Link to="/cart" style={{ color: "#333", textDecoration: "none" }}>
@@ -897,52 +925,88 @@ useEffect(() => {
             padding: "10px 15px",
             borderTop: "1px solid #555"
           }}>
+
+            
+
             {/* Account Dropdown */}
-            <div style={{ marginBottom: "10px" }}>
-              <div
-                onClick={() => setShowAccountDropdown(!showAccountDropdown)}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  fontWeight: "bold",
-                  padding: "12px",
-                  backgroundColor: "#4B5563",
-                  borderRadius: "6px",
-                  cursor: "pointer"
-                }}
-              >
-                Account
-                <span>
-                  {showAccountDropdown ? (
-                    <i className="fa-solid fa-angle-up"></i>
-                  ) : (
-                    <i className="fa-solid fa-angle-down"></i>
-                  )}
-                </span>
+      {isLoggedIn ? (
+  // Show Account dropdown if logged in
+  <div style={{ marginBottom: "10px" }}>
+    <div
+      onClick={() => setShowAccountDropdown(!showAccountDropdown)}
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        fontWeight: "bold",
+        padding: "12px",
+        backgroundColor: "#4B5563",
+        borderRadius: "6px",
+        cursor: "pointer"
+      }}
+    >
+      Account
+      <span>
+        {showAccountDropdown ? (
+          <i className="fa-solid fa-angle-up"></i>
+        ) : (
+          <i className="fa-solid fa-angle-down"></i>
+        )}
+      </span>
+    </div>
 
-              </div>
+    {showAccountDropdown && (
+      <div
+        style={{
+          marginTop: "10px",
+          backgroundColor: "#1F2937",
+          borderRadius: "6px",
+          padding: "10px"
+        }}
+      >
+        <Link to="/account?tab=overview" style={accountItem}>
+          Overview
+        </Link>
+        <Link to="/account?tab=orders" style={accountItem}>
+          Order History
+        </Link>
+        <Link to="/account?tab=address" style={accountItem}>
+          Address Details
+        </Link>
+        <button
+          onClick={handleLogout}
+          style={{
+            ...accountItem,
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            color: "inherit",
+            textAlign: "left",
+            padding: "8px 0",
+            width: "100%"
+          }}
+        >
+          Logout
+        </button>
+      </div>
+    )}
+  </div>
+) : (
+  // Show Sign In link if not logged in
+  <div style={{ marginBottom: "10px", padding: "12px" }}>
+    <Link
+      to="/sign-in"
+      style={{
+        color: "#fff",
+        textDecoration: "none",
+        fontWeight: "bold"
+      }}
+    >
+      Sign In
+    </Link>
+  </div>
+)}
 
-              {showAccountDropdown && (
-                <div style={{
-                  marginTop: "10px",
-                  backgroundColor: "#1F2937",
-                  borderRadius: "6px",
-                  padding: "10px"
-                }}>
-                  <Link to="/sign-in" style={accountItem}>Sign up</Link>
-                  <div style={dropdownDivider}></div>
-                  <Link to="/account?tab=overview" style={accountItem}>Overview</Link>
-                  {/* <div style={accountItem}>Re-order</div> */}
-                  <Link to="/account?tab=orders" style={accountItem}>Order History</Link>
-                  <Link to="/account?tab=address" style={accountItem}>Address Details</Link>
-                  <Link to="/account?tab=logout" style={accountItem}>Logout</Link>
-
-                  {/* <div style={accountItem}>Refer and Earn</div>
-                  <div style={accountItem}>Redeem Gift Cards</div> */}
-                </div>
-              )}
-            </div>
 
             {/* Cart */}
             <div style={{

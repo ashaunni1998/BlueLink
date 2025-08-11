@@ -29,6 +29,7 @@ import Checkout from "./pages/user/Checkout";
 import AccountPage from "./pages/user/AccountPage";
 import EmailVerificationPage from "./pages/user/EmailVerificationPage";
 import ForgotPassword from "./pages/user/ForgotPassword";
+import VerifyOtp from "./pages/user/VerifyOtp";
 import Wishlist from "./pages/user/Wishlist";
 import Success from "./pages/user/Success";
 import Cancel from "./pages/user/Cancel";
@@ -109,6 +110,7 @@ function App() {
        <Route path="/terms" element={<TermsAndCondition/>}/>
 
 <Route path="/privacy" element={<PrivacyPolicy/>}/>
+<Route path="/verify-otp" element={<VerifyOtp/>}/>
 
 
 

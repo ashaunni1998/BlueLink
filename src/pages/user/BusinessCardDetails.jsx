@@ -4,6 +4,9 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import './Home.css';
 
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+
 const BusinessCardDetails = () => {
   const quantities = [
     { qty: 50, pricePerCard: 0.44, packPrice: 22.0 },
@@ -85,6 +88,69 @@ const handleSubmitReview = () => {
   setReviewText(""); // Clear input after successful submit
   alert("Review submitted successfully!");
 };
+
+
+const { id: productId } = useParams(); 
+const [product, setProduct] = useState(null);
+
+useEffect(() => {
+  const fetchProduct = async () => {
+    try {
+      const res = await fetch(`/api/products/${productId}`);
+      const data = await res.json();
+      if (res.ok) {
+        setProduct(data);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  fetchProduct();
+}, [productId]);
+
+// Add this above your return()
+
+const handleAddToCart = async () => {
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please login to add items to your cart.");
+      return;
+    }
+
+    if (!product?._id) {
+      alert("Product information not loaded yet. Please try again.");
+      return;
+    }
+
+    const res = await fetch("/api/cart/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        productId: product._id,  // ✅ real ID from backend
+        quantity: 1,
+        size: selectedSize,
+        finish: selectedFinish,
+        corner: selectedCorner
+      })
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      alert("Product added to cart!");
+      window.location.href = "/cart";
+    } else {
+      alert(data.message || "Failed to add product to cart.");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Something went wrong. Please try again.");
+  }
+};
+
 
 
 
@@ -454,10 +520,36 @@ const handleSubmitReview = () => {
 
 
 
-          <div style={{ marginTop: 30 }}>
+
+<div style={{ marginTop: 30 }}>
+  <button
+    onClick={handleAddToCart}
+    style={{
+      background: '#2563EB',
+      color: '#fff',
+      padding: '12px 24px',
+      border: 'none',
+      borderRadius: 6,
+      fontSize: 16,
+      cursor: 'pointer',
+      width: '100%',
+      maxWidth: 300,
+      marginBottom: '10px'
+    }}
+  >
+    🛒 Add to Cart
+  </button>
+</div>
+
+
+
+
+
+
+          {/* <div style={{ marginTop: 30 }}>
             <a href="/checkout">
               <button style={{
-                background: '#00b388',
+                background: '#2563EB',
                 color: '#fff',
                 padding: '12px 24px',
                 border: 'none',
@@ -470,7 +562,7 @@ const handleSubmitReview = () => {
                 Continue
               </button>
             </a>
-          </div>
+          </div> */}
         </div>
      
       </div>

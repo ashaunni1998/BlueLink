@@ -197,7 +197,7 @@ const PostCards = () => {
               <li>Double-sided color</li>
               <li>Available in all common sizes</li>
             </ul>
-            <a href="#" style={styles.link}>Shop Original Postcards</a>
+            <a href="/cart" style={styles.link}>Add to cart</a>
           </div>
 
           <div style={styles.card}>
