@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Swal from 'sweetalert2';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 const EmailVerificationPage = () => {
   const [otp, setOtp] = useState('');
@@ -13,6 +15,7 @@ const EmailVerificationPage = () => {
   const hasSentOtp = useRef(false); // ✅ Prevent multiple sends in Strict Mode
 
   const email = location.state?.email || '';
+const { setIsLoggedIn } = useContext(AuthContext);
 
   // Function to send OTP
   const sendOtp = async () => {
@@ -65,16 +68,29 @@ const EmailVerificationPage = () => {
 
       const data = await response.json();
 
-      if (response.ok) {
-        Swal.fire({
-          icon: 'success',
-          title: 'OTP verified successfully!',
-          timer: 1500,
-          showConfirmButton: false
-        }).then(() => {
-          navigate('/'); // ✅ go to home page
-        });
-      } else {
+if (response.ok) {
+  // ✅ Store token/user if backend returns them
+  if (data.token) {
+    localStorage.setItem("token", data.token);
+  }
+  if (data.userData) {
+    localStorage.setItem("user", JSON.stringify(data.userData));
+  }
+
+  // ✅ Update AuthContext immediately
+  setIsLoggedIn(true);
+
+  Swal.fire({
+    icon: 'success',
+    title: 'OTP verified successfully!',
+    timer: 1500,
+    showConfirmButton: false
+  }).then(() => {
+    navigate('/'); // ✅ Go to home page
+  });
+}
+
+       else {
         Swal.fire({
           icon: 'error',
           title: 'Verification Failed',
