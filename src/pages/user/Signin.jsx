@@ -1,11 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 import { jwtDecode } from "jwt-decode";
 import GoogleLogin from "./GoogleLogin";
-import Swal from "sweetalert2";
 import './Home.css';
+import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-
+import Swal from "sweetalert2"; 
+import { useState } from "react";
+import { useEffect } from "react";
 
 const SignIn = () => {
   const [hasAccount, setHasAccount] = useState(true);
@@ -14,20 +17,26 @@ const SignIn = () => {
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
-  const { setIsLoggedIn } = useContext(AuthContext);
+   const { setIsLoggedIn } = useContext(AuthContext);
+
+   
 
   useEffect(() => {
     window.handleGoogleResponse = (response) => {
       const userObject = jwtDecode(response.credential);
+      console.log("Google User:", userObject);
       localStorage.setItem("user", JSON.stringify(userObject));
-      setIsLoggedIn(true);
-      navigate("/");
+      navigate("/dashboard");
     };
-  }, [navigate, setIsLoggedIn]);
+  }, [navigate]);
+
+
+const [success, setSuccess] = useState("");
 
 const handleSubmit = async (e) => {
   e.preventDefault();
   setError("");
+  setSuccess("");
   setIsSubmitting(true);
 
   try {
@@ -42,30 +51,27 @@ const handleSubmit = async (e) => {
 
     const data = await response.json();
 
-    if (response.ok && data.data) {
-      // ✅ Save token & user immediately
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-      }
-      localStorage.setItem("user", JSON.stringify(data.data));
+if (response.ok && data.userData) {
+  if (data.token) {
+    localStorage.setItem("token", data.token);
+  }
+  localStorage.setItem("user", JSON.stringify(data.userData));
+  setIsLoggedIn(true);
 
-      // ✅ Update AuthContext so Header updates instantly
-      setIsLoggedIn(true);
-
-      // ✅ Navigate to home immediately (same as OTP flow)
-      navigate("/");
-
-      // ✅ Show success alert (does not block navigation)
-      Swal.fire({
-        icon: "success",
-        title: "Login Successful",
-        text: "Welcome back!",
-        timer: 1500,
-        showConfirmButton: false
-      });
-    } else {
-      setError(data.message || "Login failed. Please check your credentials.");
-    }
+  Swal.fire({
+    icon: "success",
+    title: "Login Successful",
+    text: "Welcome back!",
+    timer: 1500,
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false
+  }).then(() => {
+    navigate("/", { replace: true });
+  });
+} else {
+  setError(data.message || "Login failed. Please check your credentials.");
+}
 
   } catch (err) {
     console.error("Login error:", err);
@@ -75,79 +81,130 @@ const handleSubmit = async (e) => {
   }
 };
 
+
+
+
+useEffect(() => {
+  const handleAuthChange = () => {
+    setIsLoggedIn(!!localStorage.getItem("token"));
+  };
+
+  window.addEventListener("authChange", handleAuthChange);
+  return () => {
+    window.removeEventListener("authChange", handleAuthChange);
+  };
+}, []);
+
+
   return (
-    <div className="responsive-container" style={styles.container}>
-      <div style={styles.formContainer}>
-        <h2 style={styles.heading}>Sign in</h2>
+    <div className="responsive-container">
+      <Header />
+      <div style={styles.container}>
+        <div style={styles.formContainer}>
+          <h2 style={styles.heading}>Sign in</h2>
 
-        <form style={styles.form} onSubmit={handleSubmit}>
-          <div style={styles.radioGroup}>
-            <label>
+          <form style={styles.form} onSubmit={handleSubmit}>
+            {/* Radio Buttons */}
+            <div style={styles.radioGroup}>
+              <label>
+                <input
+                  type="radio"
+                  name="account"
+                  checked={hasAccount}
+                  onChange={() => {
+                    setHasAccount(true);
+                    navigate("/signin");
+                  }}
+                />
+                <span style={styles.radioLabel}>I have an account</span>
+              </label>
+              <br />
+              <label>
+                <input
+                  type="radio"
+                  name="account"
+                  checked={!hasAccount}
+                  onChange={() => {
+                    setHasAccount(false);
+                    navigate("/signup");
+                  }}
+                />
+                <span style={styles.radioLabel}>I don't have an account</span>
+              </label>
+            </div>
+
+            {/* Error Message */}
+            {error && (
+              <div style={{ color: "red", marginBottom: "10px" }}>{error}</div>
+            )}
+
+
+
+
+            {/* Email/Password */}
+            <div style={styles.inputGroup}>
+              <label>Email address</label>
               <input
-                type="radio"
-                name="account"
-                checked={hasAccount}
-                onChange={() => {
-                  setHasAccount(true);
-                  navigate("/signin");
-                }}
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                style={styles.input}
+                required
               />
-              <span style={styles.radioLabel}>I have an account</span>
-            </label>
-            <br />
-            <label>
+            </div>
+            <div style={styles.inputGroup}>
+              <label>Password</label>
               <input
-                type="radio"
-                name="account"
-                checked={!hasAccount}
-                onChange={() => {
-                  setHasAccount(false);
-                  navigate("/signup");
-                }}
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                style={styles.input}
+                required
               />
-              <span style={styles.radioLabel}>I don't have an account</span>
-            </label>
-          </div>
+            </div>
+            <a href="/forgotpassword" style={styles.forgotPassword}>
+              Forgotten your password?
+            </a>
 
-          {error && <div style={{ color: "red", marginBottom: "10px" }}>{error}</div>}
 
-          <div style={styles.inputGroup}>
-            <label>Email address</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              style={styles.input}
-              required
-            />
-          </div>
-          <div style={styles.inputGroup}>
-            <label>Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              style={styles.input}
-              required
-            />
-          </div>
-          <a href="/forgotpassword" style={styles.forgotPassword}>
-            Forgotten your password?
-          </a>
+             {/* Google login */}
+            <GoogleLogin />
 
-          <GoogleLogin />
+            {/* Remember Me */}
+            {/* <div style={styles.checkboxGroup}>
+              <label>
+                <input type="checkbox" defaultChecked />
+                <span style={styles.checkboxLabel}>
+                  Remember me on this computer
+                </span>
+              </label>
+              <p style={styles.helperText}>
+                This feature requires cookies. <a href="#">What's this?</a>
+              </p>
+            </div> */}
 
-          <button type="submit" disabled={isSubmitting} style={styles.button}>
-            {isSubmitting ? "Signing in..." : "Sign in"}
-          </button>
+            {/* Submit Button */}
+            <button type="submit" disabled={isSubmitting} style={styles.button}>
+              {isSubmitting ? "Signing in..." : "Sign in"}
+            </button>
 
-          <p style={styles.disclaimer}>
-            This site is protected by reCAPTCHA and the Google{" "}
-            <a href="#">Privacy Policy</a> and{" "}
-            <a href="#">Terms of Service</a> apply.
-          </p>
-        </form>
+            {/* reCAPTCHA disclaimer */}
+            <p style={styles.disclaimer}>
+              This site is protected by reCAPTCHA and the Google{" "}
+              <a href="#">Privacy Policy</a> and{" "}
+              <a href="#">Terms of Service</a> apply.
+            </p>
+
+            {/* Divider */}
+            {/* <div style={styles.divider}>
+              <span>OR</span>
+            </div> */}
+
+           
+          </form>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };
@@ -155,33 +212,58 @@ const handleSubmit = async (e) => {
 const styles = {
   container: {
     display: "flex",
+    flexDirection: "row",
+    padding: "40px",
     justifyContent: "center",
-    padding: "40px"
+    alignItems: "flex-start",
+    gap: "40px",
+    flexWrap: "wrap",
   },
   formContainer: {
     border: "1px solid #ddd",
     padding: "30px",
     width: "420px",
-    borderRadius: "5px"
+    borderRadius: "5px",
   },
-  heading: { marginBottom: "20px" },
-  form: { display: "flex", flexDirection: "column" },
-  radioGroup: { marginBottom: "20px" },
-  radioLabel: { marginLeft: "8px" },
-  inputGroup: { marginBottom: "15px" },
+  heading: {
+    marginBottom: "20px",
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  radioGroup: {
+    marginBottom: "20px",
+  },
+  radioLabel: {
+    marginLeft: "8px",
+  },
+  inputGroup: {
+    marginBottom: "15px",
+  },
   input: {
     width: "100%",
     padding: "10px",
     fontSize: "14px",
     borderRadius: "4px",
     border: "1px solid #ccc",
-    marginTop: "5px"
+    marginTop: "5px",
   },
   forgotPassword: {
     fontSize: "13px",
     color: "green",
     textDecoration: "none",
-    marginBottom: "20px"
+    marginBottom: "20px",
+  },
+  checkboxGroup: {
+    marginBottom: "20px",
+  },
+  checkboxLabel: {
+    marginLeft: "8px",
+  },
+  helperText: {
+    fontSize: "12px",
+    marginTop: "5px",
   },
   button: {
     backgroundColor: "#007f4f",
@@ -191,9 +273,18 @@ const styles = {
     borderRadius: "4px",
     cursor: "pointer",
     marginTop: "10px",
-    marginBottom: "20px"
+    marginBottom: "20px",
   },
-  disclaimer: { fontSize: "12px", color: "#555" }
+  disclaimer: {
+    fontSize: "12px",
+    color: "#555",
+  },
+  divider: {
+    textAlign: "center",
+    margin: "20px 0",
+    borderTop: "1px solid #ccc",
+    position: "relative",
+  },
 };
 
 export default SignIn;

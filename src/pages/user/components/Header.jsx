@@ -401,7 +401,7 @@ const handleLogout = async () => {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
   setIsLoggedIn(false);
-  navigate("/signin");
+  navigate("/sign-in");
 };
 
 
