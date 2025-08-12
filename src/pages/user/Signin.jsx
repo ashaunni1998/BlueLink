@@ -7,6 +7,8 @@ import GoogleLogin from "./GoogleLogin";
 import './Home.css';
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import Swal from "sweetalert2"; // ✅ Add at to
+
 
 const SignIn = () => {
   const [hasAccount, setHasAccount] = useState(true);
@@ -33,39 +35,47 @@ const SignIn = () => {
     setError("");
     setIsSubmitting(true);
 
-    try {
-      const response = await fetch(
-        "https://kerala-digital-park-server.vercel.app/api/user/login",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
-        }
-      );
+  try {
+  const response = await fetch(
+    "https://kerala-digital-park-server.vercel.app/api/user/login",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    }
+  );
 
-      const data = await response.json();
+  const data = await response.json();
 
-     if (response.ok && data.data) {
-  localStorage.setItem("user", JSON.stringify(data.data));
+  if (response.ok && data.data) {
+    localStorage.setItem("user", JSON.stringify(data.data));
+    if (data.token) {
+      localStorage.setItem("token", data.token);
+    }
+    setIsLoggedIn(true);
 
-  if (data.token) {
-    localStorage.setItem("token", data.token);
+    Swal.fire({
+      icon: "success",
+      title: "Login Successful",
+      text: "Welcome back!",
+      timer: 1500,
+      showConfirmButton: false
+    }).then(() => {
+      navigate("/");
+    });
+
+  } else {
+    setError(data.message || "Login failed. Please check your credentials.");
   }
 
-  setIsLoggedIn(true);
-  navigate("/");
-} else {
-  setError(data.message || "Login failed. Please check your credentials.");
+} catch (err) {
+  console.error("Login error:", err);
+  setError("Something went wrong. Please try again later.");
+} finally {
+  setIsSubmitting(false);
 }
 
-    } catch (err) {
-      console.error("Login error:", err);
-      setError("Something went wrong. Please try again later.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
+   };
 
 useEffect(() => {
   const handleAuthChange = () => {
