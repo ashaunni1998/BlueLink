@@ -6,7 +6,7 @@ import { Heart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
-
+import Swal from 'sweetalert2';
 
 
 
@@ -387,12 +387,25 @@ useEffect(() => {
 
 
 const navigate = useNavigate();
-const handleLogout = () => {
+
+const handleLogout = async () => {
+  try {
+    await fetch("https://kerala-digital-park-server.vercel.app/api/user/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+  } catch (err) {
+    console.error("Logout error:", err);
+  }
+
   localStorage.removeItem("token");
   localStorage.removeItem("user");
   setIsLoggedIn(false);
-  navigate("/");
+  navigate("/signin");
 };
+
+
+
 
 
 
@@ -498,20 +511,32 @@ const handleLogout = () => {
             </div>
             )}
 
-         <span style={topLink}>
+ <span style={topLink}>
   {isLoggedIn ? (
-    <button
-      onClick={handleLogout}
-      style={{ background: "none", border: "none", color: "#333", cursor: "pointer" }}
-    >
-      Logout
-    </button>
+    <>
+      <button
+        onClick={handleLogout}
+        style={{
+          background: "none",
+          border: "none",
+          color: "#333",
+          cursor: "pointer",
+          marginRight: "10px"
+        }}
+      >
+        Logout
+      </button>
+      <Link to="/account" style={{ color: "#333", textDecoration: "none" }}>
+        Account
+      </Link>
+    </>
   ) : (
     <Link to="/sign-in" style={{ color: "#333", textDecoration: "none" }}>
       {t("sign_in") || "Sign In"}
     </Link>
   )}
 </span>
+
 
 
             <span style={topLink}>
