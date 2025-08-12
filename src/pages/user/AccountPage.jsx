@@ -8,9 +8,8 @@ import './Home.css';
 const AccountPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { setUser } = useContext(AuthContext); // If storing user in context
+  const { setUser } = useContext(AuthContext);
 
-  // Normalize tabs
   const queryParams = new URLSearchParams(location.search);
   const normalizeTab = (tab) => {
     const mapping = {
@@ -23,6 +22,13 @@ const AccountPage = () => {
 
   const defaultTab = normalizeTab(queryParams.get('tab'));
   const [activeSection, setActiveSection] = useState(defaultTab);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const newTab = new URLSearchParams(location.search).get('tab');
@@ -31,7 +37,6 @@ const AccountPage = () => {
     }
   }, [location]);
 
-  // Sections data
   const sections = {
     overview:
       'Welcome to your Blue Link Printing dashboard. From your account dashboard you can view your recent orders, manage your shipping and billing addresses, manage your order return, view your orders, and edit your password and account details.',
@@ -52,67 +57,80 @@ const AccountPage = () => {
     address: '123 Main Street, Springfield, IL 62704, USA'
   };
 
-  // Logout handler
-const handleLogout = async () => {
-  try {
-    await fetch('/api/logout', { method: 'POST', credentials: 'include' });
-  } catch (err) {
-    console.error('Logout request failed', err);
-  } finally {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    navigate('/sign-in');
-  }
-};
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/logout', { method: 'POST', credentials: 'include' });
+    } catch (err) {
+      console.error('Logout request failed', err);
+    } finally {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      navigate('/sign-in');
+    }
+  };
 
-
-  // Styles
+  // Inline styles
   const layoutStyle = {
     display: 'flex',
-    flex: 1,
-    flexDirection: window.innerWidth < 768 ? 'column' : 'row'
+    flexDirection: isMobile ? 'column' : 'row',
+    flex: 1
   };
 
   const sidebarStyle = {
-    backgroundColor: '#f1f1f1',
-    width: window.innerWidth < 768 ? '100%' : '250px',
-    padding: '20px',
-    borderBottom: window.innerWidth < 768 ? '1px solid #ccc' : 'none',
-    borderRight: window.innerWidth >= 768 ? '1px solid #ccc' : 'none',
+    backgroundColor: '#f9f9f9',
+    width: isMobile ? '100%' : '240px',
+    padding: isMobile ? '10px' : '20px',
+    borderRight: isMobile ? 'none' : '1px solid #ddd',
+    borderBottom: isMobile ? '1px solid #ddd' : 'none',
     display: 'flex',
-    flexDirection: window.innerWidth < 768 ? 'row' : 'column',
-    overflowX: 'auto',
-    alignItems: 'flex-start',
-    maxHeight: '300px'
+    flexDirection: 'column',
+    gap: '12px',
+    boxSizing: 'border-box'
   };
 
-  const buttonStyle = (active) => ({
-    padding: '10px 15px',
-    marginBottom: window.innerWidth < 768 ? '0' : '10px',
-    marginRight: window.innerWidth < 768 ? '10px' : '0',
-    borderRadius: '5px',
-    border: 'none',
-    backgroundColor: active ? '#007BFF' : 'transparent',
-    color: active ? '#fff' : '#333',
+  const buttonStyle = {
+    padding: '12px 16px',
+    borderRadius: '8px',
+    border: '1px solid #ddd',
+    backgroundColor: '#fff',
+    color: '#333',
     cursor: 'pointer',
-    whiteSpace: 'nowrap'
-  });
+    whiteSpace: 'nowrap',
+    width: isMobile ? '100%' : 'auto',
+    textAlign: 'center',
+    transition: 'all 0.2s ease-in-out'
+  };
 
-  const logoutButtonStyle = {
-    padding: '10px 15px',
-    borderRadius: '5px',
-    border: 'none',
+  const activeButtonStyle = {
+    ...buttonStyle,
     backgroundColor: '#007BFF',
     color: '#fff',
-    cursor: 'pointer',
-    marginTop: window.innerWidth < 768 ? '0' : '20px',
-    marginRight: window.innerWidth < 768 ? '10px' : '0',
-    whiteSpace: 'nowrap'
+    fontWeight: 'bold',
+    border: 'none',
+    boxShadow: '0 2px 6px rgba(0, 123, 255, 0.3)'
   };
 
-  const contentStyle = { flex: 1, padding: '30px' };
-  const tableStyle = { width: '100%', borderCollapse: 'collapse' };
-  const thTdStyle = { border: '1px solid #ccc', padding: '12px', textAlign: 'left' };
+  const logoutButtonStyle = {
+    ...buttonStyle,
+    fontWeight: 'bold'
+  };
+
+  const contentStyle = {
+    flex: 1,
+    padding: '30px'
+  };
+
+  const tableStyle = {
+    width: '100%',
+    borderCollapse: 'collapse'
+  };
+
+  const thTdStyle = {
+    border: '1px solid #ccc',
+    padding: '12px',
+    textAlign: 'left'
+  };
+
   const viewButtonStyle = {
     padding: '6px 12px',
     backgroundColor: '#007BFF',
@@ -131,7 +149,7 @@ const handleLogout = async () => {
           {Object.keys(sections).map((key) => (
             <button
               key={key}
-              style={buttonStyle(activeSection === key)}
+              style={activeSection === key ? activeButtonStyle : buttonStyle}
               onClick={() => setActiveSection(key)}
             >
               {key === 'overview' && 'Overview'}
@@ -139,7 +157,6 @@ const handleLogout = async () => {
               {key === 'address' && 'Address'}
             </button>
           ))}
-          {/* Logout Button */}
           <button style={logoutButtonStyle} onClick={handleLogout}>
             Logout
           </button>
@@ -150,35 +167,37 @@ const handleLogout = async () => {
           <h2 style={{ fontSize: '24px', marginBottom: '20px', textTransform: 'capitalize' }}>
             {activeSection.replace('-', ' ')}
           </h2>
+{activeSection === 'orderhistory' ? (
+  <div style={{ overflowX: 'auto' }}>
+    <table style={tableStyle}>
+      <thead>
+        <tr>
+          <th style={thTdStyle}>Order ID</th>
+          <th style={thTdStyle}>Product Name</th>
+          <th style={thTdStyle}>Date</th>
+          <th style={thTdStyle}>Amount</th>
+          <th style={thTdStyle}>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {orders.map((order) => (
+          <tr key={order.id}>
+            <td style={thTdStyle}>{order.id}</td>
+            <td style={thTdStyle}>{order.product}</td>
+            <td style={thTdStyle}>{order.date}</td>
+            <td style={thTdStyle}>{order.amount}</td>
+            <td style={thTdStyle}>
+              <Link to={`/orders/${order.id}`}>
+                <button style={viewButtonStyle}>View</button>
+              </Link>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+) : activeSection === 'address' ? (
 
-          {activeSection === 'orderhistory' ? (
-            <table style={tableStyle}>
-              <thead>
-                <tr>
-                  <th style={thTdStyle}>Order ID</th>
-                  <th style={thTdStyle}>Product Name</th>
-                  <th style={thTdStyle}>Date</th>
-                  <th style={thTdStyle}>Amount</th>
-                  <th style={thTdStyle}>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orders.map((order) => (
-                  <tr key={order.id}>
-                    <td style={thTdStyle}>{order.id}</td>
-                    <td style={thTdStyle}>{order.product}</td>
-                    <td style={thTdStyle}>{order.date}</td>
-                    <td style={thTdStyle}>{order.amount}</td>
-                    <td style={thTdStyle}>
-                      <Link to={`/orders/${order.id}`}>
-                        <button style={viewButtonStyle}>View</button>
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : activeSection === 'address' ? (
             <div style={{ fontSize: '16px', color: '#333', lineHeight: '1.8' }}>
               <p><strong>Name:</strong> {customerInfo.name}</p>
               <p><strong>Email:</strong> {customerInfo.email}</p>
