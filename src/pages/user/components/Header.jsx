@@ -483,59 +483,122 @@ const handleLogout = async () => {
 
 
             {/* Account / Sign In */}
-            {isLoggedIn && (
-            <div
-              style={{ position: "relative", display: "inline-block" }}
-              onMouseEnter={!isMobile ? handleAccountMouseEnter : undefined}
-              onMouseLeave={!isMobile ? handleAccountMouseLeave : undefined}
-            >
-              <div style={{ cursor: "pointer" }}>
-                <span style={topLink}>{t("account") || "Account"}</span>
-              </div>
-              {accountDropdown && (
-      <div style={accountDropdownStyle} className="accountDropdownStyle">
-        <Link to="/account?tab=overview" style={{ ...accountItem, textDecoration: "none", color: "inherit" }}>
-          Overview
-        </Link>
-        <Link to="/account?tab=orders" style={{ ...accountItem, textDecoration: "none", color: "inherit" }}>
-          Order History
-        </Link>
-        <Link to="/account?tab=address" style={{ ...accountItem, textDecoration: "none", color: "inherit" }}>
-          Address Details
-        </Link>
-        <button onClick={handleLogout} style={{ ...accountItem, background: "none", border: "none", cursor: "pointer" }}>
-          Logout
-        </button>
-      </div>
-    )}
-            </div>
-            )}
+{/* Account / Sign In */}
+{isLoggedIn ? (
+  <div
+    style={{ position: "relative", display: "inline-block" }}
+    onMouseEnter={!isMobile ? handleAccountMouseEnter : undefined}
+    onMouseLeave={!isMobile ? handleAccountMouseLeave : undefined}
+  >
+    <div style={{ cursor: "pointer" }}>
+      <span style={topLink}>{t("account") || "Account"}</span>
+    </div>
+{accountDropdown && (
+  <div
+    style={{
+      position: "absolute",
+      top: "100%",
+      left: "50%",
+      transform: "translateX(-50%)",
+      backgroundColor: "#fff",
+      boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
+      borderRadius: "8px",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "stretch",
+      minWidth: "180px",
+      padding: "10px 0",
+      zIndex: 1000
+    }}
+  >
+    {/* Links */}
+    <Link
+      to="/account?tab=overview"
+      style={{
+        padding: "10px 15px",
+        textDecoration: "none",
+        color: "#0073e6",
+        fontSize: "14px",
+        fontWeight: "500",
+        transition: "background-color 0.2s ease"
+      }}
+      onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#f5f7fa")}
+      onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
+    >
+      Overview
+    </Link>
 
- <span style={topLink}>
-  {isLoggedIn ? (
-    <>
-      <button
-        onClick={handleLogout}
-        style={{
-          background: "none",
-          border: "none",
-          color: "#333",
-          cursor: "pointer",
-          marginRight: "10px"
-        }}
-      >
-        Logout
-      </button>
-      <Link to="/account" style={{ color: "#333", textDecoration: "none" }}>
-        Account
-      </Link>
-    </>
-  ) : (
+    <Link
+      to="/account?tab=orders"
+      style={{
+        padding: "10px 15px",
+        textDecoration: "none",
+        color: "#0073e6",
+        fontSize: "14px",
+        fontWeight: "500",
+        transition: "background-color 0.2s ease"
+      }}
+      onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#f5f7fa")}
+      onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
+    >
+      Order History
+    </Link>
+
+    <Link
+      to="/account?tab=address"
+      style={{
+        padding: "10px 15px",
+        textDecoration: "none",
+        color: "#0073e6",
+        fontSize: "14px",
+        fontWeight: "500",
+        transition: "background-color 0.2s ease"
+      }}
+      onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#f5f7fa")}
+      onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
+    >
+      Address Details
+    </Link>
+
+    {/* Divider */}
+    <div style={{ borderTop: "1px solid #eee", marginTop: "8px" }} />
+
+    {/* Logout Button */}
+    <button
+      onClick={handleLogout}
+      style={{
+        margin: "10px auto 0 auto",
+        padding: "8px 16px",
+        backgroundColor: "#0073e6",
+        color: "#fff",
+        border: "none",
+        borderRadius: "6px",
+        cursor: "pointer",
+        fontSize: "14px",
+        fontWeight: "500",
+        transition: "background-color 0.2s ease"
+      }}
+      onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#0073e6")}
+      onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#0073e6")}
+    >
+      Logout
+    </button>
+  </div>
+)}
+
+
+
+
+  </div>
+) : (
+  <span style={topLink}>
     <Link to="/sign-in" style={{ color: "#333", textDecoration: "none" }}>
       {t("sign_in") || "Sign In"}
     </Link>
-  )}
-</span>
+  </span>
+)}
+
+
 
 
 
