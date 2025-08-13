@@ -5,6 +5,7 @@ import HomeSlider from "./HomeSlider";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
+import { useEffect } from "react";
 
 
 
@@ -25,6 +26,12 @@ const handleLoginRedirect = () => {
   window.location.href = "/login"; // Adjust route as needed
 };
 
+  useEffect(() => {
+    const section = document.getElementById("popular-products");
+    if (section) {
+      section.scrollIntoView({ behavior: "auto", block: "start" });
+    }
+  }, []);
 
 const styles = {
     section: {
@@ -184,7 +191,7 @@ const styles = {
       {/* Hero Section */}
       <HomeSlider/>
       {/* Features Section */}
-      <section style={{ padding: "60px 20px", backgroundColor: "#ffffff" }}>
+      <section style={{ padding: "10px 5px", backgroundColor: "#ffffff" }}>
         <div
           style={{
             display: "flex",
@@ -198,7 +205,7 @@ const styles = {
             <img
               src="https://img.icons8.com/ios-filled/100/007bff/blueprint.png"
               alt="Print"
-              style={{ marginBottom: "15px" }}
+              style={{ marginBottom: "5px" }}
             />
             <h3 style={{ fontSize: "20px", marginBottom: "10px" }}>High-Quality Prints</h3>
             <p style={{ color: "#666" }}>
@@ -209,7 +216,7 @@ const styles = {
             <img
               src="https://img.icons8.com/ios-filled/100/007bff/shipped.png"
               alt="Delivery"
-              style={{ marginBottom: "15px" }}
+              style={{ marginBottom: "10px" }}
             />
             <h3 style={{ fontSize: "20px", marginBottom: "10px" }}>Fast Delivery</h3>
             <p style={{ color: "#666" }}>
@@ -220,7 +227,7 @@ const styles = {
             <img
               src="https://img.icons8.com/ios-filled/100/007bff/customer-support.png"
               alt="Support"
-              style={{ marginBottom: "15px" }}
+              style={{ marginBottom: "10px" }}
             />
             <h3 style={{ fontSize: "20px", marginBottom: "10px" }}>Customer Support</h3>
             <p style={{ color: "#666" }}>
@@ -230,7 +237,7 @@ const styles = {
         </div>
       </section>
 {/* Popular Products Section */}
-<section style={{ backgroundColor: "#f5f8f6", padding: "60px 20px", textAlign: "center" }}>
+<section style={{ backgroundColor: "#f5f8f6", padding: "50px 0px", textAlign: "center" }}>
   <h2 style={{ fontSize: "28px", marginBottom: "10px", fontWeight: "600", color: "#111" }}>
     Popular products
   </h2>

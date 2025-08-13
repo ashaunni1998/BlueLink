@@ -72,7 +72,7 @@ export default function HomeSlider() {
           backgroundImage: `url(${slide.image})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          height: isMobile ? "250px" : "500px",
+          height: isMobile ? "200px" : "450px",
           position: "relative",
           display: "flex",
           alignItems: "center",
@@ -109,7 +109,7 @@ export default function HomeSlider() {
             <p style={{ fontSize: "16px", marginBottom: "25px" }}>{slide.description}</p>
           <a href="/businessCard">  <button
               style={{
-                padding: "10px 25px",
+                padding: "5px 10px",
                 backgroundColor: "#007bff",
                 color: "#fff",
                 border: "none",
