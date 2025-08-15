@@ -251,7 +251,7 @@ const styles = {
   },
   forgotPassword: {
     fontSize: "13px",
-    color: "green",
+    color: "blue",
     textDecoration: "none",
     marginBottom: "20px",
   },
@@ -266,7 +266,7 @@ const styles = {
     marginTop: "5px",
   },
   button: {
-    backgroundColor: "#007f4f",
+    backgroundColor: "#007bff",
     color: "white",
     padding: "10px 20px",
     border: "none",

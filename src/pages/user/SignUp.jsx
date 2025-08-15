@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import './Home.css';
+import GoogleLogin from './GoogleLogin';
 
 const countryOptions = [
   { name: "India", code: "+91" },
@@ -225,7 +226,7 @@ const SignUp = () => {
                 type="submit"
                 disabled={isSubmitting}
                 style={{
-                  backgroundColor: isSubmitting ? '#999' : '#1abc9c',
+                  backgroundColor: isSubmitting ? '#999' : '#007bff',
                   color: 'white',
                   padding: '12px',
                   border: 'none',
@@ -239,6 +240,11 @@ const SignUp = () => {
                 {isSubmitting ? "Creating Account..." : "Create Account"}
               </button>
 
+
+
+<div style={{marginLeft:"205px", color:"#007bff"}}>or</div>
+
+<GoogleLogin/>
               {/* Sign In Link */}
               <button
                 type="button"

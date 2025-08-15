@@ -20,7 +20,7 @@ const Footer = () => {
 
   const sections = [
     {
-      title: "Products",
+      title: "Products" ,
       links: [
         { label: "All Products", path: "/" },
         { label: "Business Cards", path: "/businessCard" },
