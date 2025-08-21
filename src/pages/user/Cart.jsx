@@ -9,9 +9,11 @@ const Cart = () => {
   // Fetch cart from backend
   const fetchCart = async () => {
     try {
-      const res = await fetch('/api/cart', {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+      const res = await fetch('https://kerala-digital-park-server.vercel.app/api/getCart', {
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+         credentials: "include",
       });
+       
       const data = await res.json();
       if (res.ok) {
         setItems(
@@ -43,15 +45,15 @@ const Cart = () => {
     setItems(prev =>
       prev.map(item => (item.id === id ? { ...item, qty } : item))
     );
-    try {
-      await fetch('/api/cart', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        },
-        body: JSON.stringify({ productId: id, quantity: qty })
-      });
+    try {await fetch(`https://kerala-digital-park-server.vercel.app/api/removeCartItem?productId=${id}`, {
+  method: 'DELETE',
+  headers: { 
+    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    'Content-Type': 'application/json'
+  },
+  credentials: "include"
+});
+
     } catch (err) {
       console.error(err);
     }
@@ -61,8 +63,9 @@ const Cart = () => {
   const handleRemove = async (id) => {
     setItems(prev => prev.filter(item => item.id !== id));
     try {
-      await fetch(`/api/cart/${id}`, {
+      await fetch(`https://kerala-digital-park-server.vercel.app//api/removeCartItem?cartId=687de5daa0b89ea3d073e0d1&productId=687b1cbe3c0480bccc466e0e`, {
         method: 'DELETE',
+         credentials: "include",
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });
     } catch (err) {

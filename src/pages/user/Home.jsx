@@ -6,10 +6,29 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
 import { useEffect } from "react";
+import API_BASE_URL from "../../config"; // adjust the path properly
 
 
 
 const Home = () => {
+
+
+
+
+
+    const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/products`, { credentials: "include" })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.productData) setProducts(data.productData);
+      })
+      .catch((err) => console.error("Error fetching products:", err));
+  }, []);
+
+
+
 
     const [showModal, setShowModal] = useState(false);
 
@@ -254,86 +273,55 @@ const styles = {
       margin: "0 auto",
     }}
   >
-    {[
-      {
-        image: "https://static.vecteezy.com/system/resources/previews/000/256/401/non_2x/abstract-wavy-visiting-card-template-vector.jpg",
-        label: "Shop Business Cards",
-        link: "/businessCard",
-      },
-      {
-        image: "https://img.elegantflyer.com/templates/preview/free-business-card-set-73923.jpg",
-        label: "Shop Postcards",
-        link: "/postCards",
-      },
-      {
-        image: "https://img.freepik.com/free-vector/modern-black-white-business-card-design_1017-14939.jpg?semt=ais_hybrid&w=740",
-        label: "Shop Flyers",
-        link: "/flyers",
-      },
-      {
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzzvpMzVl3soLGN18QJBgHPilLGuWNL1RVWw&s",
-        label: "Shop Stickers & Labels",
-        link: "/stickers",
-      },
-      {
-        image: "https://www.shutterstock.com/image-vector/professional-minimalist-business-card-design-600nw-2316957167.jpg",
-        label: "Shop Stationery",
-        link: "/stationery",
-      },
-      {
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKtxgvGY02u7_ujy2D-rhzSh9QRpa4UIIUVQ&s",
-        label: "Shop Personalized Gift",
-        link: "/personalized-gift",
-      },
-      {
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy45Tw4PCBCuwhdSXRMQu3WDpjInDCIG8jeA&s",
-        label: "Shop Tshirt Printing",
-        link: "/tshirtprinting",
-      },
-      {
-        image: "https://png.pngtree.com/template/20200714/ourmid/pngtree-blue-abstract-business-card-image_391818.jpg",
-        label: "Shop Button Badges",
-        link: "/buttonbadges",
-      },
-    ].map((product, index) => (
-      <div
-        key={index}
-        style={{
-          backgroundColor: "#fff",
-          borderRadius: "6px",
-          overflow: "hidden",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <div style={{ height: "160px", overflow: "hidden" }}>
-          <img
-            src={product.image}
-            alt={product.label}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              display: "block",
-            }}
-          />
+      {products.map((product) => (
+            <div
+              key={product._id}
+              style={{
+                backgroundColor: "#fff",
+                borderRadius: "6px",
+                overflow: "hidden",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <div style={{ height: "160px", overflow: "hidden" }}>
+                <img
+                  src={product.images[0] || "https://via.placeholder.com/300"}
+                  alt={product.name}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block",
+                  }}
+                />
+              </div>
+              <div
+                style={{
+                  padding: "12px",
+                  borderTop: "1px solid #eee",
+                  textAlign: "center",
+                }}
+              >
+                <a
+                  href={`/product/${product._id}`}
+                  style={{
+                    color: "#007a5e",
+                    textDecoration: "none",
+                    fontWeight: "500",
+                    fontSize: "14px",
+                  }}
+                >
+                  {product.name} &gt;
+                </a>
+                <p style={{ fontSize: "13px", color: "#666", marginTop: "6px" }}>
+                  ${product.price}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
-        <div style={{ padding: "12px", borderTop: "1px solid #eee", textAlign: "center" }}>
-          <a
-            href={product.link}
-            style={{
-              color: "#007a5e",
-              textDecoration: "none",
-              fontWeight: "500",
-              fontSize: "14px",
-            }}
-          >
-            {product.label} &gt;
-          </a>
-        </div>
-      </div>
-    ))}
-  </div>
+      
 </section>
 
 
@@ -386,50 +374,7 @@ const styles = {
 
 
 
-   {/* Reviews Section */}
-      {/* <section style={styles.section}>
-      
-        <div style={styles.logosRow}>
-          {logos.map((logo) => (
-            <img key={logo.alt} src={logo.src} alt={logo.alt}  style={{ ...styles.logo, ...logo.style }} height="40" />
-          ))}
-        </div>
 
-      
-        <div style={styles.trustpilotBlock}>
-          <h2 style={{ fontSize: "20px", margin: "10px 0" }}>Excellent</h2>
-          <div style={styles.trustpilotStars}>
-            {[...Array(4)].map((_, i) => (
-              <Star key={i} />
-            ))}
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Trustpilot_star_half.svg"
-              alt="half star"
-              style={styles.starIcon}
-            />
-          </div>
-          <p style={{ fontSize: "14px", margin: "6px 0" }}>Based on 18,145 reviews</p>
-          <div style={{ color: "#00b67a", fontWeight: "bold" }}>★ Trustpilot</div>
-        </div>
-
-        
-        <div style={styles.reviewCards}>
-          {reviews.map((review, index) => (
-            <div key={index} style={styles.card}>
-              <div style={styles.stars}>
-                {[...Array(review.stars)].map((_, i) => (
-                  <Star key={i} />
-                ))}
-              </div>
-              <div style={styles.reviewTitle}>{review.title}</div>
-              <div style={styles.reviewText}>{review.text}</div>
-              <div style={styles.reviewer}>
-                {review.author}, <span style={styles.timeAgo}>{review.time}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section> */}
 
 
 <section

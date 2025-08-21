@@ -1,261 +1,91 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import GoogleTranslateDropdown from "../GoogleTranslateDropdown.jsx";
-import { Heart } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
-import Swal from 'sweetalert2';
 
-
+export default function Header() {
+  const [menuItems, setMenuItems] = useState([{ name: "Help & Faq" }, { name: "The Blog" }]);
+  const [hoveredMenu, setHoveredMenu] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [expandedMenus, setExpandedMenus] = useState({});
+  const [accountDropdown, setAccountDropdown] = useState(false);
+  const [showAccountDropdown, setShowAccountDropdown] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+  
+  const { t } = useTranslation();
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const accountTimeoutRef = useRef(null);
+  const isMobile = window.innerWidth < 1024;
 
 
   
- 
-// const languages = [
-//   { code: "us", label: "United States" },
-//   { code: "fr", label: "France" },
-//   { code: "de", label: "Germany" },
-//   { code: "es", label: "Spain" },
-//   { code: "it", label: "Italy" },
-//   { code: "pt", label: "Portugal" },
-//   { code: "nl", label: "Netherlands" },
-//   { code: "ru", label: "Russia" },
-//   { code: "jp", label: "Japan" },
-//   { code: "cn", label: "China" },
-//   { code: "in", label: "India" },
-//   { code: "br", label: "Brazil" },
-//   { code: "kr", label: "South Korea" },
-//   { code: "ca", label: "Canada" },
-//   { code: "au", label: "Australia" },
-//   { code: "mx", label: "Mexico" },
-//   { code: "ae", label: "UAE" },
-//   { code: "tr", label: "Turkey" },
-//   { code: "sa", label: "Saudi Arabia" },
-//   { code: "sg", label: "Singapore" },
-// ];
 
-const menuItems = [
-  {
-    title: "Business Cards",
-    subItems: [
-      { label: "All Business Cards", link: "/businessCard" },
-      { label: "Business Cards", link: "/BusinessCardDetails" },
-      { label: "Special Business Cards", link: "/BusinessCardDetails" },
-      { label: "Ice White Pearl Business Cards", link: "/BusinessCardDetails" },
-      { label: "Folded Business Cards", link: "/BusinessCardDetails" },
-
-    ],
-  },
-  {
-    title: "Postcards",
-    subItems: [
-      { label: "All Postcards", link: "/postcards/" },
-      { label: "Original PostCards", link: "/postcarddetails/" },
-      { label: "Super PostCards", link: "/postcards/" },
-      { label: "Pearlescent PostCards", link: "/postcards/" },
-
-    ],
-  },
-  {
-    title: "Flyers & Leaflets",
-    subItems: [
-      { label: "All Flyers", link: "/flyers" },
-      { label: "US Letter Flyers", link: "/flyerdetails" },
-      { label: "Half Page Flyers", link: "/flyers-leaflets/option-b" },
-      { label: "Long Flyers", link: "/flyers-leaflets/option-b" },
-      { label: "Square Flyers", link: "/flyers-leaflets/option-b" },
-      { label: "Small Flyers", link: "/flyers-leaflets/option-b" },
-      { label: "Premium Flyers", link: "/flyers-leaflets/option-b" },
-      { label: "Pearlescent Flyers", link: "/flyers-leaflets/option-b" },
-      { label: "Eco Flyers", link: "/flyers-leaflets/option-b" },
-      { label: "Custom Flyers", link: "/flyers-leaflets/option-b" },
-      { label: "Design a Flyer", link: "/flyers-leaflets/option-b" },
-    ],
-  },
-
-  //  {
-  //   title: "Stationery",
-  //   subItems: [
-  //     { label: "Stationery", link: "/stationery" },
-  //     { label: "Stickers And Labels", link: "/flyers-leaflets/option-b" },
-  //   ],
-  // },
-
-  {
-    title: "Stationery",
-    subItems: [
-      {
-        label: "Stationery",
-        link: "/stationery",
-        subItems: [
-          { label: "Letterhead", link: "/stationery/letterhead" },
-          { label: "Envelopes Orange & Purple", link: "/stationery/envelopes" },
-          { label: "Greeting Cards", link: "/greetingcardDetails" },
-          { label: "Invitation Cards", link: "/stationery/invitation-cards" }
-        ]
-      },
-      {
-        label: "Stickers And Labels",
-        link: "/stickers",
-        subItems: [
-          { label: "All Stickers", link: "/stickers" },
-          { label: "Metallic Round Stickers", link: "/stickerdetails" },
-          { label: "Metallic Rectangular Stickers", link: "/stickers-labels/rect-metallic" },
-          { label: "Coated Paper Round Stickers", link: "/stickers-labels/coated-paper" },
-          { label: "Coated Paper Rectangular Stickers", link: "/stickers-labels/coated-paper" },
-          { label: "Mate Paper Round Stickers", link: "/stickers-labels/coated-paper" },
-          { label: "Mate Paper Rectangular Stickers", link: "/stickers-labels/coated-paper" },
-          { label: "Vinyl Round Stickers", link: "/stickers-labels/coated-paper" },
-          { label: " Vinyl Rectangular Stickers", link: "/stickers-labels/coated-paper" },
-          { label: "Vinyl Sticker Books", link: "/stickers-labels/coated-paper" },
-          { label: "Waterproof & non-tearable High Temperature Resistant Sticker", link: "/stickers-labels/coated-paper" }
-
-        ]
-      }
-    ]
-  },
-
-  {
-    title: "Personalized Gift",
-    subItems: [
-      { label: "Personalized Gift", link: "/personalized-gift" },
-      
-    ],
-  },
-  {
-    title: "T-shirt Printing",
-    subItems: [
-      { label: "T-Shirt Printing", link: "/tshirtprinting" },
-
-    ],
-  },
-
-  {
-    title: "Button Badgets",
-    subItems: [
-
-      { label: "Button Badgets", link: "/buttonbadges" },
-
-    ],
-  },
-
-
-  //  {
-  //   title: "Stickers and Labels",
-  //   subItems: [
-  //     { label: "Option A", link: "/stickers-labels/option-a" },
-  //     { label: "Option B", link: "/stickers-labels/option-b" },
-  //   ],
-  // },
-
-  {
-    title: "The Blog",
-    link: "/blog",
-  },
-  {
-    title: "Help & FAQs",
-    link: "/help",
-  },
-
-
-
-];
-
-export default function Header() {
-
-
-  const { t, i18n } = useTranslation();
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
-  const [menuOpen, setMenuOpen] = useState(false);
-  // const [langDropdown, setLangDropdown] = useState(false);
-  // const [selectedLang, setSelectedLang] = useState(languages[0]);
-  const [hoveredMenu, setHoveredMenu] = useState(null);
-  const [accountDropdown, setAccountDropdown] = useState(false);
-  const [showAccountDropdown, setShowAccountDropdown] = useState(false);
-  const [expandedMenus, setExpandedMenus] = useState({});
-  const [activeSubItem, setActiveSubItem] = useState(null);
-
-
-
-
-
-  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-
-  // Dummy search data
-  // const dummyResults = [
-  //   "Business Card Templates",
-  //   "Premium Business Cards",
-  //   "Business Card Designs",
-  //   "Business Card Printing",
-  //   "Modern Business Cards",
-  // ];
-
-  // Filter results based on query
-  // const filteredResults = dummyResults.filter(item =>
-  //   item.toLowerCase().includes(searchQuery.toLowerCase())
-  // );
-
-
-
-
-
-
-
-const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
-  const accountTimeoutRef = useRef(null);
-
+  // Fetch menu data
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 1024);
-      if (window.innerWidth >= 1024) setMenuOpen(false);
+    const fetchMenuData = async () => {
+      try {
+        const res = await fetch("https://kerala-digital-park-server.vercel.app/api/product/tobBarCategory", {
+          method: "GET", headers: { "Content-Type": "application/json" }, credentials: "include",
+        });
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        const data = await res.json();
+        
+        const formatted = data.data
+        console.log(formatted);
+        setMenuItems((prev) => [...formatted, ...prev]);
+      } catch (error) {
+        console.error("Error fetching menu data:", error);
+      }
     };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    fetchMenuData();
   }, []);
 
-  // const toggleSubMenu = (title) => {
-  //   setExpandedMenus((prev) => ({
-  //     ...prev,
-  //     [title]: !prev[title],
-  //   }));
-  // };
+  // Search functionality
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    const fetchResults = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(`https://kerala-digital-park-server.vercel.app/api/product/searchProduct?search=${encodeURIComponent(searchQuery)}`);
+        const data = await res.json();
+        setSearchResults(data.products || []);
+      } catch (err) {
+        setSearchResults([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    const delayDebounce = setTimeout(fetchResults, 400);
+    return () => clearTimeout(delayDebounce);
+  }, [searchQuery]);
 
-  //   const toggleSubMenu = (key) => {
-
-  //   setExpandedMenus((prev) => ({
-  //     ...prev,
-  //     [key]: !prev[key],
-  //   }));
-  // };
-
-
+  // Mobile scroll lock
+  useEffect(() => {
+    document.body.style.overflow = (isMobile && menuOpen) ? 'hidden' : 'auto';
+    return () => { document.body.style.overflow = 'auto'; };
+  }, [menuOpen, isMobile]);
 
   const toggleSubMenu = (key) => {
     setExpandedMenus((prev) => {
       const newExpanded = { ...prev };
       const isExpanding = !prev[key];
-
-      // Collapse children if parent is collapsing
       if (!isExpanding) {
         Object.keys(newExpanded).forEach(k => {
-          if (k.startsWith(`${key} >`) || k === key) {
-            delete newExpanded[k];
-          }
+          if (k.startsWith(`${key} >`) || k === key) delete newExpanded[k];
         });
       } else {
         newExpanded[key] = true;
       }
-
       return newExpanded;
     });
   };
-
-
-
-
 
   const handleAccountMouseEnter = () => {
     clearTimeout(accountTimeoutRef.current);
@@ -263,103 +93,150 @@ const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   };
 
   const handleAccountMouseLeave = () => {
-    accountTimeoutRef.current = setTimeout(() => {
-      setAccountDropdown(false);
-    }, 200);
-  };
-  const handleCloseMobileMenu = () => {
-    setMenuOpen(false);
+    accountTimeoutRef.current = setTimeout(() => setAccountDropdown(false), 200);
   };
 
+  const handleLogout = async () => {
+    try {
+      await fetch("https://kerala-digital-park-server.vercel.app/api/user/logout", {
+        method: "POST", credentials: "include",
+      });
+    } catch (err) {
+      console.error("Logout error:", err);
+    }
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setIsLoggedIn(false);
+    navigate("/sign-in");
+  };
+
+  const SearchDropdown = ({ results, onSelect, isMobile = false }) => (
+    searchQuery && (
+      <div style={styles.searchDropdown}>
+        {loading ? (
+          <div style={styles.searchItem}>Searching...</div>
+        ) : results.length ? (
+          results.map((item) => (
+            <div key={item._id} style={styles.searchItem} onClick={() => onSelect(item)}>
+              {item.name}
+            </div>
+          ))
+        ) : (
+          <div style={styles.searchItem}>No results found</div>
+        )}
+      </div>
+    )
+  );
+
+  const AccountDropdown = () => (
+    accountDropdown && (
+      <div style={styles.accountDropdown}>
+        {["overview", "orders", "address"].map(tab => (
+          <Link key={tab} to={`/account?tab=${tab}`} style={styles.accountLink}>
+            {tab === "overview" ? "Overview" : tab === "orders" ? "Order History" : "Address Details"}
+          </Link>
+        ))}
+        <div style={styles.divider} />
+        <button onClick={handleLogout} style={styles.logoutBtn}>Logout</button>
+      </div>
+    )
+  );
+
+  // const MobileMenuItem = ({ item }) => {
+  //   const hasSubItems = item.subItems?.length > 0;
+  //   if (!hasSubItems) {
+  //     return (
+  //       <Link key={item.name} to={item.link} style={styles.mobileNavItem} onClick={() => setMenuOpen(false)}>
+  //         {item.name}
+  //       </Link>
+  //     );
+  //   }
+
+    
+
+  //   return (
+  //     <div key={item.name}>
+  //       <div onClick={() => toggleSubMenu(item.name)} style={styles.mobileNavToggle}>
+  //         <span>{item.name}</span>
+  //         <i className={`fa-solid fa-angle-${expandedMenus[item.name] ? 'up' : 'down'}`}></i>
+  //       </div>
+  //       {expandedMenus[item.name] && (
+  //         <div style={styles.mobileSubMenu}>
+  //           {item.subItems.map((subItem, i) => (
+  //             <div key={i}>
+  //               {subItem.subItems ? (
+  //                 <>
+  //                   <div onClick={() => toggleSubMenu(`${item.name} > ${subItem.label}`)} style={styles.mobileSubToggle}>
+  //                     <span>{subItem.label}</span>
+  //                     <i className={`fa-solid fa-angle-${expandedMenus[`${item.name} > ${subItem.label}`] ? 'up' : 'down'}`}></i>
+  //                   </div>
+  //                   {expandedMenus[`${item.name} > ${subItem.label}`] && (
+  //                     <div style={styles.mobileNestedMenu}>
+  //                       {subItem.subItems.map((child, j) => (
+  //                         <Link key={j} to={child.link} style={styles.mobileSubItem} onClick={() => setMenuOpen(false)}>
+  //                           {child.label}
+  //                         </Link>
+  //                       ))}
+  //                     </div>
+  //                   )}
+  //                 </>
+  //               ) : (
+  //                 <Link to={subItem.link} style={styles.mobileSubLink} onClick={() => setMenuOpen(false)}>
+  //                   {subItem.label}
+  //                 </Link>
+  //               )}
+  //             </div>
+  //           ))}
+  //         </div>
+  //       )}
+  //     </div>
+  //   );
+  // };
 
 
-  const searchItems = [
-  "Business Cards",
-  "Postcards",
-  "Stickers",
-  "Flyers",
-  "Labels",
-  "Brochures",
-  "Packaging",
-  "Signs",
-  "Promo Products",
-  "Stationery",
-  "Invitation Cards",
-  "Gift Cards"
-];
+  // Dynamic Mobile Menu Item
+const MobileMenuItem = ({ item }) => {
+  const hasProducts = item.products?.length > 0;
 
-const filteredResults = searchItems.filter((item) =>
-  item.toLowerCase().includes(searchQuery.toLowerCase())
-);
-
-
-
-
-const renderMenuItem = (title, link, subItems) => {
-  const isExpanded = expandedMenus[title];
-
-  // ✅ CASE 1: No subItems → Direct Link (like Help or Blog)
-  if (!subItems || subItems.length === 0) {
+  if (!hasProducts) {
     return (
       <Link
-        key={title}
-        to={link}
-        style={{
-          ...mobileSubItem,
-          display: "block",
-          padding: "12px",
-          borderRadius: "10px",
-          marginBottom: "10px",
-          backgroundColor: "#f9f9f9",
-          fontWeight: "bold",
-          textDecoration: "none",
-          color: "#111",
-        }}
-        onClick={() => setMenuOpen(false)} // ✅ close menu
+        key={item._id}
+        to={`/category/${item._id}`}
+        style={styles.mobileNavItem}
+        onClick={() => setMenuOpen(false)}
       >
-        {title}
+        {item.name}
       </Link>
     );
   }
 
-  // ✅ CASE 2: Has SubItems (Business Cards, etc.)
   return (
-    <div key={title}>
+    <div key={item._id}>
+      {/* Toggle main category */}
       <div
-        onClick={() => toggleSubMenu(title)}
-        style={{
-          ...mobileSubItem,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "12px",
-          borderRadius: "10px",
-          marginBottom: "10px",
-          backgroundColor: "#f9f9f9",
-          fontWeight: "bold",
-          cursor: "pointer",
-        }}
+        onClick={() => toggleSubMenu(item._id)}
+        style={styles.mobileNavToggle}
       >
-        <span>{title}</span>
-        <i className={`fa-solid fa-angle-${isExpanded ? "up" : "down"}`}></i>
+        <span>{item.name}</span>
+        <i
+          className={`fa-solid fa-angle-${
+            expandedMenus[item._id] ? "up" : "down"
+          }`}
+        ></i>
       </div>
 
-      {isExpanded && (
-        <div style={{ paddingLeft: "16px" }}>
-          {subItems.map((item, i) => (
+      {/* Products under category */}
+      {expandedMenus[item._id] && (
+        <div style={styles.mobileSubMenu}>
+          {item.products.map((product) => (
             <Link
-              key={i}
-              to={item.link}
-              style={{
-                ...mobileSubItem,
-                display: "block",
-                padding: "10px 12px",
-                textDecoration: "none",
-                color: "#000",
-              }}
-              onClick={() => setMenuOpen(false)} // ✅ close on sub link too
+              key={product._id}
+              to={`/product/${product._id}`}
+              style={styles.mobileSubLink}
+              onClick={() => setMenuOpen(false)}
             >
-              {item.label}
+              {product.name}
             </Link>
           ))}
         </div>
@@ -367,1112 +244,241 @@ const renderMenuItem = (title, link, subItems) => {
     </div>
   );
 };
-useEffect(() => {
-  if (isMobile && menuOpen) {
-    document.body.style.overflow = 'hidden';  // Disable background scroll
-  } else {
-    document.body.style.overflow = 'auto';    // Re-enable scroll
-  }
-
-  // Clean up on unmount
-  return () => {
-    document.body.style.overflow = 'auto';
-  };
-}, [menuOpen, isMobile]);
-
-
-
-
-
-
-
-const navigate = useNavigate();
-
-const handleLogout = async () => {
-  try {
-    await fetch("https://kerala-digital-park-server.vercel.app/api/user/logout", {
-      method: "POST",
-      credentials: "include",
-    });
-  } catch (err) {
-    console.error("Logout error:", err);
-  }
-
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
-  setIsLoggedIn(false);
-  navigate("/sign-in");
-};
-
-
-
-
-
-
-
-
-
 
   return (
-    <header style={headerWrapper}>
+    <header style={styles.header}>
       {/* Top Section */}
-      <div style={topBar} className="top-bar">
-        <div style={logoWrapper}>
+      <div style={styles.topBar}>
+        <div style={styles.logoWrapper}>
           <a href="/">
-            <img
-              src="/assets/logo/logo2.jpg"
-              alt="Logo"
-              style={{ height: "50px", objectFit: "contain", width: "115px" }}
-            />
+            <img src="/assets/logo/logo2.jpg" alt="Logo" style={styles.logo} />
           </a>
         </div>
 
         {!isMobile && (
-          <div className="topRightRow" style={topRightRow}>
+          <div style={styles.topRightRow}>
             <GoogleTranslateDropdown />
-
-            {/* Language */}
-            {/* {!isMobile && (
-  <div className="lang-selector" style={{ position: "relative" }}>
-    <span onClick={() => setLangDropdown(!langDropdown)} style={topLink}>
-      <img
-        src={`https://flagcdn.com/w20/${selectedLang.code}.png`}
-        alt={selectedLang.label}
-        style={{
-          width: "20px",
-          height: "14px",
-          marginRight: "6px",
-          verticalAlign: "middle",
-        }}
-      />
-      {selectedLang.label}
-    </span>
-    {langDropdown && (
-      <div style={dropdownStyle}>
-        {languages.map((lang) => (
-          <div
-            key={lang.code}
-            onClick={() => {
-              setSelectedLang(lang);
-              i18n.changeLanguage(lang.code);
-              setLangDropdown(false);
-            }}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              padding: "8px 12px",
-              cursor: "pointer",
-              backgroundColor:
-                lang.code === selectedLang.code ? "#f0f0f0" : "white",
-            }}
-          >
-            <img
-              src={`https://flagcdn.com/w20/${lang.code}.png`}
-              alt={lang.label}
-              style={{ width: "20px", height: "14px", marginRight: "8px" }}
-            />
-            {lang.label}
-          </div>
-        ))}
-      </div>
-    )}
-  </div>
-)} */}
-
-
-
-
-            {/* Account / Sign In */}
-{/* Account / Sign In */}
-{isLoggedIn ? (
-  <div
-    style={{ position: "relative", display: "inline-block" }}
-    onMouseEnter={!isMobile ? handleAccountMouseEnter : undefined}
-    onMouseLeave={!isMobile ? handleAccountMouseLeave : undefined}
-  >
-    <div style={{ cursor: "pointer" }}>
-      <span style={topLink}>{t("account") || "Account"}</span>
-    </div>
-{accountDropdown && (
-  <div
-    style={{
-      position: "absolute",
-      top: "100%",
-      left: "50%",
-      transform: "translateX(-50%)",
-      backgroundColor: "#fff",
-      boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
-      borderRadius: "8px",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "stretch",
-      minWidth: "180px",
-      padding: "10px 0",
-      zIndex: 1000
-    }}
-  >
-    {/* Links */}
-    <Link
-      to="/account?tab=overview"
-      style={{
-        padding: "10px 15px",
-        textDecoration: "none",
-        color: "#0073e6",
-        fontSize: "14px",
-        fontWeight: "500",
-        transition: "background-color 0.2s ease"
-      }}
-      onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#f5f7fa")}
-      onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
-    >
-      Overview
-    </Link>
-
-    <Link
-      to="/account?tab=orders"
-      style={{
-        padding: "10px 15px",
-        textDecoration: "none",
-        color: "#0073e6",
-        fontSize: "14px",
-        fontWeight: "500",
-        transition: "background-color 0.2s ease"
-      }}
-      onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#f5f7fa")}
-      onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
-    >
-      Order History
-    </Link>
-
-    <Link
-      to="/account?tab=address"
-      style={{
-        padding: "10px 15px",
-        textDecoration: "none",
-        color: "#0073e6",
-        fontSize: "14px",
-        fontWeight: "500",
-        transition: "background-color 0.2s ease"
-      }}
-      onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#f5f7fa")}
-      onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
-    >
-      Address Details
-    </Link>
-
-    {/* Divider */}
-    <div style={{ borderTop: "1px solid #eee", marginTop: "8px" }} />
-
-    {/* Logout Button */}
-    <button
-      onClick={handleLogout}
-      style={{
-        margin: "10px auto 0 auto",
-        padding: "8px 16px",
-        backgroundColor: "#0073e6",
-        color: "#fff",
-        border: "none",
-        borderRadius: "6px",
-        cursor: "pointer",
-        fontSize: "14px",
-        fontWeight: "500",
-        transition: "background-color 0.2s ease"
-      }}
-      onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#0073e6")}
-      onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#0073e6")}
-    >
-      Logout
-    </button>
-  </div>
-)}
-
-
-
-
-  </div>
-) : (
-  <span style={topLink}>
-    <Link to="/sign-in" style={{ color: "#333", textDecoration: "none" }}>
-      {t("sign_in") || "Sign In"}
-    </Link>
-  </span>
-)}
-
-
-
-
-
-            <span style={topLink}>
-              <Link to="/cart" style={{ color: "#333", textDecoration: "none" }}>
-                <i className="fa-solid fa-cart-shopping" style={{ marginRight: "5px" }}></i>
-                {t("cart") || "Cart"}
-              </Link>
-            </span>
-
-            {/* <span style={topLink}>
-              <Link to="/wishlist" style={{ color: "#333", textDecoration: "none" }}>
-                <i className="fa-solid fa-heart" style={{ marginRight: "5px" }}></i>
-                {t("wishlist") || "Wishlist"}
-              </Link>
-            </span> */}
-
-
-            <div className="search-wrapper" style={searchWrapper}>
-             <input
-  type="text"
-  placeholder={t("search") || "Search"}
-  value={searchQuery}
-  onChange={(e) => setSearchQuery(e.target.value)}
-  style={searchInput}
-/>
-
-              <span style={searchIcon}>🔍</span>
-
-              {searchQuery && (
-  <div style={{
-    position: "absolute",
-    top: "38px",
-    left: 0,
-    right: 0,
-    backgroundColor: "#fff",
-    border: "1px solid #ccc",
-    zIndex: 1000,
-    maxHeight: "200px",
-    overflowY: "auto"
-  }}>
-    {filteredResults.length ? filteredResults.map((item, i) => (
-      <div
-        key={i}
-        style={{
-          padding: "10px",
-          borderBottom: "1px solid #eee",
-          cursor: "pointer"
-        }}
-        onClick={() => {
-          setSearchQuery(item);
-          // You can also navigate to another page here
-        }}
-      >
-        {item}
-      </div>
-    )) : (
-      <div style={{ padding: "10px", color: "#999" }}>No results found</div>
-    )}
-  </div>
-)}
-
-            </div>
-          </div>
-        )}
-
-        {/* Hamburger for Mobile */}
-        {isMobile && (
-          <div onClick={() => setMenuOpen(!menuOpen)} style={hamburgerStyle}>
-            ☰
-          </div>
-
-        )}
-      </div>
-
-      {/* Navigation Bar (Desktop only) */}
-      <div style={navBar}>
-        {!isMobile && (
-          <nav style={navLinksContainer}>
-            <div style={navLinks}>
-              {menuItems.map((item) => (
-                <div key={item.title} style={{ position: "relative" }}
-                  onMouseEnter={() => setHoveredMenu(item.title)}
-                  onMouseLeave={() => setHoveredMenu(null)}>
-                  {item.link ? (
-                    <Link to={item.link} style={navLink}>{item.title}</Link>
-                  ) : (
-                    <span style={navLink}>{item.title}</span>
-                  )}
-                  {item.subItems && hoveredMenu === item.title && (
-                    <div style={dropdownMenu}>
-                      {item.subItems.map((subItem, i) => {
-                        const hasNested = subItem.subItems && subItem.subItems.length > 0;
-                        return (
-                          <div
-                            key={i}
-                            style={{
-                              position: "relative",
-                              display: "flex",
-                              flexDirection: "column",
-                            }}
-                            onMouseEnter={() => setActiveSubItem(subItem.label)}
-                            onMouseLeave={() => setActiveSubItem(null)}
-                          >
-                            <Link
-                              to={subItem.link}
-                              style={{
-                                ...dropdownItem,
-                                fontWeight: hasNested ? "bold" : "normal",
-                                display: "block",
-                                whiteSpace: "nowrap",
-                              }}
-                            >
-                              {subItem.label}
-                            </Link>
-
-                            {hasNested && activeSubItem === subItem.label && (
-                              <div
-                                style={{
-                                  position: "absolute",
-                                  top: 0,
-                                  left: "100%",
-                                  background: "#fff",
-                                  border: "1px solid #ddd",
-                                  boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-                                  whiteSpace: "nowrap",
-                                  zIndex: 300,
-                                  minWidth: "220px",
-                                }}
-                              >
-                                {subItem.subItems.map((nestedItem, j) => (
-                                  <Link
-                                    key={j}
-                                    to={nestedItem.link}
-                                    style={{
-                                      ...dropdownItem,
-                                      padding: "10px 16px",
-                                      whiteSpace: "nowrap",
-                                    }}
-                                  >
-                                    {nestedItem.label}
-                                  </Link>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-
-                </div>
-              ))}
-            </div>
-          </nav>
-        )}
-      </div>
-
-      {/* Mobile Hamburger Menu Expanded */}
-      {isMobile && menuOpen && (
-        <div style={mobileMenu}>
-            <div style={{ flex: 1, overflowY: "auto", padding: "20px" }}>
-          {/* Close Icon */}
-          {/* <div style={{ display: "flex", justifyContent: "flex-end", padding: "10px" }}>
-  <button
-    onClick={() => setMenuOpen(false)}
-    style={{
-      background: "none",
-      border: "none",
-      fontSize: "28px",
-      cursor: "pointer",
-      color: "#333",
-    }}
-    aria-label="Close menu"
-  >
-    &times;
-  </button>
-</div>
-
-          <div className="search-wrapper" style={{ ...searchWrapper, marginBottom: "10px" }}>
-            <input type="text" placeholder={t("search") || "Search"} style={searchInput} />
-            <span style={searchIcon}>🔍</span>
-          </div> */}
-
-          <div style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "10px 16px",
-            borderBottom: "1px solid #eee",
-            backgroundColor: "#fff"
-          }}>
-           <div style={{
-  position: "relative",
-  flex: 1,
-  marginRight: "10px"
-}}>
-  <input
-    type="text"
-    placeholder="Search"
-    style={{
-      width: "100%",
-      padding: "8px 36px 8px 12px",
-      fontSize: "16px",
-      border: "1px solid #ccc",
-      borderRadius: "4px"
-    }}
-  />
-  <span style={{
-    position: "absolute",
-    right: "10px",
-    top: "50%",
-    transform: "translateY(-50%)",
-    fontSize: "16px",
-    color: "#888"
-  }}>🔍</span>
-</div>
-
-            <i
-              className="fas fa-times"
-              onClick={handleCloseMobileMenu}
-              style={{
-                fontSize: "22px",
-                cursor: "pointer",
-                color: "#333"
-              }}
-            ></i>
-          </div>
-
-
-          {/* Language Selector */}
-          {/* <div style={{ marginBottom: "10px" }}>
-            <div onClick={() => setLangDropdown(!langDropdown)} style={{ ...topLink, display: "flex", alignItems: "center" }}>
-              <img
-                src={`https://flagcdn.com/w20/${selectedLang.code}.png`}
-                alt={selectedLang.label}
-                style={{ width: "20px", height: "14px", marginRight: "8px" }}
-              />
-              {selectedLang.label}
-            </div>
-            {langDropdown && (
-              <div style={dropdownStyle}>
-                {languages.map((lang) => (
-                  <div
-                    key={lang.code}
-                    onClick={() => {
-                      setSelectedLang(lang);
-                      i18n.changeLanguage(lang.code);
-                      setLangDropdown(false);
-                    }}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      padding: "8px 12px",
-                      cursor: "pointer",
-                      backgroundColor: lang.code === selectedLang.code ? "#f0f0f0" : "white",
-                    }}
-                  >
-                    <img
-                      src={`https://flagcdn.com/w20/${lang.code}.png`}
-                      alt={lang.label}
-                      style={{ width: "20px", height: "14px", marginRight: "8px" }}
-                    />
-                    {lang.label}
-                  </div>
-                ))}
+            
+            {isLoggedIn ? (
+              <div style={styles.accountContainer} onMouseEnter={handleAccountMouseEnter} onMouseLeave={handleAccountMouseLeave}>
+                <span style={styles.topLink}>{t("account") || "Account"}</span>
+                <AccountDropdown />
               </div>
+            ) : (
+              <Link to="/sign-in" style={styles.topLink}>
+                {t("sign_in") || "Sign In"}
+              </Link>
             )}
-          </div> */}
 
+            <Link to="/cart" style={styles.topLink}>
+              <i className="fa-solid fa-cart-shopping" style={{ marginRight: "5px" }}></i>
+              {t("cart") || "Cart"}
+            </Link>
 
+            <div style={styles.searchWrapper}>
+              <input
+                type="text"
+                placeholder={t("search") || "Search"}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                style={styles.searchInput}
+              />
+              <span style={styles.searchIcon}>🔍</span>
+              <SearchDropdown 
+                results={searchResults} 
+                onSelect={(item) => {
+                  setSearchQuery(item.name);
+                  navigate(`/product/${item._id}`);
+                  setSearchResults([]);
+                }}
+              />
+            </div>
+          </div>
+        )}
 
-          {/* Navigation Items */}
-
-
-
-        {menuItems.map((item) => {
-  const hasSubItems = item.subItems && item.subItems.length > 0;
-
-  // ✅ Case 1: No subItems (like Help & Blog)
-  if (!hasSubItems) {
-    return (
-      <Link
-        key={item.title}
-        to={item.link}
-        style={{
-          ...mobileSubItem,
-          fontWeight: "bold",
-          display: "block",
-          padding: "12px",
-          marginBottom: "10px",
-          backgroundColor: "#f9f9f9",
-          borderRadius: "8px",
-          textDecoration: "none",
-          color: "#111",
-        }}
-        onClick={handleCloseMobileMenu}
-      >
-        {item.title}
-      </Link>
-    );
-  }
-
-  // ✅ Case 2: Has subItems (like Business Cards)
-  return (
-    <div key={item.title}>
-      <div
-        onClick={() => toggleSubMenu(item.title)}
-        style={{
-          ...mobileNavLink,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <span>{item.title}</span>
-        <span>
-          {expandedMenus[item.title] ? (
-            <i className="fa-solid fa-angle-up"></i>
-          ) : (
-            <i className="fa-solid fa-angle-down"></i>
-          )}
-        </span>
+        {isMobile && (
+          <div onClick={() => setMenuOpen(!menuOpen)} style={styles.hamburger}>☰</div>
+        )}
       </div>
 
-      {expandedMenus[item.title] && (
-        <div style={{ paddingLeft: "16px" }}>
-          {item.subItems.map((subItem, i) => (
-            <div key={i}>
-              {subItem.subItems ? (
-                <>
-                  <div
-                    onClick={() =>
-                      toggleSubMenu(`${item.title} > ${subItem.label}`)
-                    }
-                    style={{
-                      ...mobileSubItem,
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      fontWeight: "bold",
-                      cursor: "pointer",
-                    }}
-                  >
-                    <span>{subItem.label}</span>
-                    <span>
-                      {expandedMenus[subItem.label] ? (
-                        <i className="fa-solid fa-angle-up"></i>
-                      ) : (
-                        <i className="fa-solid fa-angle-down"></i>
-                      )}
-                    </span>
-                  </div>
-                </>
-              ) : (
-                <Link
-                  to={subItem.link}
-                  style={{
-                    ...mobileSubItem,
-                    fontWeight: "bold",
-                    display: "block",
-                    padding: "10px 12px",
-                    textDecoration: "none",
-                    color: "#000",
-                  }}
-                  onClick={handleCloseMobileMenu}
-                >
-                  {subItem.label}
-                </Link>
-              )}
-
-              {expandedMenus[`${item.title} > ${subItem.label}`] &&
-                subItem.subItems && (
-                  <div
-                    style={{
-                      paddingLeft: "20px",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "8px",
-                      marginTop: "8px",
-                    }}
-                  >
-                    {subItem.subItems.map((child, j) => (
-                      <Link
-                        key={j}
-                        to={child.link}
-                        style={mobileSubItem}
-                        onClick={handleCloseMobileMenu}
-                      >
-                        {child.label}
+      {/* Desktop Navigation */}
+      {!isMobile && (
+        <nav style={styles.navBar}>
+          <div style={styles.navLinks}>
+            {menuItems.map((item) => (
+              <div key={item._id} style={styles.navItem} onMouseEnter={() => setHoveredMenu(item._id)} onMouseLeave={() => setHoveredMenu(null)}>
+                {item.products?.length > 0 ? (
+                  <span style={styles.navLink}>{item.name}</span>
+                ) : (
+                    <span style={styles.navLink}>{item.name}</span>
+                  // <div onClick={() => {}} style={styles.navButton}>{item.name}</div>
+                )}
+                
+                {item.products?.length > 0 && hoveredMenu === item._id && (
+                  <div style={styles.dropdown}>
+                    {item.products.map((product) => (
+                      <Link key={product._id} to={`/product/${product._id}`} style={styles.dropdownItem}>
+                        {product.name}
                       </Link>
                     ))}
                   </div>
                 )}
-            </div>
-          ))}
-        </div>
+              </div>
+            ))}
+          </div>
+        </nav>
       )}
-    </div>
-  );
-})}
 
-
-
-
-
-          {/* ✅ Account & Cart at the bottom */}
-          <div style={{
-            // marginTop: "auto",
-            backgroundColor: "#374151",
-            color: "white",
-            padding: "10px 15px",
-            borderTop: "1px solid #555"
-          }}>
-
-            
-
-            {/* Account Dropdown */}
-      {isLoggedIn ? (
-  // Show Account dropdown if logged in
-  <div style={{ marginBottom: "10px" }}>
-    <div
-      onClick={() => setShowAccountDropdown(!showAccountDropdown)}
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        fontWeight: "bold",
-        padding: "12px",
-        backgroundColor: "#4B5563",
-        borderRadius: "6px",
-        cursor: "pointer"
-      }}
-    >
-      Account
-      <span>
-        {showAccountDropdown ? (
-          <i className="fa-solid fa-angle-up"></i>
-        ) : (
-          <i className="fa-solid fa-angle-down"></i>
-        )}
-      </span>
-    </div>
-
-    {showAccountDropdown && (
-      <div
-        style={{
-          marginTop: "10px",
-          backgroundColor: "#1F2937",
-          borderRadius: "6px",
-          padding: "10px"
-        }}
-      >
-        <Link to="/account?tab=overview" style={accountItem}>
-          Overview
-        </Link>
-        <Link to="/account?tab=orders" style={accountItem}>
-          Order History
-        </Link>
-        <Link to="/account?tab=address" style={accountItem}>
-          Address Details
-        </Link>
-        <button
-          onClick={handleLogout}
-          style={{
-            ...accountItem,
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            color: "inherit",
-            textAlign: "left",
-            padding: "8px 0",
-            width: "100%"
-          }}
-        >
-          Logout
-        </button>
-      </div>
-    )}
-  </div>
-) : (
-  // Show Sign In link if not logged in
-  <div style={{ marginBottom: "10px", padding: "12px" }}>
-    <Link
-      to="/sign-in"
-      style={{
-        color: "#fff",
-        textDecoration: "none",
-        fontWeight: "bold"
-      }}
-    >
-      Sign In
-    </Link>
-  </div>
-)}
-
-
-            {/* Cart */}
-            <div style={{
-              padding: "12px",
-              backgroundColor: "#10B981",
-              textAlign: "center",
-              borderRadius: "6px",
-              fontWeight: "bold",
-              color: "white"
-            }}>
-              <Link to="/cart" style={{ color: "white", textDecoration: "none" }}>
-                <i className="fas fa-shopping-cart" style={{ marginRight: "8px" }}></i>
-                Cart
-              </Link>
+      {/* Mobile Menu */}
+      {isMobile && menuOpen && (
+        <div style={styles.mobileMenu}>
+          <div style={styles.mobileHeader}>
+            <div style={styles.mobileSearchWrapper}>
+              <input
+                type="text"
+                placeholder="Search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                style={styles.mobileSearchInput}
+              />
+              <span style={styles.mobileSearchIcon}>🔍</span>
+              <SearchDropdown 
+                results={searchResults} 
+                onSelect={(item) => {
+                  setSearchQuery(item.name);
+                  navigate(`/product/${item._id}`);
+                  setSearchResults([]);
+                  setMenuOpen(false);
+                }}
+                isMobile={true}
+              />
             </div>
-            {/* <div style={{
-              padding: "12px",
-              backgroundColor: "#10B981",
-              textAlign: "center",
-              borderRadius: "6px",
-              fontWeight: "bold",
-              color: "white",
-              marginTop: "10px" // Optional spacing below Cart
-            }}> */}
-              {/* <Link to="/wishlist" style={{ color: "white", textDecoration: "none" }}>
-                <i className="fas fa-heart" style={{ marginRight: "8px" }}></i>
-                Wishlist
-              </Link> */}
-            {/* </div> */}
-
+            <i className="fas fa-times" onClick={() => setMenuOpen(false)} style={styles.closeIcon}></i>
+          </div>
+          
+          <div style={styles.mobileContent}>
+            {/* {menuItems.map((item) => <MobileMenuItem key={item.name} item={item} />)} */}
+           {menuItems.map((item) => (
+  <MobileMenuItem key={item._id} item={item} />
+))}
 
           </div>
 
-
-          {/* Account Section */}
-          {/* <div style={{ marginBottom: "10px" }}>
-            <div onClick={() => setAccountDropdown(!accountDropdown)} style={topLink}>
-              {t("account") || "Account"}
-            </div>
-            {accountDropdown && (
-              <div style={accountDropdownStyle} className="accountDropdownStyle">
-                <Link to="/sign-in" style={accountItem}>Sign up</Link>
-                <div style={dropdownDivider}></div>
-                <div style={accountItem}>Overview</div>
-                <div style={accountItem}>Re-order</div>
-                <div style={accountItem}>Order History</div>
-                <div style={accountItem}>Saved Projects</div>
-                <div style={accountItem}>Refer and Earn</div>
-                <div style={accountItem}>Redeem Gift Cards</div>
+          {/* Mobile Footer */}
+          <div style={styles.mobileFooter}>
+            {isLoggedIn ? (
+              <div style={styles.mobileAccountSection}>
+                <div onClick={() => setShowAccountDropdown(!showAccountDropdown)} style={styles.mobileAccountToggle}>
+                  Account
+                  <i className={`fa-solid fa-angle-${showAccountDropdown ? 'up' : 'down'}`}></i>
+                </div>
+                {showAccountDropdown && (
+                  <div style={styles.mobileAccountDropdown}>
+                    {["Overview", "Order History", "Address Details"].map((label, i) => (
+                      <Link key={i} to={`/account?tab=${["overview", "orders", "address"][i]}`} style={styles.mobileAccountLink}>
+                        {label}
+                      </Link>
+                    ))}
+                    <button onClick={handleLogout} style={styles.mobileLogoutBtn}>Logout</button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div style={styles.mobileSignIn}>
+                <Link to="/sign-in" style={styles.mobileSignInLink}>Sign In</Link>
               </div>
             )}
-          </div> */}
-
-          {/* Cart Link */}
-          {/* <Link to="/cart" style={{ ...topLink, marginBottom: "10px", display: "inline-block" }}>
-            <i className="fa-solid fa-cart-shopping" style={{ marginRight: "5px" }}></i>
-            {t("cart") || "Cart"}
-          </Link> */}
-        </div>
+            <div style={styles.mobileCart}>
+              <Link to="/cart" style={styles.mobileCartLink}>
+                <i className="fas fa-shopping-cart" style={{ marginRight: "8px" }}></i>Cart
+              </Link>
+            </div>
+          </div>
         </div>
       )}
+
       {/* Offer Bar */}
-      <div style={offerBarStyle}>
-        🎉 New members get <strong>$5</strong> off their first order! <a href="/sign-in" className="text-white" >Sign up now.</a>
+      <div style={styles.offerBar}>
+        🎉 New members get <strong>$5</strong> off their first order! <a href="/sign-in" style={{ color: "white" }}>Sign up now.</a>
       </div>
 
-
-
-
-
-      <style>{responsiveStyle}</style>
+      <style>{styles.responsive}</style>
     </header>
   );
 }
 
-// Inside Header component
-// const getMobileMenuStyle = (menuOpen) => ({
-//   position: "fixed",
-//   top: 0,
-//   right: 0,
-//   height: "100vh",
-//   width: "80%",
-//   backgroundColor: "#fff",
-//   zIndex: 999,
-//   transform: menuOpen ? "translateX(0)" : "translateX(100%)",
-//   transition: "transform 0.3s ease-in-out",
-//   boxShadow: "-2px 0 8px rgba(0,0,0,0.2)",
-//   overflowY: "auto",
-//   padding: "20px",
-// });
-
-
-const topRightRow = {
-
-  display: "flex",
-  alignItems: "center",
-  gap: "20px",
-  flexWrap: "wrap",
-  justifyContent: "flex-end",
-  flex: 1,
-};
-
-
-const navLinksContainer = {
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  flexWrap: "nowrap",
-  overflowY: "visible",
-};
-
-const navIcons = {
-  display: "flex",
-  gap: "20px",
-  alignItems: "center",
-};
-
-
-
-const headerWrapper = {
-  fontFamily: "'Segoe UI', sans-serif",
-  borderBottom: "1px solid #eee",
-  boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
-  backgroundColor: "white",
-  width: "100%",
-  position: "sticky",
-  top: "0",
-  zIndex: "100 ", /* Optional: ensures header is above other content */
-  /* Add other styling for your header */
-
-};
-
-const topBar = {
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  padding: "5px 0px ",
-};
-
-const logoWrapper = {
-  display: "flex",
-  alignItems: "center",
-
-};
-
-
-const topLink = {
-  cursor: "pointer",
-  color: "#333",
-  fontSize: "14px",
-};
-
-const searchWrapper = {
-  position: "relative",
-  width: "160px",
-};
-
-const searchInput = {
-  width: "100%",
-  padding: "8px 36px 8px 12px",
-  border: "1px solid #ccc",
-  borderRadius: "6px",
-};
-
-const searchIcon = {
-  position: "absolute",
-  right: "10px",
-  top: "50%",
-  transform: "translateY(-50%)",
-  fontSize: "16px",
-  color: "#333",
-  pointerEvents: "none",
-};
-
-const hamburgerStyle = {
-  fontSize: "24px",
-  cursor: "pointer",
-  textDecoration: "none",
-};
-
-const mobileRow1 = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  gap: "15px",
-  flexWrap: "wrap",
-  width: "100%",
-};
-
-const mobileRow2 = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  gap: "15px",
-  flexWrap: "wrap",
-  width: "100%",
-  marginTop: "10px",
-};
-
-const accountDropdownStyle = {
-  position: "absolute",
-  top: "35px",
-  left: "0px",
-  zIndex: 9999,
-  backgroundColor: "#fff",
-  boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-  width: "220px",
-  border: "1px solid #ddd",
-  borderRadius: "6px",
-  padding: "10px 0",
-};
-
-const accountItem = {
-  padding: "8px 0",
-  fontSize: "14px",
-  cursor: "pointer",
-  //  color: "#fff",
-  textDecoration: "none",
-  display: "block"
-};
-
-const dropdownDivider = {
-  // height: "1px",
-  // backgroundColor: "#eee",
-  margin: "8px 0",
-  borderTop: "1px solid #444",
-};
-
-const dropdownStyle = {
-  position: "absolute",
-  top: "100%",
-  right: 0,
-  backgroundColor: "#fff",
-  border: "1px solid #ccc",
-  width: "220px",
-  boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-  zIndex: 1000,
-};
-
-const navBar = {
-  padding: "10px 0px",
-
-  display: "flex",
-};
-
-const navLinks = {
-  display: "flex",
-  gap: "25px",
-  flexWrap: "nowrap",
-  whiteSpace: "nowrap",
-  position: "relative",
-  zIndex: 1,
-};
-
-const navLink = {
-  fontSize: "14px",
-  color: "#111",
-  fontWeight: "500",
-  textDecoration: "none",
-};
-
-const dropdownMenu = {
-  position: "absolute",
-  top: "100%",
-  left: 0,
-  backgroundColor: "#fff",
-  border: "1px solid #ddd",
-  boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-  zIndex: 200,
-  padding: "8px 0",
-  minWidth: "180px",
-  borderRadius: "6px",
-  whiteSpace: "nowrap",
-};
-
-const dropdownItem = {
-  padding: "10px 16px",
-  fontSize: "14px",
-  color: "#333",
-  cursor: "pointer",
-  whiteSpace: "nowrap",
-  textDecoration: "none",
-  display: "block",
-  transition: "background-color 0.2s",
-};
-
-const mobileMenu = {
-  position: "fixed",
-  top: 0,
-  right: 0,
-  bottom: 0,
-   maxHeight: "100vh",
-  width: "80%",
-  backgroundColor: "#fff",
-  zIndex: 999,
-  // transform: menuOpen ? "translateX(0)" : "translateX(100%)",
-  transition: "transform 0.3s ease-in-out",
-  boxShadow: "-2px 0 8px rgba(0,0,0,0.2)",
-   overflowY: "scroll",
-  // padding: "20px",
-  display: "flex",
-  flexDirection: "column",
-};
-
-
-const mobileNavLink = {
-  padding: "12px 16px",
-  fontSize: "16px",
-  fontWeight: "500",
-  backgroundColor: "#f8f9fa",
-  borderRadius: "8px",
-  marginBottom: "10px",
-  boxShadow: "0 2px 4px rgba(0,0,0,0.08)",
-  cursor: "pointer",
-};
-
-
-const mobileSubItem = {
-  padding: "6px 10px",
-  fontSize: "14px",
-  borderBottom: "1px solid #eee",
-  textDecoration: "none",
-  color: "black",
-};
-
-const offerBarStyle = {
-  backgroundColor: "#007BFF",
-  color: "#fff",
-  textAlign: "center",
-  padding: "10px 20px",
-  fontSize: "14px",
-  fontWeight: "500",
-  lineHeight: "1.4",
-  wordWrap: "break-word",
-};
-
-
-const responsiveStyle = `
-  @media (min-width: 768px) {
-    .top-bar {
-      flex-direction: row !important;
-      justify-content: space-between !important;
-      padding: 10px 30px;
-      align-items: center;
+const styles = {
+  header: {
+    fontFamily: "'Segoe UI', sans-serif",
+    borderBottom: "1px solid #eee",
+    boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
+    backgroundColor: "white",
+    width: "100%",
+    position: "sticky",
+    top: "0",
+    zIndex: "100",
+  },
+  topBar: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "5px 0px",
+  },
+  logoWrapper: { display: "flex", alignItems: "center" },
+  logo: { height: "50px", objectFit: "contain", width: "115px" },
+  topRightRow: { display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap", justifyContent: "flex-end", flex: 1 },
+  topLink: { cursor: "pointer", color: "#333", fontSize: "14px", textDecoration: "none" },
+  accountContainer: { position: "relative", display: "inline-block" },
+  searchWrapper: { position: "relative", width: "160px" },
+  searchInput: { width: "100%", padding: "8px 36px 8px 12px", border: "1px solid #ccc", borderRadius: "6px" },
+  searchIcon: { position: "absolute", right: "10px", top: "50%", transform: "translateY(-50%)", fontSize: "16px", color: "#333", pointerEvents: "none" },
+  searchDropdown: { position: "absolute", top: "38px", left: 0, right: 0, backgroundColor: "#fff", border: "1px solid #ccc", zIndex: 1000, maxHeight: "200px", overflowY: "auto" },
+  searchItem: { padding: "10px", borderBottom: "1px solid #eee", cursor: "pointer", color: "#999" },
+  hamburger: { fontSize: "24px", cursor: "pointer" },
+  navBar: { position: "relative", zIndex: 20 },
+  navLinks: { display: "flex", gap: "25px", flexWrap: "nowrap", whiteSpace: "nowrap", position: "relative", zIndex: 1 },
+  navItem: { position: "relative" },
+  navLink: { fontSize: "14px", color: "#111", fontWeight: "500", textDecoration: "none" },
+  navButton: { fontWeight: "600", fontSize: "16px", color: "#222", borderRadius: "4px", cursor: "pointer", padding: "8px 12px" },
+  dropdown: { position: "absolute", top: "100%", left: "0", backgroundColor: "#fff", border: "1px solid #ddd", borderRadius: "4px", boxShadow: "0 2px 8px rgba(0,0,0,0.1)", zIndex: 1000, minWidth: "200px", padding: "8px 0" },
+  dropdownItem: { display: "block", padding: "8px 16px", textDecoration: "none", color: "#333", whiteSpace: "nowrap", borderBottom: "1px solid #f0f0f0", transition: "background-color 0.2s ease" },
+  accountDropdown: { position: "absolute", top: "100%", left: "50%", transform: "translateX(-50%)", backgroundColor: "#fff", boxShadow: "0px 4px 10px rgba(0,0,0,0.1)", borderRadius: "8px", display: "flex", flexDirection: "column", alignItems: "stretch", minWidth: "180px", padding: "10px 0", zIndex: 1000 },
+  accountLink: { padding: "10px 15px", textDecoration: "none", color: "#0073e6", fontSize: "14px", fontWeight: "500", transition: "background-color 0.2s ease" },
+  divider: { borderTop: "1px solid #eee", marginTop: "8px" },
+  logoutBtn: { margin: "10px auto 0 auto", padding: "8px 16px", backgroundColor: "#0073e6", color: "#fff", border: "none", borderRadius: "6px", cursor: "pointer", fontSize: "14px", fontWeight: "500" },
+  mobileMenu: { position: "fixed", top: 0, right: 0, bottom: 0, maxHeight: "100vh", width: "80%", backgroundColor: "#fff", zIndex: 999, boxShadow: "-2px 0 8px rgba(0,0,0,0.2)", overflowY: "scroll", display: "flex", flexDirection: "column" },
+  mobileHeader: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 16px", borderBottom: "1px solid #eee", backgroundColor: "#fff", position: "relative" },
+  mobileSearchWrapper: { position: "relative", flex: 1, marginRight: "10px" },
+  mobileSearchInput: { width: "100%", padding: "8px 36px 8px 12px", fontSize: "16px", border: "1px solid #ccc", borderRadius: "4px" },
+  mobileSearchIcon: { position: "absolute", right: "10px", top: "50%", transform: "translateY(-50%)", fontSize: "16px", color: "#888" },
+  closeIcon: { fontSize: "22px", cursor: "pointer", color: "#333" },
+  mobileContent: { flex: 1, overflowY: "auto", padding: "20px" },
+  mobileNavItem: { fontWeight: "bold", display: "block", padding: "12px", marginBottom: "10px", backgroundColor: "#f9f9f9", borderRadius: "8px", textDecoration: "none", color: "#111" },
+  mobileNavToggle: { padding: "12px 16px", fontSize: "16px", fontWeight: "500", backgroundColor: "#f8f9fa", borderRadius: "8px", marginBottom: "10px", boxShadow: "0 2px 4px rgba(0,0,0,0.08)", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" },
+  mobileSubMenu: { paddingLeft: "16px" },
+  mobileSubToggle: { padding: "6px 10px", fontSize: "14px", borderBottom: "1px solid #eee", textDecoration: "none", color: "black", display: "flex", justifyContent: "space-between", alignItems: "center", fontWeight: "bold", cursor: "pointer" },
+  mobileSubLink: { fontWeight: "bold", display: "block", padding: "10px 12px", textDecoration: "none", color: "#000" },
+  mobileNestedMenu: { paddingLeft: "20px", display: "flex", flexDirection: "column", gap: "8px", marginTop: "8px" },
+  mobileSubItem: { padding: "6px 10px", fontSize: "14px", borderBottom: "1px solid #eee", textDecoration: "none", color: "black" },
+  mobileFooter: { backgroundColor: "#374151", color: "white", padding: "10px 15px", borderTop: "1px solid #555" },
+  mobileAccountSection: { marginBottom: "10px" },
+  mobileAccountToggle: { display: "flex", justifyContent: "space-between", alignItems: "center", fontWeight: "bold", padding: "12px", backgroundColor: "#4B5563", borderRadius: "6px", cursor: "pointer" },
+  mobileAccountDropdown: { marginTop: "10px", backgroundColor: "#1F2937", borderRadius: "6px", padding: "10px" },
+  mobileAccountLink: { padding: "8px 0", fontSize: "14px", cursor: "pointer", textDecoration: "none", display: "block", color: "white" },
+  mobileLogoutBtn: { background: "none", border: "none", cursor: "pointer", color: "inherit", textAlign: "left", padding: "8px 0", width: "100%" },
+  mobileSignIn: { marginBottom: "10px", padding: "12px" },
+  mobileSignInLink: { color: "#fff", textDecoration: "none", fontWeight: "bold" },
+  mobileCart: { padding: "12px", backgroundColor: "#10B981", textAlign: "center", borderRadius: "6px", fontWeight: "bold", color: "white" },
+  mobileCartLink: { color: "white", textDecoration: "none" },
+  offerBar: { backgroundColor: "#007BFF", color: "#fff", textAlign: "center", padding: "10px 20px", fontSize: "14px", fontWeight: "500", lineHeight: "1.4", wordWrap: "break-word" },
+  responsive: `
+    @media (min-width: 768px) {
+      .top-bar { flex-direction: row !important; justify-content: space-between !important; padding: 10px 30px; align-items: center; }
     }
-
-    .mobileRow1,
-    .mobileRow2 {
-      flex-direction: row !important;
-      justify-content: flex-end !important;
+    @media (max-width: 768px) {
+      .top-bar { padding: 10px 16px !important; }
+      .search-wrapper { width: 100% !important; }
+      .search-wrapper input { width: 100% !important; }
     }
-  }
-
-  @media (max-width: 768px) {
-    .top-bar {
-      padding: 10px 16px !important; /* ✅ Add horizontal padding for mobile */
-    }
-
-    .mobileRow1,
-    .mobileRow2 {
-      flex-direction: row !important;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .accountDropdownStyle {
-      position: relative !important;
-      top: unset !important;
-      box-shadow: none !important;
-      width: 100% !important;
-    }
-
-    .search-wrapper {
-      width: 100% !important;
-    }
-
-    .search-wrapper input {
-      width: 100% !important;
-    }
-  }
-`;
+  `
+};

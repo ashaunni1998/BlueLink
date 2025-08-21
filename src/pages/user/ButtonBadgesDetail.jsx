@@ -3,6 +3,7 @@ import { Star } from 'lucide-react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import './Home.css';
+import Review from './Review';
 
 const ButtonBadgesDetail = () => {
   const badgeOptions = [
@@ -19,9 +20,6 @@ const ButtonBadgesDetail = () => {
 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [mainImageIndex, setMainImageIndex] = useState(0);
-  const [reviewText, setReviewText] = useState('');
-  const [showReviews, setShowReviews] = useState(false);
-  const [rating, setRating] = useState(0);
 
   const handlePrev = () => {
     if (mainImageIndex > 0) setMainImageIndex(mainImageIndex - 1);
@@ -31,22 +29,7 @@ const ButtonBadgesDetail = () => {
     if (mainImageIndex < imagePreviews.length - 1) setMainImageIndex(mainImageIndex + 1);
   };
 
-  const handleSubmitReview = () => {
-    if (!reviewText.trim()) {
-      alert("Please enter your review before submitting.");
-      return;
-    }
 
-    if (rating === 0) {
-      alert("Please select a star rating.");
-      return;
-    }
-
-    console.log("Submitted review:", { reviewText, rating });
-    alert(`Thank you! You rated us ${rating} star(s).`);
-    setReviewText("");
-    setRating(0);
-  };
 
   return (
     <div className="responsive-container">
@@ -203,83 +186,7 @@ const ButtonBadgesDetail = () => {
           </p>
         </section>
 
-        {/* Review Section */}
-        <section style={{ marginTop: '40px', marginBottom: '100px', maxWidth: '600px', marginLeft: 'auto', marginRight: 'auto' }}>
-          <h3 style={{ fontSize: '22px', marginBottom: '10px' }}>Add Your Review</h3>
-          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px', gap: '6px' }}>
-            {[1, 2, 3, 4, 5].map((star) => (
-              <Star
-                key={star}
-                size={24}
-                color={star <= rating ? '#FFD700' : '#ccc'}
-                fill={star <= rating ? '#FFD700' : 'none'}
-                style={{ cursor: 'pointer' }}
-                onClick={() => setRating(star)}
-              />
-            ))}
-          </div>
-          <textarea
-            value={reviewText}
-            onChange={(e) => setReviewText(e.target.value)}
-            rows={4}
-            placeholder="Write your review here..."
-            style={{
-              width: '100%',
-              padding: '12px',
-              borderRadius: '6px',
-              border: '1px solid #ccc',
-              marginBottom: '20px',
-              fontSize: '15px',
-            }}
-          />
-          <div style={{
-            display: 'flex',
-            justifyContent: 'flex-start',
-            gap: '12px',
-            flexWrap: 'wrap',
-            marginBottom: '20px'
-          }}>
-            <button
-              onClick={handleSubmitReview}
-              style={{
-                background: '#007BFF',
-                color: '#fff',
-                padding: '10px 16px',
-                border: 'none',
-                borderRadius: 6,
-                cursor: 'pointer',
-                fontSize: 14,
-              }}
-            >
-              Submit Review
-            </button>
-            <button
-              onClick={() => setShowReviews(!showReviews)}
-              style={{
-                background: '#f0f0f0',
-                color: '#333',
-                padding: '10px 16px',
-                border: '1px solid #ccc',
-                borderRadius: 6,
-                cursor: 'pointer',
-                fontSize: 14,
-              }}
-            >
-              {showReviews ? 'Hide Reviews' : 'View Reviews'}
-            </button>
-          </div>
-
-          {showReviews && (
-            <div style={{ borderTop: '1px solid #ddd', paddingTop: '20px' }}>
-              <p style={{ fontWeight: 'bold', marginBottom: '8px' }}>Customer Reviews:</p>
-              <div style={{ fontSize: '15px', color: '#444' }}>
-                ⭐⭐⭐⭐⭐ "Great quality and fast delivery!"
-                <br />
-                ⭐⭐⭐⭐ "Loved the print and finish."
-              </div>
-            </div>
-          )}
-        </section>
+   <Review/>
       </div>
 
       <Footer />

@@ -42,7 +42,9 @@ import Contact from "./pages/user/Contact";
 import Aboutus from "./pages/user/Aboutus";
 import TermsAndCondition from "./pages/user/TermsAndCondition";
 import PrivacyPolicy from "./pages/user/PrivacyPolicy";
+import Review from "./pages/user/Review";
 
+import ProductDetail from "./pages/user/ProductDetail";
 
 
 
@@ -111,8 +113,9 @@ function App() {
 
 <Route path="/privacy" element={<PrivacyPolicy/>}/>
 <Route path="/verify-otp" element={<VerifyOtp/>}/>
+<Route path="/review" element={<Review/>}/>
 
-
+ <Route path="/product/:id" element={<ProductDetail />} />
 
 
 
