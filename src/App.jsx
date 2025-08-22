@@ -45,7 +45,8 @@ import PrivacyPolicy from "./pages/user/PrivacyPolicy";
 import Review from "./pages/user/Review";
 
 import ProductDetail from "./pages/user/ProductDetail";
-
+import Editor from "./pages/user/Editor";
+import DesignSelector from "./pages/user/DesignSelector";
 
 
 
@@ -69,65 +70,67 @@ import Login from "./pages/admin/Login";
 
 function App() {
 
-  
+
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/cart" element={<Cart />} />  
-        <Route path="/wishlist" element={<Wishlist/>}/>
-        <Route path="/Signup" element={<SignUp/>} />
-        <Route path="/businessCard" element={<BusinessCards/>} /> 
-        <Route path="/postCards"  element={<PostCards/>}/>
-        <Route path="/flyers" element={<Flyers/>}/>
-        <Route path="/sign-in" element={<SignIn/>}/>
-        <Route path="/forgotpassword" element={<ForgotPassword/>}/>
-        <Route path="/reset-password" element={<ResetPassword/>}/>
-        <Route path="/stickers" element={<Stickers/>}/>
-        <Route path="/businesscardDetails" element={<BusinessCardDetails/>}/>
-        <Route path="/stationery" element={<Stationery/>}/>
-        <Route path="/personalized-gift" element={<PersonalizedGift/>}/>
-        <Route path="/superbusinessCard" element={<SuperBusinessCards/>}/>
-        <Route path="/tshirtprinting" element={<TShirtPrinting/>}/>
-        <Route path="/buttonbadges"  element={<ButtonBadges/>}/>
-        <Route path="/postcarddetails" element={<PostcardDetails/>}/>
-       <Route path="/flyerdetails" element={<FlyerDetails/>}/>
-       <Route path="/greetingcardDetails" element={<GreetingCardDetails/>}/>
-       <Route path="/stickerdetails" element={<StickerDetails/>}/>
-       <Route path="/tshirtprintingdetail" element={<TShirtPrintingDetail/>}/>
-       <Route path="/personalizedgiftDetails" element={<PersonalizedGiftDetails/>}/>
-       <Route path="/buttonbadgesdetails" element={<ButtonBadgesDetail/>}/>
-       <Route path="/checkout" element={<Checkout/>}/>
-       <Route path="/account" element={<AccountPage/>}/>
-       <Route path="/emailverification" element={<EmailVerificationPage/>}/>
-       <Route path="/success" element={<Success/>}/>
-       <Route path="/cancel" element={<Cancel/>}/>
-       <Route path="/orders/:id" element={<OrderDetails/>}/>
-       <Route path="/orderconfirmation" element={<OrderConfirmation/>}/>
-       <Route path="/returns" element={<Returns/>}/>
-       <Route path="blog" element={<Blog/>}/>
-      <Route path="/help" element={<HelpAndFaqPage/>}/>
-       <Route path="/contact" element={<Contact/>}/>
-       <Route path="/about" element={<Aboutus/>}/>
-       <Route path="/terms" element={<TermsAndCondition/>}/>
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/Signup" element={<SignUp />} />
+        <Route path="/businessCard" element={<BusinessCards />} />
+        <Route path="/postCards" element={<PostCards />} />
+        <Route path="/flyers" element={<Flyers />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/stickers" element={<Stickers />} />
+        <Route path="/businesscardDetails" element={<BusinessCardDetails />} />
+        <Route path="/stationery" element={<Stationery />} />
+        <Route path="/personalized-gift" element={<PersonalizedGift />} />
+        <Route path="/superbusinessCard" element={<SuperBusinessCards />} />
+        <Route path="/tshirtprinting" element={<TShirtPrinting />} />
+        <Route path="/buttonbadges" element={<ButtonBadges />} />
+        <Route path="/postcarddetails" element={<PostcardDetails />} />
+        <Route path="/flyerdetails" element={<FlyerDetails />} />
+        <Route path="/greetingcardDetails" element={<GreetingCardDetails />} />
+        <Route path="/stickerdetails" element={<StickerDetails />} />
+        <Route path="/tshirtprintingdetail" element={<TShirtPrintingDetail />} />
+        <Route path="/personalizedgiftDetails" element={<PersonalizedGiftDetails />} />
+        <Route path="/buttonbadgesdetails" element={<ButtonBadgesDetail />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/account" element={<AccountPage />} />
+        <Route path="/emailverification" element={<EmailVerificationPage />} />
+        <Route path="/success" element={<Success />} />
+        <Route path="/cancel" element={<Cancel />} />
+        <Route path="/orders/:id" element={<OrderDetails />} />
+        <Route path="/orderconfirmation" element={<OrderConfirmation />} />
+        <Route path="/returns" element={<Returns />} />
+        <Route path="blog" element={<Blog />} />
+        <Route path="/help" element={<HelpAndFaqPage />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<Aboutus />} />
+        <Route path="/terms" element={<TermsAndCondition />} />
 
-<Route path="/privacy" element={<PrivacyPolicy/>}/>
-<Route path="/verify-otp" element={<VerifyOtp/>}/>
-<Route path="/review" element={<Review/>}/>
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/verify-otp" element={<VerifyOtp />} />
+        <Route path="/review" element={<Review />} />
 
- <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/editor/:id" element={<Editor />} />
+        <Route path="/design-selector/:id" element={<DesignSelector />} />
 
 
 
 
 
-        <Route path="/admin" element={<AdminDashboard/>}/>
-        <Route path="/sidebar" element={<AdminSidebar/>}/>
-        <Route path="/login" element={<Login/>}/>
-        
-        </Routes>
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/sidebar" element={<AdminSidebar />} />
+        <Route path="/login" element={<Login />} />
+
+      </Routes>
     </Router>
-    
+
   );
 }
 
