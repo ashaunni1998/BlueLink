@@ -19,7 +19,15 @@ export default function Header() {
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const accountTimeoutRef = useRef(null);
-  const isMobile = window.innerWidth < 1024;
+ // Add this hook near top of component
+const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+
+useEffect(() => {
+  const handleResize = () => setIsMobile(window.innerWidth < 1024);
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
+
 
 
   
@@ -245,6 +253,17 @@ const MobileMenuItem = ({ item }) => {
   );
 };
 
+
+// Cart click handler
+const handleCartClick = (e) => {
+  if (!isLoggedIn) {
+    e.preventDefault(); // stop navigation
+    alert("Please login to add items to cart");
+    navigate("/sign-in"); // optional: redirect to sign-in
+  }
+};
+
+
   return (
     <header style={styles.header}>
       {/* Top Section */}
@@ -270,10 +289,11 @@ const MobileMenuItem = ({ item }) => {
               </Link>
             )}
 
-            <Link to="/cart" style={styles.topLink}>
-              <i className="fa-solid fa-cart-shopping" style={{ marginRight: "5px" }}></i>
-              {t("cart") || "Cart"}
-            </Link>
+         <Link to="/cart" style={styles.topLink} onClick={handleCartClick}>
+  <i className="fa-solid fa-cart-shopping" style={{ marginRight: "5px" }}></i>
+  {t("cart") || "Cart"}
+</Link>
+
 
             <div style={styles.searchWrapper}>
               <input
@@ -388,11 +408,13 @@ const MobileMenuItem = ({ item }) => {
                 <Link to="/sign-in" style={styles.mobileSignInLink}>Sign In</Link>
               </div>
             )}
-            <div style={styles.mobileCart}>
-              <Link to="/cart" style={styles.mobileCartLink}>
-                <i className="fas fa-shopping-cart" style={{ marginRight: "8px" }}></i>Cart
-              </Link>
-            </div>
+           <div style={styles.mobileCart}>
+  <Link to="/cart" style={styles.mobileCartLink} onClick={handleCartClick}>
+    <i className="fas fa-shopping-cart" style={{ marginRight: "8px" }}></i>
+    Cart
+  </Link>
+</div>
+
           </div>
         </div>
       )}
