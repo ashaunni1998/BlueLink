@@ -47,7 +47,7 @@ import Review from "./pages/user/Review";
 import ProductDetail from "./pages/user/ProductDetail";
 import Editor from "./pages/user/Editor";
 import DesignSelector from "./pages/user/DesignSelector";
-
+import OtherCardDesigner from "./pages/user/OtherCardDesigner";
 
 
 
@@ -119,6 +119,7 @@ function App() {
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/editor/:id" element={<Editor />} />
         <Route path="/design-selector/:id" element={<DesignSelector />} />
+        <Route path="/other-design-selector/:id" element={<OtherCardDesigner/>}/>
 
 
 

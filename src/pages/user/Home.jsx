@@ -16,7 +16,7 @@ const Home = () => {
 
 
 
-    const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/products`, { credentials: "include" })
@@ -30,20 +30,20 @@ const Home = () => {
 
 
 
-    const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
-const handleShopNowClick = () => {
-  const isLoggedIn = false; // Replace with real auth check
-  if (!isLoggedIn) {
-    setShowModal(true);
-  } else {
-    // Proceed to cart or product detail
-  }
-};
+  const handleShopNowClick = () => {
+    const isLoggedIn = false; // Replace with real auth check
+    if (!isLoggedIn) {
+      setShowModal(true);
+    } else {
+      // Proceed to cart or product detail
+    }
+  };
 
-const handleLoginRedirect = () => {
-  window.location.href = "/login"; // Adjust route as needed
-};
+  const handleLoginRedirect = () => {
+    window.location.href = "/login"; // Adjust route as needed
+  };
 
   useEffect(() => {
     const section = document.getElementById("popular-products");
@@ -52,7 +52,7 @@ const handleLoginRedirect = () => {
     }
   }, []);
 
-const styles = {
+  const styles = {
     section: {
       backgroundColor: "#f7f9f7",
       padding: "40px 20px",
@@ -126,14 +126,14 @@ const styles = {
     },
   };
 
- const logos = [
-  { alt: "Uber", src: "https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" },
-  { alt: "Calm", src: "/homeimages/calm.svg",  style:{height:"600px"}},
-  { alt: "Glossier", src: "/homeimages/glossier.svg"},
-  { alt: "Etsy", src: "/homeimages/etsy.svg" },
-  { alt: "Airbnb", src: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Airbnb_Logo_Bélo.svg/512px-Airbnb_Logo_Bélo.svg.png" },
-  { alt: "TED", src: "/homeimages/TED.svg" },
-];
+  const logos = [
+    { alt: "Uber", src: "https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" },
+    { alt: "Calm", src: "/homeimages/calm.svg", style: { height: "600px" } },
+    { alt: "Glossier", src: "/homeimages/glossier.svg" },
+    { alt: "Etsy", src: "/homeimages/etsy.svg" },
+    { alt: "Airbnb", src: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Airbnb_Logo_Bélo.svg/512px-Airbnb_Logo_Bélo.svg.png" },
+    { alt: "TED", src: "/homeimages/TED.svg" },
+  ];
 
   const reviews = [
     {
@@ -160,30 +160,30 @@ const styles = {
   ];
 
   const Star = () => (
-      <svg
-    width="60px"
-    height=""
-    viewBox="0 0 46 46"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <g className="tp-star">
-      <path
-        className="tp-star__canvas"
-        fill="#dcdce6"
-        d="M0 46.330002h46.375586V0H0z"
-      />
-      <path
-        className="tp-star__shape"
-        fill="#FFF"
-        d="M39.533936 19.711433L13.230239 38.80065l3.838216-11.797827L7.02115 19.711433h12.418975l3.837417-11.798624 3.837418 11.798624h12.418975zM23.2785 31.510075l7.183595-1.509576 2.862114 8.800152L23.2785 31.510075z"
-      />
-    </g>
-  </svg>
+    <svg
+      width="60px"
+      height=""
+      viewBox="0 0 46 46"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g className="tp-star">
+        <path
+          className="tp-star__canvas"
+          fill="#dcdce6"
+          d="M0 46.330002h46.375586V0H0z"
+        />
+        <path
+          className="tp-star__shape"
+          fill="#FFF"
+          d="M39.533936 19.711433L13.230239 38.80065l3.838216-11.797827L7.02115 19.711433h12.418975l3.837417-11.798624 3.837418 11.798624h12.418975zM23.2785 31.510075l7.183595-1.509576 2.862114 8.800152L23.2785 31.510075z"
+        />
+      </g>
+    </svg>
   );
 
- 
+
   return (
-   <div className="responsive-container">
+    <div className="responsive-container">
       {/* <nav
         style={{
           display: "flex",
@@ -205,10 +205,10 @@ const styles = {
           <li style={{ cursor: "pointer" }}>Contact</li>
         </ul>
       </nav> */}
-      <Header/>
+      <Header />
 
       {/* Hero Section */}
-      <HomeSlider/>
+      <HomeSlider />
       {/* Features Section */}
       <section style={{ padding: "10px 5px", backgroundColor: "#ffffff" }}>
         <div
@@ -255,25 +255,25 @@ const styles = {
           </div>
         </div>
       </section>
-{/* Popular Products Section */}
-<section style={{ backgroundColor: "#f5f8f6", padding: "50px 0px", textAlign: "center" }}>
-  <h2 style={{ fontSize: "28px", marginBottom: "10px", fontWeight: "600", color: "#111" }}>
-    Popular products
-  </h2>
-  <p style={{ fontSize: "16px", color: "#666", marginBottom: "40px" }}>
-    These are tried and true favorites that will have you set to get down to business.
-  </p>
+      {/* Popular Products Section */}
+      <section style={{ backgroundColor: "#f5f8f6", padding: "50px 0px", textAlign: "center" }}>
+        <h2 style={{ fontSize: "28px", marginBottom: "10px", fontWeight: "600", color: "#111" }}>
+          Popular products
+        </h2>
+        <p style={{ fontSize: "16px", color: "#666", marginBottom: "40px" }}>
+          These are tried and true favorites that will have you set to get down to business.
+        </p>
 
-  <div
-    style={{
-      display: "grid",
-      gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-      gap: "30px",
-      maxWidth: "1200px",
-      margin: "0 auto",
-    }}
-  >
-      {products.map((product) => (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+            gap: "30px",
+            maxWidth: "1200px",
+            margin: "0 auto",
+          }}
+        >
+          {products.map((product) => (
             <div
               key={product._id}
               style={{
@@ -321,267 +321,267 @@ const styles = {
             </div>
           ))}
         </div>
-      
-</section>
+
+      </section>
 
 
 
 
 
 
-<section
-  style={{
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: "40px 20px",
-    backgroundColor: "#f5f5f5",
-  }}
->
-  <div
-    style={{
-      flex: "1 1 300px",
-      minWidth: "300px",
-      maxWidth: "500px",
-      height: "300px",
-      backgroundImage: "url('/homeimages/flyer.jpeg')",
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      borderRadius: "8px",
-    }}
-  />
-  <div
-    style={{
-      flex: "1 1 300px",
-      minWidth: "300px",
-      maxWidth: "500px",
-      backgroundColor: "#fff",
-      padding: "30px",
-      borderRadius: "8px",
-      boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-      marginTop: "20px",
-    }}
-  >
-    <h1 style={{ fontSize: "24px", marginBottom: "10px" }}>Flyers & Leaflets.</h1>
-    <p style={{ fontSize: "16px", lineHeight: "1.5" }}>
-      Get creative with your Flyer printing.
-      <br />
-      Choose from fancy finishes and premium papers.
-    </p>
-  </div>
-</section>
-
-
-
-
-
-
-<section
-  style={{
-    backgroundColor: "#f5f5f5",
-    padding: "60px 20px",
-  }}
->
-  <div
-    style={{
-      display: "flex",
-      flexWrap: "wrap",
-      gap: "30px",
-      justifyContent: "center",
-    }}
-  >
-    {/* Business Card Design Examples */}
-    <div
-      style={{
-        backgroundColor: "#fff",
-        maxWidth: "500px",
-        flex: "1 1 300px",
-        borderRadius: "8px",
-        overflow: "hidden",
-        boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-      }}
-    >
-      <img
-        src="/homeimages/business-cards-sample.jpg"
-        alt="Business Card Examples"
-        style={{ width: "100%", height: "auto" }}
-      />
-      <div style={{ padding: "24px" }}>
-        <h3 style={{ fontSize: "20px", fontWeight: "600", marginBottom: "10px" }}>
-          10 Business Card design examples
-        </h3>
-        <p style={{ fontSize: "15px", color: "#555", marginBottom: "16px" }}>
-          Blue Links’s designers share 10 standout business cards from different industries.
-        </p>
-        <a
-          href="#"
+      <section
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "40px 20px",
+          backgroundColor: "#f5f5f5",
+        }}
+      >
+        <div
           style={{
-            color: "#007a5e",
-            fontWeight: "600",
-            textDecoration: "none",
+            flex: "1 1 300px",
+            minWidth: "300px",
+            maxWidth: "500px",
+            height: "300px",
+            backgroundImage: "url('/homeimages/flyer.jpeg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            borderRadius: "8px",
+          }}
+        />
+        <div
+          style={{
+            flex: "1 1 300px",
+            minWidth: "300px",
+            maxWidth: "500px",
+            backgroundColor: "#fff",
+            padding: "30px",
+            borderRadius: "8px",
+            boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+            marginTop: "20px",
           }}
         >
-          Read more &gt;
-        </a>
-      </div>
-    </div>
+          <h1 style={{ fontSize: "24px", marginBottom: "10px" }}>Flyers & Leaflets.</h1>
+          <p style={{ fontSize: "16px", lineHeight: "1.5" }}>
+            Get creative with your Flyer printing.
+            <br />
+            Choose from fancy finishes and premium papers.
+          </p>
+        </div>
+      </section>
 
-    {/* Invites Section */}
-    <div
-      style={{
-        backgroundColor: "#fff",
-        maxWidth: "500px",
-        flex: "1 1 300px",
-        borderRadius: "8px",
-        overflow: "hidden",
-        boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-      }}
-    >
-      <img
-        src="/homeimages/invites-sample.jpg"
-        alt="Event Invitations"
-        style={{ width: "100%", height: "auto" }}
-      />
-      <div style={{ padding: "24px" }}>
-        <h3 style={{ fontSize: "20px", fontWeight: "600", marginBottom: "10px" }}>
-          Invites they won’t ignore
-        </h3>
-        <p style={{ fontSize: "15px", color: "#555", marginBottom: "16px" }}>
-          How to create paper invites that actually get a “yes.”
-        </p>
-        <a
-          href="#"
+
+
+
+
+
+      <section
+        style={{
+          backgroundColor: "#f5f5f5",
+          padding: "60px 20px",
+        }}
+      >
+        <div
           style={{
-            color: "#007a5e",
-            fontWeight: "600",
-            textDecoration: "none",
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "30px",
+            justifyContent: "center",
           }}
         >
-          Read more &gt;
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
+          {/* Business Card Design Examples */}
+          <div
+            style={{
+              backgroundColor: "#fff",
+              maxWidth: "500px",
+              flex: "1 1 300px",
+              borderRadius: "8px",
+              overflow: "hidden",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+            }}
+          >
+            <img
+              src="/homeimages/business-cards-sample.jpg"
+              alt="Business Card Examples"
+              style={{ width: "100%", height: "auto" }}
+            />
+            <div style={{ padding: "24px" }}>
+              <h3 style={{ fontSize: "20px", fontWeight: "600", marginBottom: "10px" }}>
+                10 Business Card design examples
+              </h3>
+              <p style={{ fontSize: "15px", color: "#555", marginBottom: "16px" }}>
+                Blue Links’s designers share 10 standout business cards from different industries.
+              </p>
+              <a
+                href="#"
+                style={{
+                  color: "#007a5e",
+                  fontWeight: "600",
+                  textDecoration: "none",
+                }}
+              >
+                Read more &gt;
+              </a>
+            </div>
+          </div>
 
-<section
-  style={{
-    display: "flex",
-    flexWrap: "wrap",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#f5f5f5",
-    padding: "60px 20px",
-  }}
->
-  {/* Left Side - Image */}
-  <div
-    style={{
-      flex: "1 1 50%",
-      minWidth: "300px",
-      maxWidth: "800px",
-      padding: "20px",
-      textAlign: "center",
-    }}
-  >
-    <img
-      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQd19vInA8bUX20OregUR32xvV6CbNZ_kMhDQ&s" // Replace with flyer image if available
-      alt="Flyers & Leaflets"
-      style={{ width: "100%", height: "auto", borderRadius: "8px" }}
-    />
-  </div>
+          {/* Invites Section */}
+          <div
+            style={{
+              backgroundColor: "#fff",
+              maxWidth: "500px",
+              flex: "1 1 300px",
+              borderRadius: "8px",
+              overflow: "hidden",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+            }}
+          >
+            <img
+              src="/homeimages/invites-sample.jpg"
+              alt="Event Invitations"
+              style={{ width: "100%", height: "auto" }}
+            />
+            <div style={{ padding: "24px" }}>
+              <h3 style={{ fontSize: "20px", fontWeight: "600", marginBottom: "10px" }}>
+                Invites they won’t ignore
+              </h3>
+              <p style={{ fontSize: "15px", color: "#555", marginBottom: "16px" }}>
+                How to create paper invites that actually get a “yes.”
+              </p>
+              <a
+                href="#"
+                style={{
+                  color: "#007a5e",
+                  fontWeight: "600",
+                  textDecoration: "none",
+                }}
+              >
+                Read more &gt;
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  {/* Right Side - Text Card */}
-  <div
-    style={{
-      flex: "1 1 400px",
-      maxWidth: "500px",
-      backgroundColor: "#fff",
-      borderRadius: "8px",
-      padding: "40px",
-      boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-      margin: "20px",
-    }}
-  >
-    <h2 style={{ fontSize: "28px", marginBottom: "20px", fontWeight: "600", color: "#111" }}>
-      Flyers & Leaflets. Spread the word.
-    </h2>
-    <p style={{ fontSize: "16px", color: "#555", marginBottom: "30px" }}>
-      Make your message loud and clear with professional, high-impact flyers and leaflets – ideal for promotions, menus, and more.
-    </p>
-    <a
-      href="#"
-      style={{
-        fontSize: "16px",
-        color: "#007a5e",
-        fontWeight: "600",
-        textDecoration: "none",
-      }}
-    >
-      Shop Flyers & Leaflets &gt;
-    </a>
-  </div>
-</section>
-<section
-  style={{
-    display: "flex",
-    flexWrap: "wrap",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#f5f5f5",
-    padding: "60px 20px",
-  }}
->
-  {/* Left Side - Image */}
-  <div
-    style={{
-      flex: "1 1 50%",
-      minWidth: "300px",
-      maxWidth: "800px",
-      padding: "20px",
-      textAlign: "center",
-    }}
-  >
-    <img
-      src="https://thesignaturebox.com/cdn/shop/articles/personalised-gifts-5-things-to-consider-before-choosing-personalized-gifts-294055.jpg?v=1706979689&width=1280" // Replace with flyer image if available
-      alt="Flyers & Leaflets"
-      style={{ width: "100%", height: "auto", borderRadius: "8px" }}
-    />
-  </div>
+      <section
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#f5f5f5",
+          padding: "60px 20px",
+        }}
+      >
+        {/* Left Side - Image */}
+        <div
+          style={{
+            flex: "1 1 50%",
+            minWidth: "300px",
+            maxWidth: "800px",
+            padding: "20px",
+            textAlign: "center",
+          }}
+        >
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQd19vInA8bUX20OregUR32xvV6CbNZ_kMhDQ&s" // Replace with flyer image if available
+            alt="Flyers & Leaflets"
+            style={{ width: "100%", height: "auto", borderRadius: "8px" }}
+          />
+        </div>
 
-  {/* Right Side - Text Card */}
-  <div
-    style={{
-      flex: "1 1 400px",
-      maxWidth: "500px",
-      backgroundColor: "#fff",
-      borderRadius: "8px",
-      padding: "40px",
-      boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-      margin: "20px",
-    }}
-  >
-    <h2 style={{ fontSize: "28px", marginBottom: "20px", fontWeight: "600", color: "#111" }}>
-  Personalized Gift. Make it special.
-</h2>
-<p style={{ fontSize: "16px", color: "#555", marginBottom: "30px" }}>
-  Add a personal touch with custom gifts perfect for any occasion – from birthdays to business branding.
-</p>
+        {/* Right Side - Text Card */}
+        <div
+          style={{
+            flex: "1 1 400px",
+            maxWidth: "500px",
+            backgroundColor: "#fff",
+            borderRadius: "8px",
+            padding: "40px",
+            boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+            margin: "20px",
+          }}
+        >
+          <h2 style={{ fontSize: "28px", marginBottom: "20px", fontWeight: "600", color: "#111" }}>
+            Flyers & Leaflets. Spread the word.
+          </h2>
+          <p style={{ fontSize: "16px", color: "#555", marginBottom: "30px" }}>
+            Make your message loud and clear with professional, high-impact flyers and leaflets – ideal for promotions, menus, and more.
+          </p>
+          <a
+            href="#"
+            style={{
+              fontSize: "16px",
+              color: "#007a5e",
+              fontWeight: "600",
+              textDecoration: "none",
+            }}
+          >
+            Shop Flyers & Leaflets &gt;
+          </a>
+        </div>
+      </section>
+      <section
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#f5f5f5",
+          padding: "60px 20px",
+        }}
+      >
+        {/* Left Side - Image */}
+        <div
+          style={{
+            flex: "1 1 50%",
+            minWidth: "300px",
+            maxWidth: "800px",
+            padding: "20px",
+            textAlign: "center",
+          }}
+        >
+          <img
+            src="https://thesignaturebox.com/cdn/shop/articles/personalised-gifts-5-things-to-consider-before-choosing-personalized-gifts-294055.jpg?v=1706979689&width=1280" // Replace with flyer image if available
+            alt="Flyers & Leaflets"
+            style={{ width: "100%", height: "auto", borderRadius: "8px" }}
+          />
+        </div>
 
-    <a
-      href="#"
-      style={{
-        fontSize: "16px",
-        color: "#007a5e",
-        fontWeight: "600",
-        textDecoration: "none",
-      }}
-    >
-      Shop Flyers & Leaflets &gt;
-    </a>
-  </div>
-</section>
+        {/* Right Side - Text Card */}
+        <div
+          style={{
+            flex: "1 1 400px",
+            maxWidth: "500px",
+            backgroundColor: "#fff",
+            borderRadius: "8px",
+            padding: "40px",
+            boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+            margin: "20px",
+          }}
+        >
+          <h2 style={{ fontSize: "28px", marginBottom: "20px", fontWeight: "600", color: "#111" }}>
+            Personalized Gift. Make it special.
+          </h2>
+          <p style={{ fontSize: "16px", color: "#555", marginBottom: "30px" }}>
+            Add a personal touch with custom gifts perfect for any occasion – from birthdays to business branding.
+          </p>
+
+          <a
+            href="#"
+            style={{
+              fontSize: "16px",
+              color: "#007a5e",
+              fontWeight: "600",
+              textDecoration: "none",
+            }}
+          >
+            Shop Flyers & Leaflets &gt;
+          </a>
+        </div>
+      </section>
 
       {/* CTA Banner */}
       <section
@@ -598,7 +598,7 @@ const styles = {
         <p style={{ fontSize: "18px", marginBottom: "25px" }}>
           Simple process. High-quality. Always on time.
         </p>
-       <a href="/sign-in" ><button
+        <a href="/sign-in" ><button
           style={{
             padding: "10px 28px",
             fontSize: "16px",
@@ -613,10 +613,10 @@ const styles = {
         </button></a>
       </section>
 
-    
-      <Footer/>
 
-      
+      <Footer />
+
+
 
     </div>
 

@@ -48,7 +48,7 @@ export default function Editor() {
     if (tpl.type === "upload") {
       navigate(`/design-selector/${id}`);
     } else {
-      alert(`Selected template: ${tpl.name}`);
+      alert(`/other-design-selector/${id}`);
     }
   };
 
