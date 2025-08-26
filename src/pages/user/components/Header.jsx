@@ -118,23 +118,29 @@ useEffect(() => {
     navigate("/sign-in");
   };
 
-  const SearchDropdown = ({ results, onSelect, isMobile = false }) => (
-    searchQuery && (
-      <div style={styles.searchDropdown}>
-        {loading ? (
-          <div style={styles.searchItem}>Searching...</div>
-        ) : results.length ? (
-          results.map((item) => (
-            <div key={item._id} style={styles.searchItem} onClick={() => onSelect(item)}>
-              {item.name}
-            </div>
-          ))
-        ) : (
-          <div style={styles.searchItem}>No results found</div>
-        )}
-      </div>
-    )
-  );
+  // Inside Header component, before return()
+const SearchDropdown = ({ results, onSelect, isMobile = false }) => (
+  searchQuery && (
+    <div style={isMobile ? styles.mobileSearchDropdown : styles.searchDropdown}>
+      {loading ? (
+        <div style={styles.searchItem}>Searching...</div>
+      ) : results.length ? (
+        results.map((item) => (
+          <div
+            key={item._id}
+            style={styles.searchItem}
+            onClick={() => onSelect(item)}
+          >
+            {item.name}
+          </div>
+        ))
+      ) : (
+        <div style={styles.searchItem}>No results found</div>
+      )}
+    </div>
+  )
+);
+
 
   const AccountDropdown = () => (
     accountDropdown && (
@@ -454,7 +460,7 @@ const styles = {
   searchWrapper: { position: "relative", width: "160px" },
   searchInput: { width: "100%", padding: "8px 36px 8px 12px", border: "1px solid #ccc", borderRadius: "6px" },
   searchIcon: { position: "absolute", right: "10px", top: "50%", transform: "translateY(-50%)", fontSize: "16px", color: "#333", pointerEvents: "none" },
-  searchDropdown: { position: "absolute", top: "38px", left: 0, right: 0, backgroundColor: "#fff", border: "1px solid #ccc", zIndex: 1000, maxHeight: "200px", overflowY: "auto" },
+  searchDropdown: { position: "absolute", top: "42px", left: 0, right: 0, backgroundColor: "#fff", border: "1px solid #ccc", zIndex: 2000, maxHeight: "250px", overflowY: "auto",borderRadius:"6px", },
   searchItem: { padding: "10px", borderBottom: "1px solid #eee", cursor: "pointer", color: "#999" },
   hamburger: { fontSize: "24px", cursor: "pointer" },
   navBar: { position: "relative", zIndex: 20 },
