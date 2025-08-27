@@ -21,6 +21,24 @@ export default function ProductDetail() {
   const [reviewText, setReviewText] = useState('');
   const [showReviews, setShowReviews] = useState(false);
 
+
+
+  // ✅ add this hook at the top of your file
+function useMediaQuery(query) {
+  const [matches, setMatches] = useState(window.matchMedia(query).matches);
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    const listener = () => setMatches(media.matches);
+    media.addEventListener("change", listener);
+    return () => media.removeEventListener("change", listener);
+  }, [query]);
+  return matches;
+}
+
+// inside your component
+const isMobile = useMediaQuery("(max-width: 768px)");
+
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -295,7 +313,7 @@ export default function ProductDetail() {
           <textarea value={reviewText} onChange={e => setReviewText(e.target.value)} placeholder="Write review..."/>
           <button onClick={handleSubmitReview}>Submit Review</button>
         </div> */}
-<Review/>
+<Review productId={id}/>
         <Footer />
       </div>
     </div>

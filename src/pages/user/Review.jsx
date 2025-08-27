@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Star, Trash2 } from "lucide-react"; // Trash icon for delete
-import API_BASE_URL from "../../config"; // ✅ adjust path if needed
+import { Star, Trash2 } from "lucide-react"; 
+import API_BASE_URL from "../../config"; 
 
 const Review = ({ productId }) => {
   const [rating, setRating] = useState(0);
@@ -13,18 +13,34 @@ const Review = ({ productId }) => {
   const fetchReviews = async () => {
     try {
       setLoading(true);
+       console.log("🔎 Fetching reviews for productId:", productId);
       const res = await fetch(
-        `${API_BASE_URL}/review/productReview?productId=${productId}&limit=10&page=1`,
-        { credentials: "include" } // include cookies for auth
+        `${API_BASE_URL}/review/productReview?productId=68a3fcbd8bb89752830da307&limit=10&page=1`,
+        { credentials: "include" }
       );
+       console.log("🔎 Response status:", res.status);
       const data = await res.json();
+      console.log("🔎 Response JSON:", data);
       if (res.ok) {
-        setReviews(data.reviews || []);
+        // console.log("Fetched reviews raw:", data); // 🔎 debug
+        let fetchedReviews = [];
+
+        // normalize response
+     if (data.reviews && Array.isArray(data.reviews.reviews)) {
+  fetchedReviews = data.reviews.reviews;
+} else {
+  fetchedReviews = [];
+}
+
+console.log("✅ Normalized reviews:", fetchedReviews);
+        setReviews(fetchedReviews);
       } else {
         console.error(data.message);
+        setReviews([]);
       }
     } catch (error) {
       console.error("Error fetching reviews:", error);
+      setReviews([]);
     } finally {
       setLoading(false);
     }
@@ -36,13 +52,12 @@ const Review = ({ productId }) => {
       alert("Please select a rating and write a review.");
       return;
     }
-console.log(productId);
-console.log(JSON.stringify(productId));
+
     try {
       const res = await fetch(`${API_BASE_URL}/review`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include", // ensure cookies (auth) are sent
+        credentials: "include", 
         body: JSON.stringify({ productId, rating, comment: reviewText }),
       });
 
@@ -51,7 +66,8 @@ console.log(JSON.stringify(productId));
         alert("Thank you for your review!");
         setRating(0);
         setReviewText("");
-        fetchReviews(); // refresh reviews
+        setShowReviews(true);   // ✅ auto show reviews after submit
+        fetchReviews();         // ✅ refresh reviews
       } else {
         alert(data.message || "Error submitting review");
       }
