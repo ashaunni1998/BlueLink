@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Star } from 'lucide-react';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Review from "./Review";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -285,7 +286,7 @@ export default function ProductDetail() {
         </div>
 
         {/* Reviews */}
-        <div style={styles.reviewsSection}>
+        {/* <div style={styles.reviewsSection}>
           <h3>Leave a Review</h3>
           {[1,2,3,4,5].map(s => (
             <Star key={s} size={24} onClick={() => setRating(s)}
@@ -293,8 +294,8 @@ export default function ProductDetail() {
           ))}
           <textarea value={reviewText} onChange={e => setReviewText(e.target.value)} placeholder="Write review..."/>
           <button onClick={handleSubmitReview}>Submit Review</button>
-        </div>
-
+        </div> */}
+<Review/>
         <Footer />
       </div>
     </div>

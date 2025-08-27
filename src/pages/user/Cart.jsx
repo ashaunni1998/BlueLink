@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 
 const Cart = () => {
   const [items, setItems] = useState([]);
+  const [cartId, setCartId] = useState(null); // ✅ save cartId from backend
   const [loading, setLoading] = useState(true);
 
   // ✅ Fetch cart from backend (cookie auth)
@@ -17,11 +18,13 @@ const Cart = () => {
 
       const data = await res.json();
       if (res.ok && data.cartData) {
-        // backend returns: { cartData: { items: [{ productId, quantity, product }] } }
+        setCartId(data.cartData._id); // ✅ store cartId
+
+        // backend returns: { cartData: { _id, items: [{ productId, quantity, product }] } }
         setItems(
           (data.cartData.items || []).map(i => ({
             id: i.productId,                       // raw productId
-            name: i.product?.name?? "(Product unavailable)",
+            name: i.product?.name ?? "(Product unavailable)",
             desc: i.product?.description ?? "This product is no longer available",
             price: i.product?.price || 0,
             qty: i.quantity,
@@ -42,31 +45,47 @@ const Cart = () => {
     fetchCart();
   }, []);
 
-  // ✅ Update quantity
+  // ✅ Update quantity (now via query params to match backend)
   const handleQtyChange = async (id, value) => {
-    const qty = Math.max(1, value);
+    const qty = Math.max(1, Number.isNaN(parseInt(value)) ? 1 : parseInt(value));
     setItems(prev => prev.map(item => (item.id === id ? { ...item, qty } : item)));
     try {
-      await fetch(`https://kerala-digital-park-server.vercel.app/api/updateCartItem`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: "include",
-        body: JSON.stringify({ productId: id, quantity: qty }),
-      });
+      const res = await fetch(
+        `https://kerala-digital-park-server.vercel.app/api/updateCartItem?cartId=${encodeURIComponent(cartId ?? '')}&productId=${encodeURIComponent(id)}&newQty=${encodeURIComponent(qty)}`,
+        {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: "include",
+        }
+      );
+
+      const data = await res.json();
+      if (!res.ok) {
+        console.error("Update failed:", data.message);
+      }
     } catch (err) {
       console.error(err);
     }
   };
 
-  // ✅ Remove item
+  // ✅ Remove item (now via query params to match backend)
   const handleRemove = async (id) => {
-    setItems(prev => prev.filter(item => item.id !== id));
     try {
-      await fetch(`https://kerala-digital-park-server.vercel.app/api/removeCartItem?productId=${id}`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: "include"
-      });
+      const res = await fetch(
+        `https://kerala-digital-park-server.vercel.app/api/removeCartItem?cartId=${encodeURIComponent(cartId ?? '')}&productId=${encodeURIComponent(id)}`,
+        {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: "include"
+        }
+      );
+
+      const data = await res.json();
+      if (res.ok) {
+        setItems(prev => prev.filter(item => item.id !== id));
+      } else {
+        console.error("Failed to remove:", data.message);
+      }
     } catch (err) {
       console.error(err);
     }
