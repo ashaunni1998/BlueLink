@@ -154,10 +154,12 @@ const isMobile = useMediaQuery("(max-width: 768px)");
       const data = await res.json();
       if (res.ok) {
         alert("✅ Product added to cart!");
-        window.location.href = "/getCart";
+        // window.location.href = "/getCart";
+        navigate("/cart");
       } else if (res.status === 401) {
         alert("⚠️ Session expired. Please login again.");
-        window.location.href = "/signin";
+        // window.location.href = "/signin";
+        navigate("/signin");
       } else {
         alert(data.message || "Failed to add product to cart.");
       }
