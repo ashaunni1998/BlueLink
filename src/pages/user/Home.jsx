@@ -304,7 +304,7 @@ const Home = () => {
                 }}
               >
                 <a
-                  href={`/product/${product._id}`}
+                  href={`/productDetails/${product._id}`}
                   style={{
                     color: "#007a5e",
                     textDecoration: "none",

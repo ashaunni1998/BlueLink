@@ -116,7 +116,7 @@ function App() {
         <Route path="/verify-otp" element={<VerifyOtp />} />
         <Route path="/review" element={<Review />} />
 
-        <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/productDetails/:id" element={<ProductDetail />} />
         <Route path="/editor/:id" element={<Editor />} />
         <Route path="/design-selector/:id" element={<DesignSelector />} />
         <Route path="/other-design-selector/:id" element={<OtherCardDesigner/>}/>
