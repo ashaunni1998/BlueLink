@@ -154,7 +154,7 @@ const isMobile = useMediaQuery("(max-width: 768px)");
       const data = await res.json();
       if (res.ok) {
         alert("✅ Product added to cart!");
-        window.location.href = "/cart";
+        window.location.href = "/getCart";
       } else if (res.status === 401) {
         alert("⚠️ Session expired. Please login again.");
         window.location.href = "/signin";
