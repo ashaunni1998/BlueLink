@@ -303,17 +303,17 @@ const Home = () => {
                   textAlign: "center",
                 }}
               >
-                <a
-                  href={`/productDetails/${product._id}`}
-                  style={{
-                    color: "#007a5e",
-                    textDecoration: "none",
-                    fontWeight: "500",
-                    fontSize: "14px",
-                  }}
-                >
-                  {product.name} &gt;
-                </a>
+               <Link
+  to={`/product/${product._id}`}
+  style={{
+    color: "#007a5e",
+    textDecoration: "none",
+    fontWeight: "500",
+    fontSize: "14px",
+  }}
+>
+  {product.name} &gt;
+</Link>
                 <p style={{ fontSize: "13px", color: "#666", marginTop: "6px" }}>
                   ${product.price}
                 </p>
