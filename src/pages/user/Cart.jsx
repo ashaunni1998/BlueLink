@@ -156,7 +156,12 @@ const Cart = () => {
             <div style={{ marginTop: '1.5rem', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
               <a href="/"><button style={{ backgroundColor: '#2563EB', color: '#fff', padding: '0.5rem 1.5rem', borderRadius: '0.375rem', fontSize: '0.875rem', cursor: 'pointer', border: 'none' }}>← Continue Shopping</button></a>
               {items.length > 0 && (
-                <a href="/checkout"><button style={{ backgroundColor: '#2563EB', color: '#fff', padding: '0.5rem 1.5rem', borderRadius: '0.375rem', fontSize: '0.875rem', cursor: 'pointer', border: 'none' }}>Proceed to Checkout</button></a>
+               <a href="/checkout">
+  <button onClick={() => localStorage.setItem("cart", JSON.stringify(items))}>
+    Proceed to Checkout
+  </button>
+</a>
+
               )}
             </div>
           </div>

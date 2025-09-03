@@ -8,7 +8,6 @@ const Review = ({ productId }) => {
   const [showReviews, setShowReviews] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
-
   // ✅ Fetch reviews from backend
   const fetchReviews = async () => {
     try {
@@ -52,7 +51,7 @@ console.log("✅ Normalized reviews:", fetchedReviews);
       alert("Please select a rating and write a review.");
       return;
     }
-
+const productId="68a3fcbd8bb89752830da307";
     try {
       const res = await fetch(`${API_BASE_URL}/review`, {
         method: "POST",

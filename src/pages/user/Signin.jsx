@@ -7,11 +7,15 @@ import './Home.css';
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import Swal from "sweetalert2";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
+
 
 const SignIn = () => {
   const [hasAccount, setHasAccount] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { setIsLoggedIn } = useContext(AuthContext);
@@ -128,16 +132,26 @@ const SignIn = () => {
                 required
               />
             </div>
-            <div style={styles.inputGroup}>
-              <label>Password</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                style={styles.input}
-                required
-              />
-            </div>
+          {/* 👇 Password with toggle (fixed inside input box) */}
+<div style={styles.inputGroup}>
+  <label>Password</label>
+  <div style={styles.passwordWrapper}>
+    <input
+      type={showPassword ? "text" : "password"}
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      style={styles.passwordInput}
+      required
+    />
+    <span
+      onClick={() => setShowPassword(!showPassword)}
+      style={styles.eyeIcon}
+    >
+      {showPassword ? <FaEyeSlash /> : <FaEye />}
+    </span>
+  </div>
+</div>
+
 
             <a href="/forgotpassword" style={styles.forgotPassword}>
               Forgotten your password?
@@ -203,6 +217,28 @@ const styles = {
     marginBottom: "20px",
   },
   disclaimer: { fontSize: "12px", color: "#555" },
+    inputGroup: { marginBottom: "15px" },
+
+  passwordWrapper: {
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+  },
+  passwordInput: {
+    width: "100%",
+    padding: "10px 40px 10px 10px", // 👈 add right padding so text doesn't overlap with icon
+    fontSize: "14px",
+    borderRadius: "4px",
+    border: "1px solid #ccc",
+    marginTop: "5px",
+  },
+  eyeIcon: {
+    position: "absolute",
+    right: "10px",
+    cursor: "pointer",
+    color: "#555",
+    fontSize: "18px",
+  },
 };
 
 export default SignIn;

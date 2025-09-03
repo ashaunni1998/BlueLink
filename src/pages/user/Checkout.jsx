@@ -1,296 +1,531 @@
+// src/pages/user/Checkout.jsx
 import React, { useState, useEffect } from "react";
-import { loadStripe } from "@stripe/stripe-js";
+import { useNavigate } from "react-router-dom"; 
+
+import axios from "axios";
+import API_BASE_URL from "../../config";
+import CheckoutForm from "./CheckoutForm";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import API_BASE_URL from "../config"; // check correct path
-
-const stripePromise = loadStripe("pk_test_YOUR_PUBLISHABLE_KEY");
+axios.defaults.withCredentials = true;
 
 const Checkout = () => {
-  const [formData, setFormData] = useState({
+  const navigate = useNavigate();
+  const [addresses, setAddresses] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [cart, setCart] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [orderDetails, setOrderDetails] = useState(null);
+
+  const [showAddForm, setShowAddForm] = useState(false);
+
+  
+  const [newAddress, setNewAddress] = useState({
     fullName: "",
-    email: "",
     phone: "",
-    address: "",
+    street: "",
+    streetNumber: "",
+    unitNumber: "",
+    suburb: "",
     city: "",
+    region: "",
     postalCode: "",
-    country: "India",
+    landmark: "",
+    addressType: "Home",
+    isDefault: false,
+    country: "New Zealand",
   });
+const [addressError, setAddressError] = useState("");   // for error messages
+// const [showNewAddressForm, setShowNewAddressForm] = useState(false); // toggle form
 
-  const [orderSummary, setOrderSummary] = useState(null);
-  const [coupon, setCoupon] = useState("");
-  const [discount, setDiscount] = useState(0);
-  const [appliedCoupon, setAppliedCoupon] = useState(null);
+  // ✅ Fetch addresses (cookie auth)
+ const fetchAddresses = async () => {
+  try {
+    console.log("📤 Sending GET /address/addresses with cookies");
+    console.log("Fetching addresses from:", `${API_BASE_URL}/address/addresses`);
+    const res = await axios.get(`https://kerala-digital-park-server.vercel.app/api/address/addresses`, {
+      withCredentials: true,
+    });
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    // console.log("📥 Raw address API response:", res.data);
+    setAddresses(res.data.addresses || []);
+  } catch (err) {
+    console.error("❌ Error fetching addresses:", err);
+  
+  }
+  
+};
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-
-    // load cart from localStorage
-    const cartData = JSON.parse(localStorage.getItem("cart")) || [];
-    setOrderSummary(cartData);
+    fetchAddresses();
   }, []);
 
-  const handleChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+  // ✅ Load cart from localStorage
+  useEffect(() => {
+    const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    setCart(savedCart);
+    const totalPrice = savedCart.reduce(
+      (acc, item) => acc + item.price * item.qty,
+      0
+    );
+    setTotal(totalPrice);
+  }, []);
 
-  const applyCoupon = async () => {
-    if (!coupon) return;
+  // ✅ Add address
+// inside Checkout.jsx
+// ✅ Updated handleAddAddress using axios
+const handleAddAddress = async (e) => {
+  e.preventDefault(); // prevent page reload
+console.log("worked");
+  try {
+    const addressData = {
+      fullName: newAddress.fullName,
+      phone: newAddress.phone,
+      street: newAddress.street,
+      streetNumber: newAddress.streetNumber,
+      unitNumber: newAddress.unitNumber,
+      suburb: newAddress.suburb,
+      city: newAddress.city,
+      region: newAddress.region,
+      postalCode: newAddress.postalCode,
+      landmark: newAddress.landmark,
+      addressType: newAddress.addressType,
+      
+    };
 
-    // 🔹 Example: validate coupon locally (replace with API call if needed)
-    if (coupon === "SAVE10") {
-      setDiscount(10); // 10% discount
-      setAppliedCoupon("SAVE10");
-    } else {
-      alert("Invalid coupon");
-      setDiscount(0);
-      setAppliedCoupon(null);
-    }
+    //  console.log("Sending address payload:", addressData);
 
-    // If you want backend validation instead:
-    // const res = await fetch(`${API_BASE_URL}/coupon/validate`, { method: "POST", ... });
-    // const data = await res.json();
-    // setDiscount(data.discountPercentage);
-  };
+    // ✅ Use axios (with credentials for auth/session)
+    //  console.log("📤 Sending POST /address/add payload:", addressData);
+    // const response = await axios.post(
+    //   `https://kerala-digital-park-server.vercel.app/api/address/add`,
+    //   addressData,
+    //   { withCredentials: true }
+    // );
 
-  const calculateSubtotal = () =>
-    orderSummary?.reduce((sum, item) => sum + item.price * item.quantity, 0) || 0;
+     const response = await axios.post(
+      'https://kerala-digital-park-server.vercel.app/api/address/add',
+      addressData,
+      { withCredentials: true }
+    );
 
-  const calculateTotal = () => {
-    const subtotal = calculateSubtotal();
-    if (discount > 0) {
-      return subtotal - (subtotal * discount) / 100;
-    }
-    return subtotal;
-  };
+    console.log("📥 Response from add:", response.data);
 
-  const handleCheckout = async () => {
+    // ✅ Reset form after success
+    setNewAddress({
+      fullName: "",
+      phone: "",
+      street: "",
+      streetNumber: "",
+      unitNumber: "",
+      suburb: "",
+      city: "",
+      region: "",
+      postalCode: "",
+      landmark: "",
+      addressType: "Home",
+      isDefault: false,
+      country: "New Zealand",
+    });
+
+    setAddressError("");
+    setShowAddForm(false);
+    fetchAddresses();
+    
+  } catch (err) {
+    console.log(err);
+    console.error("Error saving address:", err.response?.data || err.message);
+
+    setAddressError(
+      err.response?.data?.message || "Something went wrong. Please try again."
+    );
+  }
+};
+
+
+
+
+
+  // ✅ Delete address
+  const handleDeleteAddress = async (id) => {
     try {
-      // 1️⃣ Create Order in backend
-      const orderRes = await fetch(`${API_BASE_URL}/order/create`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({
-          products: orderSummary,
-          shippingAddress: formData,
-          coupon: appliedCoupon,
-        }),
+      await axios.delete(`${API_BASE_URL}/address/delete/${id}`, {
+        withCredentials: true,
       });
+      setAddresses(addresses.filter((addr) => addr._id !== id));
+      if (selectedAddress?._id === id) setSelectedAddress(null);
+    } catch (err) {
+      console.error("Error deleting address:", err);
+    }
+  };
 
-      const orderData = await orderRes.json();
-      if (orderRes.status !== 200) throw new Error(orderData.message);
-
-      const orderId = orderData.orderData._id;
-
-      // 2️⃣ Create Payment Intent
-      const paymentRes = await fetch(
-        `${API_BASE_URL}/order/create-payment-intent`,
+  // ✅ Place order
+  const handlePlaceOrder = async () => {
+    if (!selectedAddress) {
+      alert("Please select a shipping address.");
+      return;
+    }
+    try {
+      const orderRes = await axios.post(
+        `${API_BASE_URL}/order/create`,
         {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({
-            order: { orderId },
-            selectedPaymentMethod: "card",
-          }),
-        }
+          products: cart.map((item) => ({
+            productId: item.id,
+            quantity: item.qty,
+          })),
+          address: selectedAddress,
+          totalPrice: total,
+        },
+        { withCredentials: true }
       );
 
-      const paymentData = await paymentRes.json();
-      if (paymentRes.status !== 200) throw new Error(paymentData.message);
+      const order = orderRes.data.orderData;
+     
+      // const orderId = order._id;
+      // const payRes = await axios.post(
+      //   `${API_BASE_URL}/order/create-payment-intent`,
+      //   { order: { orderId: order._id }, selectedPaymentMethod: "card" },
+      //   { withCredentials: true }
+      // );
+      // navigate("/checkoutform", {
+      //   state: {
+      //     orderDetails: {
+      //       orderId: order._id,
+      //       amount: payRes.data.paymentIntent.amount,
+      //       clientSecret: payRes.data.paymentIntent.client_secret,
+      //       description: `Order #${order._id}`,
+      //     },
+      //   },
+      // });
 
-      // 3️⃣ Confirm Payment
-      const stripe = await stripePromise;
-      const { client_secret } = paymentData.paymentIntent;
-
-      const { error } = await stripe.confirmCardPayment(client_secret);
-      if (error) {
-        alert(error.message);
-      } else {
-        alert("✅ Payment Successful!");
-      }
+          navigate("/checkout-form", {
+      state: {
+        orderDetails: {
+          amount: order.totalPrice * 100, // Stripe works in cents
+          currency: "usd",
+          orderId: order._id,
+          description: "Test Order",
+        },
+      },
+    });
     } catch (err) {
-      alert(`Error: ${err.message}`);
+      console.error("Checkout error:", err);
     }
   };
 
+  //     setOrderDetails({
+  //       orderId: order._id,
+  //       amount: payRes.data.paymentIntent.amount,
+  //       clientSecret: payRes.data.paymentIntent.client_secret,
+  //       description: `Order #${order._id}`,
+  //     });
+  //   } catch (err) {
+  //     console.error("Checkout error:", err);
+  //   }
+  // };
+
   return (
-    <div style={{ maxWidth: "100%", overflowX: "hidden" }}>
-      <div style={{ width: "90%", margin: "0 auto" }}>
-        <Header />
+    <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "20px" }}>
+      <style>
+        {`
+          @media (max-width: 768px) {
+            .checkout-grid {
+              display: block !important;
+            }
+            .checkout-card {
+              margin-bottom: 20px !important;
+            }
+            .place-order-btn {
+              width: 100% !important;
+            }
+          }
+        `}
+      </style>
 
-        <div style={{ maxWidth: "1200px", margin: "50px auto", padding: "0 20px" }}>
-          <h2 style={{ fontSize: "32px", marginBottom: "30px", textAlign: "center" }}>
-            Checkout
-          </h2>
+      <Header />
+      <h2 style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "20px" }}>
+        Checkout
+      </h2>
 
+      <div
+        className="checkout-grid"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "20px",
+        }}
+      >
+        {/* Address Section */}
+        <div
+          className="checkout-card"
+          style={{
+            background: "#fff",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+            borderRadius: "12px",
+            padding: "20px",
+          }}
+        >
           <div
             style={{
               display: "flex",
-              flexDirection: isMobile ? "column" : "row",
-              gap: "40px",
+              justifyContent: "space-between",
+              marginBottom: "15px",
+              alignItems: "center",
             }}
           >
-            {/* Billing Form */}
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleCheckout();
-              }}
+            <h3 style={{ fontSize: "18px", fontWeight: "600" }}>
+              Shipping Address
+            </h3>
+            <button
+              onClick={() => setShowAddForm(!showAddForm)}
               style={{
-                flex: 1,
-                minWidth: "300px",
-                background: "#f9f9f9",
-                padding: "30px",
-                borderRadius: "10px",
-                boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                display: "flex",
-                flexDirection: "column",
-                gap: "15px",
+                padding: "6px 12px",
+                fontSize: "14px",
+                background: "#16a34a",
+                color: "#fff",
+                borderRadius: "6px",
+                border: "none",
+                cursor: "pointer",
               }}
             >
-              <h3 style={{ fontSize: "20px", marginBottom: "10px" }}>
-                Billing Information
-              </h3>
+              {showAddForm ? "Cancel" : "Add New"}
+            </button>
+          </div>
 
-              {["fullName", "email", "phone", "address", "city", "postalCode", "country"].map(
-                (field) => (
-                  <input
-                    key={field}
-                    type="text"
-                    name={field}
-                    placeholder={field.replace(/([A-Z])/g, " $1")}
-                    value={formData[field]}
-                    onChange={handleChange}
-                    required
-                    style={inputStyle}
-                  />
-                )
-              )}
+          {showAddForm && (
+            <form onSubmit={handleAddAddress} style={{ marginBottom: "15px" }}>
+              {[
+                { key: "fullName", label: "Full Name" },
+                { key: "phone", label: "Phone Number" },
+                { key: "street", label: "Street" },
+                { key: "streetNumber", label: "Street Number" },
+                { key: "unitNumber", label: "Unit Number (optional)" },
+                { key: "suburb", label: "Suburb" },
+                { key: "city", label: "City" },
+                { key: "region", label: "Region" },
+                { key: "postalCode", label: "Postal Code" },
+                { key: "landmark", label: "Landmark (optional)" },
+              ].map((field) => (
+                <input
+                  key={field.key}
+                  type="text"
+                  placeholder={field.label}
+                  value={newAddress[field.key]}
+                  onChange={(e) =>
+                    setNewAddress({ ...newAddress, [field.key]: e.target.value })
+                  }
+                  required={
+                    field.key !== "unitNumber" && field.key !== "landmark"
+                  }
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    border: "1px solid #ccc",
+                    borderRadius: "6px",
+                    marginBottom: "10px",
+                  }}
+                />
+              ))}
+
+              <select
+                value={newAddress.addressType}
+                onChange={(e) =>
+                  setNewAddress({ ...newAddress, addressType: e.target.value })
+                }
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  border: "1px solid #ccc",
+                  borderRadius: "6px",
+                  marginBottom: "10px",
+                }}
+              >
+                <option value="Home">Home</option>
+                <option value="Work">Work</option>
+                <option value="Other">Other</option>
+              </select>
+
+              <label
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  marginBottom: "10px",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  checked={newAddress.isDefault}
+                  onChange={(e) =>
+                    setNewAddress({ ...newAddress, isDefault: e.target.checked })
+                  }
+                />
+                Set as Default Address
+              </label>
 
               <button
                 type="submit"
                 style={{
-                  marginTop: "20px",
-                  padding: "14px",
-                  backgroundColor: "#28a745",
+                  width: "100%",
+                  padding: "10px",
+                  background: "#2563eb",
                   color: "#fff",
                   border: "none",
                   borderRadius: "6px",
-                  fontWeight: "bold",
-                  fontSize: "16px",
                   cursor: "pointer",
                 }}
               >
-                Complete Order
+                Save Address
               </button>
+            {addressError && (
+  <p style={{ color: "red", marginTop: "8px" }}>{addressError}</p>
+)}
+
             </form>
+          )}
 
-            {/* Order Summary */}
-            <div
-              style={{
-                flex: 1,
-                minWidth: "300px",
-                background: "#ffffff",
-                padding: "30px",
-                borderRadius: "10px",
-                border: "1px solid #ddd",
-                boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
-              }}
-            >
-              <h3 style={{ fontSize: "20px", marginBottom: "20px" }}>
-                Order Summary
-              </h3>
-
-              {orderSummary && orderSummary.length > 0 ? (
-                <>
-                  {orderSummary.map((item, idx) => (
-                    <div
-                      key={idx}
-                      style={{
-                        marginBottom: "20px",
-                        borderBottom: "1px solid #ccc",
-                        paddingBottom: "10px",
-                      }}
-                    >
-                      <p style={{ fontWeight: "bold" }}>{item.name}</p>
-                      <p style={{ margin: "5px 0" }}>Qty: {item.quantity}</p>
-                      <p style={{ margin: "5px 0" }}>Price: ₹{item.price}</p>
+          {addresses.length > 0 ? (
+            <div>
+              {addresses.map((addr) => (
+                <label
+                  key={addr._id}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    padding: "12px",
+                    border: `1px solid ${
+                      selectedAddress?._id === addr._id ? "#2563eb" : "#ccc"
+                    }`,
+                    borderRadius: "8px",
+                    marginBottom: "10px",
+                    background:
+                      selectedAddress?._id === addr._id ? "#eff6ff" : "#fff",
+                    cursor: "pointer",
+                  }}
+                >
+                  <div style={{ display: "flex" }}>
+                    <input
+                      type="radio"
+                      checked={selectedAddress?._id === addr._id}
+                      onChange={() => setSelectedAddress(addr)}
+                      style={{ marginRight: "10px" }}
+                    />
+                    <div>
+                      <p style={{ fontWeight: "600" }}>{addr.fullName}</p>
+                      <p style={{ fontSize: "14px", color: "#555" }}>
+                        {addr.street} {addr.streetNumber},{" "}
+                        {addr.unitNumber && `${addr.unitNumber}, `}
+                        {addr.suburb}, {addr.city}, {addr.region} -{" "}
+                        {addr.postalCode}
+                      </p>
+                      <p style={{ fontSize: "14px", color: "#777" }}>
+                        {addr.phone} • {addr.addressType}
+                        {addr.isDefault ? " • Default" : ""}
+                      </p>
                     </div>
-                  ))}
-
-                  <p>Subtotal: ₹{calculateSubtotal()}</p>
-
-                  {discount > 0 && (
-                    <p style={{ color: "green" }}>
-                      Discount ({discount}%): -₹
-                      {(calculateSubtotal() * discount) / 100}
-                    </p>
-                  )}
-
-                  <p
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteAddress(addr._id)}
                     style={{
-                      fontWeight: "bold",
-                      fontSize: "18px",
-                      marginTop: "10px",
+                      fontSize: "14px",
+                      color: "red",
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
                     }}
                   >
-                    Total: ₹{calculateTotal()}
-                  </p>
-
-                  {/* Coupon Field */}
-                  <div style={{ marginTop: "20px" }}>
-                    <input
-                      type="text"
-                      placeholder="Enter Coupon"
-                      value={coupon}
-                      onChange={(e) => setCoupon(e.target.value)}
-                      style={{
-                        padding: "10px",
-                        border: "1px solid #ccc",
-                        borderRadius: "6px",
-                        width: "70%",
-                      }}
-                    />
-                    <button
-                      type="button"
-                      onClick={applyCoupon}
-                      style={{
-                        marginLeft: "10px",
-                        padding: "10px 15px",
-                        background: "#007bff",
-                        color: "#fff",
-                        border: "none",
-                        borderRadius: "6px",
-                        cursor: "pointer",
-                      }}
-                    >
-                      Apply
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <p>No items in cart</p>
-              )}
+                    Delete
+                  </button>
+                </label>
+              ))}
             </div>
-          </div>
+          ) : (
+            <p style={{ color: "#777" }}>No saved addresses. Please add one.</p>
+          )}
         </div>
 
-        <Footer />
+        {/* Order Summary */}
+        <div
+          className="checkout-card"
+          style={{
+            background: "#fff",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+            borderRadius: "12px",
+            padding: "20px",
+          }}
+        >
+          <h3
+            style={{ fontSize: "18px", fontWeight: "600", marginBottom: "15px" }}
+          >
+            Order Summary
+          </h3>
+          <div>
+            {cart.map((item) => (
+              <div
+                key={item.id}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid #eee",
+                  padding: "8px 0",
+                  color: "#444",
+                }}
+              >
+                <span>
+                  {item.name} × {item.qty}
+                </span>
+                <span>${(item.price * item.qty).toFixed(2)}</span>
+              </div>
+            ))}
+          </div>
+          <h4
+            style={{
+              fontSize: "16px",
+              fontWeight: "bold",
+              marginTop: "15px",
+            }}
+          >
+            Total: ${total.toFixed(2)}
+          </h4>
+        </div>
       </div>
+
+      {/* Place Order Button */}
+      <div style={{ marginTop: "20px" }}>
+        {!orderDetails ? (
+          <button
+            onClick={handlePlaceOrder}
+            className="place-order-btn"
+            style={{
+              padding: "12px 24px",
+              background: "#2563eb",
+              color: "#fff",
+              fontWeight: "600",
+              border: "none",
+              borderRadius: "8px",
+              cursor: "pointer",
+            }}
+          >
+            Place Order & Continue to Payment
+          </button>
+        ) : (
+          <div
+            style={{
+              marginTop: "20px",
+              background: "#fff",
+              padding: "20px",
+              borderRadius: "12px",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+            }}
+          >
+            <CheckoutForm orderDetails={orderDetails} />
+          </div>
+        )}
+      </div>
+      <Footer />
     </div>
   );
-};
-
-const inputStyle = {
-  padding: "12px",
-  border: "1px solid #ccc",
-  borderRadius: "6px",
 };
 
 export default Checkout;

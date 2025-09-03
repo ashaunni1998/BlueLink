@@ -4,6 +4,8 @@ import { Star } from 'lucide-react';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Review from "./Review";
+import CropImage from "./CropImage";
+import CustomRequirement from "./CustomRequirement";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -20,6 +22,12 @@ export default function ProductDetail() {
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
   const [showReviews, setShowReviews] = useState(false);
+
+
+
+  const [isCropOpen, setIsCropOpen] = useState(false);
+const [croppedImage, setCroppedImage] = useState(null);
+const [selectedFile, setSelectedFile] = useState(null);
 
 
 
@@ -180,26 +188,60 @@ const isMobile = useMediaQuery("(max-width: 768px)");
     alert("Review submitted!");
   };
 
+
+
+
+
+
+const handleFileChange = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    setSelectedFile(file);
+    setIsCropOpen(true); // open crop modal
+  }
+};
+
+const handleCropComplete = (newImage) => {
+  setCroppedImage(newImage); // {url, file, isExisting:false}
+};
+
+
+const handleSubmit = () => {
+  if (!croppedImage) {
+    alert("Please upload and crop an image before submitting.");
+    return;
+  }
+
+  // For now just log/alert
+  console.log("Submitted cropped image:", croppedImage);
+  alert("Image submitted successfully!");
+
+  // 🚀 Later, replace with API upload
+  // const formData = new FormData();
+  // formData.append("image", croppedImage.file);
+  // await fetch("/api/upload", { method: "POST", body: formData });
+};
+
   // ---- STYLES ----
   const styles = {
     container: { backgroundColor: "#f8f9fa", minHeight: "100vh" },
     imageSection: {
       flex: 1,
-      maxWidth: window.innerWidth < 768 ? '100%' : '500px',
-      position: window.innerWidth < 768 ? 'relative' : 'sticky',
-      top: window.innerWidth < 768 ? 'auto' : '100px',
+      maxWidth: isMobile ? '100%' : '500px',
+      position: isMobile ? 'relative' : 'sticky',
+      top: isMobile ? 'auto' : '100px',
       height: 'fit-content'
     },
     detailsSection: {
       flex: 1.2,
       backgroundColor: 'white',
       borderRadius: '12px',
-      padding: window.innerWidth < 768 ? '20px' : '30px'
+     padding: isMobile ? '20px' : '30px'
     },
     reviewsSection: {
       maxWidth: '800px',
       margin: '0 auto',
-      padding: window.innerWidth < 768 ? '20px' : '40px',
+      padding: isMobile ? '20px' : '40px',
       backgroundColor: 'white',
       borderRadius: '12px',
       marginBottom: '40px'
@@ -208,8 +250,8 @@ const isMobile = useMediaQuery("(max-width: 768px)");
       display: 'flex',
       gap: '10px',
       marginTop: '15px',
-      overflowX: window.innerWidth < 768 ? 'auto' : 'visible',
-      padding: window.innerWidth < 768 ? '0 0 10px 0' : '0'
+     overflowX: isMobile ? 'auto' : 'visible',
+   padding: isMobile ? '0 0 10px 0' : '0'
     },
     thumbnail: {
       width: '60px',
@@ -246,7 +288,7 @@ const isMobile = useMediaQuery("(max-width: 768px)");
   if (loading) return <p style={{ textAlign: "center", padding: "40px" }}>Loading product...</p>;
   if (error) return <p style={{ textAlign: "center", color: "red", padding: "40px" }}>{error}</p>;
   if (!product) return <p style={{ textAlign: "center", padding: "40px" }}>Product not found.</p>;
-
+console.log(id);
   return (
     <div style={styles.container}>
       <div className="responsive-container">
@@ -254,13 +296,18 @@ const isMobile = useMediaQuery("(max-width: 768px)");
 
         {/* Main */}
         <div style={{
-          display: 'flex',
-          gap: window.innerWidth < 768 ? '20px' : '40px',
-          padding: window.innerWidth < 768 ? '20px' : '40px',
+          
+        
+          padding: isMobile ? '20px' : '40px',
           maxWidth: '1200px',
           margin: '0 auto',
-          flexDirection: window.innerWidth < 768 ? 'column' : 'row'
+          
         }}>
+           <div style={{
+    display: 'flex',
+    gap: isMobile ? '20px' : '40px',
+    flexDirection: isMobile ? 'column' : 'row'
+  }}>
           {/* Images */}
           <div style={styles.imageSection}>
             {product.images?.length > 0 ? (
@@ -294,30 +341,220 @@ const isMobile = useMediaQuery("(max-width: 768px)");
           </div>
 
           {/* Details */}
-          <div style={styles.detailsSection}>
-            <h1>{product.name}</h1>
-            <p>{product.description}</p>
-            <p><strong>Price:</strong> ${product.price}</p>
-            <button onClick={handleAddToCart} style={styles.button}>🛒 Add to Cart</button>
-            <button onClick={() => navigate(`/editor/${product._id}`)} style={styles.button}>
-              🎨 Customize / Upload Your Design
-            </button>
-          </div>
-        </div>
+         <div style={styles.detailsSection}>
+  {/* Basic Details */}
+  <h1>{product.name}</h1>
+  <p>{product.description}</p>
+  <p><strong>Price:</strong> ${product.price}</p>
+
+  {/* Images */}
+  {/* {product.images && product.images.length > 0 && (
+    <div style={styles.imageGallery}>
+      {product.images.map((img, index) => (
+        <img key={index} src={img} alt={product.name} style={styles.productImage} />
+      ))}
+    </div>
+  )} */}
+
+  {/* Sizes */}
+  {product.size && product.size.length > 0 && (
+    <div>
+      <h3>Available Sizes</h3>
+      <ul>
+        {product.size.map((s, i) => (
+          <li key={i}>
+            {s.name}: {s.size.width} x {s.size.height}
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+
+  {/* Paper */}
+  {product.paper && product.paper.length > 0 && (
+    <div>
+      <h3>Paper Options</h3>
+      <ul>
+        {product.paper.map((p, i) => (
+          <li key={i}>
+            {p.name} - {p.points.join(", ")}
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+
+  {/* Finish */}
+  {product.finish && product.finish.length > 0 && (
+    <div>
+      <h3>Finish</h3>
+      <ul>
+        {product.finish.map((f, i) => (
+          <li key={i}>
+            <strong>{f.name}</strong>: {f.description}
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+
+  {/* Corners */}
+  {product.corner && product.corner.length > 0 && (
+    <div>
+      <h3>Corners</h3>
+      <ul>
+        {product.corner.map((c, i) => (
+          <li key={i}>
+            <strong>{c.name}</strong>: {c.description}
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+
+  {/* Rating */}
+  <div>
+    <h3>Rating</h3>
+    <p>
+      {product.rating.count > 0
+        ? `${(product.rating.total / product.rating.count).toFixed(1)} ⭐ (${product.rating.count} reviews)`
+        : "No ratings yet"}
+    </p>
+  </div>
+
+  {/* Add to Cart */}
+  <button onClick={handleAddToCart} style={styles.button}>
+    🛒 Add to Cart
+  </button>
+</div>
+</div>
+<div style={{ marginTop: "10px" }}>
+{/* Customer Needs */}
+<CustomRequirement/>
+<div
+  style={{
+    maxWidth: "420px",
+    margin: "20px auto",
+    padding: "20px",
+    borderRadius: "12px",
+    background: "#fff",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+    fontFamily: "Arial, sans-serif",
+  }}
+>
+  <h2
+    style={{
+      fontSize: "20px",
+      fontWeight: "bold",
+      marginBottom: "16px",
+      color: "#222",
+    }}
+  >
+    Upload Product Image
+  </h2>
+
+  {/* File Upload */}
+  <input
+    type="file"
+    accept="image/*"
+    onChange={handleFileChange}
+    style={{
+      display: "block",
+      width: "100%",
+      padding: "10px",
+      marginBottom: "20px",
+      border: "1px solid #ddd",
+      borderRadius: "8px",
+      cursor: "pointer",
+      fontSize: "14px",
+      background: "#f9f9f9",
+    }}
+  />
+
+  {/* Show cropped image preview */}
+  {croppedImage && (
+    <div style={{ marginTop: "20px" }}>
+      <h3
+        style={{
+          fontSize: "16px",
+          fontWeight: "600",
+          marginBottom: "10px",
+          color: "#444",
+        }}
+      >
+        Cropped Preview:
+      </h3>
+      <div
+        style={{
+          width: "180px",
+          height: "180px",
+          borderRadius: "10px",
+          overflow: "hidden",
+          border: "1px solid #ccc",
+          boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+          marginBottom: "20px",
+        }}
+      >
+        <img
+          src={croppedImage.url}
+          alt="Cropped"
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        />
+      </div>
+
+      {/* Submit Button */}
+      <button
+        onClick={handleSubmit}
+        style={{
+          display: "inline-block",
+          padding: "10px 20px",
+          fontSize: "15px",
+          fontWeight: "600",
+          color: "#fff",
+          background: "#007bff",
+          border: "none",
+          borderRadius: "8px",
+          cursor: "pointer",
+          transition: "background 0.3s ease",
+        }}
+        onMouseOver={(e) => (e.target.style.background = "#0056b3")}
+        onMouseOut={(e) => (e.target.style.background = "#007bff")}
+      >
+        Submit
+      </button>
+    </div>
+  )}
+
+  {/* CropImage Modal */}
+  <CropImage
+    imageFile={selectedFile}
+    isOpen={isCropOpen}
+    setIsOpen={setIsCropOpen}
+    onCropComplete={handleCropComplete}
+  />
+</div>
+
 
         {/* Reviews */}
         {/* <div style={styles.reviewsSection}>
           <h3>Leave a Review</h3>
           {[1,2,3,4,5].map(s => (
             <Star key={s} size={24} onClick={() => setRating(s)}
-              fill={rating >= s ? '#facc15' : 'none'} stroke="#facc15" style={{ cursor: 'pointer' }} />
-          ))}
-          <textarea value={reviewText} onChange={e => setReviewText(e.target.value)} placeholder="Write review..."/>
-          <button onClick={handleSubmitReview}>Submit Review</button>
-        </div> */}
+            fill={rating >= s ? '#facc15' : 'none'} stroke="#facc15" style={{ cursor: 'pointer' }} />
+            ))}
+            <textarea value={reviewText} onChange={e => setReviewText(e.target.value)} placeholder="Write review..."/>
+            <button onClick={handleSubmitReview}>Submit Review</button>
+            </div> */}
+          
 <Review productId={id}/>
+        </div>
+        </div>
         <Footer />
-      </div>
-    </div>
+        </div>
+       </div>
+            
+      
+    
+    
   );
 }

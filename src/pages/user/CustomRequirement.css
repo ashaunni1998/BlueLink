@@ -1,0 +1,117 @@
+.profile-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.08);
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.profile-header {
+  margin-bottom: 16px;
+}
+
+.profile-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.profile-subtitle {
+  font-size: 14px;
+  color: #666;
+}
+
+.profile-content {
+  display: flex;
+  gap: 20px;
+}
+
+.logo-upload {
+  flex: 1;
+  text-align: center;
+}
+
+.placeholder-box {
+  width: 150px;
+  height: 150px;
+  border: 2px dashed #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 8px;
+  border-radius: 8px;
+}
+
+.logo-preview {
+  position: relative;
+  display: inline-block;
+}
+
+.logo-preview img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.remove-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(0,0,0,0.6);
+  border: none;
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 12px;
+  width: 20px;
+  height: 20px;
+}
+
+.details-form {
+  flex: 2;
+}
+
+.label {
+  display: block;
+  margin: 8px 0 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.input-box,
+.textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.profile-footer {
+  text-align: right;
+  margin-top: 16px;
+}
+
+.save-btn {
+  background: #6c5ce7;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.save-btn:hover {
+  background: #5846d6;
+}

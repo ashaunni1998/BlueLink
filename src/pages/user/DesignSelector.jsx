@@ -6,6 +6,10 @@ import { Menu, X, Type, Image as ImageIcon, Crop, Save } from "lucide-react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
 export default function DesignSelector() {
   const [images, setImages] = useState([]);
   const [selectedImg, setSelectedImg] = useState(null);
@@ -362,53 +366,71 @@ export default function DesignSelector() {
     }
   };
 
-  const renderTextSection = () => (
-    <div style={{ display: !isMobile || activeTab === "text" ? "block" : "none" }}>
-      <h3 style={{ 
-        display: "flex", 
-        alignItems: "center", 
-        gap: "8px", 
+const renderTextSection = () => (
+  <div style={{ display: !isMobile || activeTab === "text" ? "block" : "none" }}>
+    <h3
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "8px",
         fontSize: isMobile ? "16px" : "18px",
-        marginBottom: "15px"
-      }}>
-        <Type size={18} /> Text
-      </h3>
-      
-      {texts.map((t) => (
-        <div key={t.id} style={styles.textItem}>
-          <input
-            value={t.value}
-            onChange={(e) => updateText(t.id, e.target.value)}
+        marginBottom: "15px",
+      }}
+    >
+      <Type size={18} /> Text
+    </h3>
+
+    {texts.map((t) => (
+      <div key={t.id} style={{ marginBottom: "12px" }}>
+        {activeTextId === t.id ? (
+          <CKEditor
+            editor={ClassicEditor}
+            config={{
+              // licenseKey: "<YOUR_LICENSE_KEY>", // or 'GPL'
+              // plugins: [Essentials, Paragraph, Bold, Italic],
+               toolbar: ["undo", "redo", "|", "bold", "italic", "|"],
+            }}
+            data={t.value}
+            onChange={(event, editor) => updateText(t.id, editor.getData())}
+          />
+        ) : (
+          <div
             onClick={() => setActiveTextId(t.id)}
             style={{
-              ...styles.textInput,
-              ...(activeTextId === t.id ? styles.activeTextInput : {})
+              padding: "8px",
+              border: "1px solid #d1d5db",
+              borderRadius: "6px",
+              cursor: "pointer",
+              background: "#f9fafb",
             }}
-            placeholder="Enter text..."
-          />
-          <button
-            onClick={() => deleteText(t.id)}
-            style={styles.deleteButton}
-            title="Delete text"
           >
-            <X size={12} />
-          </button>
-        </div>
-      ))}
-      
-      <button 
-        style={{
-          ...styles.btn,
-          background: "#10b981",
-          color: "white",
-          width: "100%"
-        }} 
-        onClick={addText}
-      >
-        <Type size={16} /> Add Text
-      </button>
-    </div>
-  );
+            <span dangerouslySetInnerHTML={{ __html: t.value }} />
+          </div>
+        )}
+
+        <button
+          onClick={() => deleteText(t.id)}
+          style={styles.deleteButton}
+          title="Delete text"
+        >
+          <X size={12} />
+        </button>
+      </div>
+    ))}
+
+    <button
+      style={{
+        ...styles.btn,
+        background: "#10b981",
+        color: "white",
+        width: "100%",
+      }}
+      onClick={addText}
+    >
+      <Type size={16} /> Add Text
+    </button>
+  </div>
+);
 
   const renderImagesSection = () => (
     <div style={{ display: !isMobile || activeTab === "images" ? "block" : "none" }}>
@@ -565,30 +587,30 @@ export default function DesignSelector() {
               )}
 
               {texts.map((t) => (
-                <div
-                  key={t.id}
-                  draggable
-                  onDragEnd={(e) => handleDrag(e, t.id)}
-                  onClick={() => setActiveTextId(t.id)}
-                  style={{
-                    position: "absolute",
-                    top: `${t.y}px`,
-                    left: `${t.x}px`,
-                    padding: "4px 8px",
-                    background: activeTextId === t.id ? "rgba(59,130,246,0.2)" : "rgba(255,255,255,0.9)",
-                    border: activeTextId === t.id ? "2px dashed #3b82f6" : "1px solid #e5e7eb",
-                    borderRadius: "4px",
-                    fontWeight: "600",
-                    fontSize: isMobile ? "12px" : "14px",
-                    cursor: "move",
-                    userSelect: "none",
-                    minWidth: "50px",
-                    textAlign: "center"
-                  }}
-                >
-                  {t.value}
-                </div>
-              ))}
+  <div
+    key={t.id}
+    draggable
+    onDragEnd={(e) => handleDrag(e, t.id)}
+    onClick={() => setActiveTextId(t.id)}
+    style={{
+      position: "absolute",
+      top: `${t.y}px`,
+      left: `${t.x}px`,
+      padding: "4px 8px",
+      background: activeTextId === t.id ? "rgba(59,130,246,0.2)" : "rgba(255,255,255,0.9)",
+      border: activeTextId === t.id ? "2px dashed #3b82f6" : "1px solid #e5e7eb",
+      borderRadius: "4px",
+      fontSize: isMobile ? "12px" : "14px",
+      cursor: "move",
+      userSelect: "none",
+      minWidth: "50px",
+      textAlign: "center",
+    }}
+  >
+    <div dangerouslySetInnerHTML={{ __html: t.value }} />
+  </div>
+))}
+
             </div>
           </div>
         </div>

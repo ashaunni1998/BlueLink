@@ -303,17 +303,17 @@ const Home = () => {
                   textAlign: "center",
                 }}
               >
-               <Link
-  to={`/product/${product._id}`}
-  style={{
-    color: "#007a5e",
-    textDecoration: "none",
-    fontWeight: "500",
-    fontSize: "14px",
-  }}
->
-  {product.name} &gt;
-</Link>
+                <Link
+                  to={`/product/${product._id}`}
+                  style={{
+                    color: "#007a5e",
+                    textDecoration: "none",
+                    fontWeight: "500",
+                    fontSize: "14px",
+                  }}
+                >
+                  {product.name} &gt;
+                </Link>
                 <p style={{ fontSize: "13px", color: "#666", marginTop: "6px" }}>
                   ${product.price}
                 </p>
@@ -498,6 +498,7 @@ const Home = () => {
             flex: "1 1 400px",
             maxWidth: "500px",
             backgroundColor: "#fff",
+
             borderRadius: "8px",
             padding: "40px",
             boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
