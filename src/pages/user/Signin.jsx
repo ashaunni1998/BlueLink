@@ -23,13 +23,14 @@ const SignIn = () => {
 
   useEffect(() => {
     // Handle Google Login callback
-    window.handleGoogleResponse = (response) => {
-      const userObject = jwtDecode(response.credential);
-      console.log("Google User:", userObject);
-      // Cookies are set in backend; just update logged-in state
-      setIsLoggedIn(true);
-      navigate("/dashboard");
-    };
+  //   window.handleGoogleResponse = (response) => {
+  //     const userObject = jwtDecode(response.credential);
+  //     console.log("Google User:", userObject);
+  //     // Cookies are set in backend; just update logged-in state
+  //      setIsLoggedIn(true);
+  //     navigate("/dashboard");
+  //   };
+  
   }, [navigate, setIsLoggedIn]);
 
   const handleSubmit = async (e) => {

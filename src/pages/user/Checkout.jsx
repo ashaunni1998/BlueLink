@@ -16,7 +16,10 @@ const Checkout = () => {
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
   const [orderDetails, setOrderDetails] = useState(null);
-
+const [couponCode, setCouponCode] = useState("");
+const [discountAmount, setDiscountAmount] = useState(0);
+const [couponError, setCouponError] = useState("");
+const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
 
   
@@ -224,6 +227,36 @@ console.log("worked");
   //   }
   // };
 
+
+  const handleApplyCoupon = async () => {
+  if (!couponCode.trim()) {
+    setCouponError("Please enter a coupon code.");
+    return;
+  }
+  try {
+    const res = await axios.put(
+      `${API_BASE_URL}/order/apply-coupon`,
+      {
+        orderId: orderDetails?._id, // use current order id
+        coupon: couponCode,
+      },
+      { withCredentials: true }
+    );
+
+    if (res.data && res.data.data) {
+      setDiscountAmount(res.data.data.discount || 0);
+      setAppliedCoupon(res.data.data.coupon || couponCode);
+      setCouponError("");
+    }
+  } catch (err) {
+    console.error("❌ Coupon error:", err.response?.data || err.message);
+    setDiscountAmount(0);
+    setAppliedCoupon(null);
+    setCouponError(
+      err.response?.data?.message || "Invalid or expired coupon."
+    );
+  }
+};
   return (
     <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "20px" }}>
       <style>
@@ -446,49 +479,109 @@ console.log("worked");
         </div>
 
         {/* Order Summary */}
-        <div
-          className="checkout-card"
-          style={{
-            background: "#fff",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-            borderRadius: "12px",
-            padding: "20px",
-          }}
-        >
-          <h3
-            style={{ fontSize: "18px", fontWeight: "600", marginBottom: "15px" }}
-          >
-            Order Summary
-          </h3>
-          <div>
-            {cart.map((item) => (
-              <div
-                key={item.id}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  borderBottom: "1px solid #eee",
-                  padding: "8px 0",
-                  color: "#444",
-                }}
-              >
-                <span>
-                  {item.name} × {item.qty}
-                </span>
-                <span>${(item.price * item.qty).toFixed(2)}</span>
-              </div>
-            ))}
-          </div>
-          <h4
-            style={{
-              fontSize: "16px",
-              fontWeight: "bold",
-              marginTop: "15px",
-            }}
-          >
-            Total: ${total.toFixed(2)}
-          </h4>
-        </div>
+      <div
+  className="checkout-card"
+  style={{
+    background: "#fff",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+    borderRadius: "12px",
+    padding: "20px",
+  }}
+>
+  <h3 style={{ fontSize: "18px", fontWeight: "600", marginBottom: "15px" }}>
+    Order Summary
+  </h3>
+  <div>
+    {cart.map((item) => (
+      <div
+        key={item.id}
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          borderBottom: "1px solid #eee",
+          padding: "8px 0",
+          color: "#444",
+        }}
+      >
+        <span>
+          {item.name} × {item.qty}
+        </span>
+        <span>${(item.price * item.qty).toFixed(2)}</span>
+      </div>
+    ))}
+  </div>
+
+  {/* Coupon field */}
+  <div style={{ marginTop: "15px" }}>
+    <input
+      type="text"
+      placeholder="Enter coupon code"
+      value={couponCode}
+      onChange={(e) => setCouponCode(e.target.value)}
+      style={{
+        width: "70%",
+        padding: "10px",
+        border: "1px solid #ccc",
+        borderRadius: "6px",
+        marginRight: "10px",
+      }}
+    />
+    <button
+      type="button"
+      onClick={handleApplyCoupon}
+      style={{
+        padding: "10px 16px",
+        background: "#16a34a",
+        color: "#fff",
+        border: "none",
+        borderRadius: "6px",
+        cursor: "pointer",
+      }}
+    >
+      Apply
+    </button>
+    {couponError && (
+      <p style={{ color: "red", marginTop: "6px" }}>{couponError}</p>
+    )}
+    {appliedCoupon && (
+      <p style={{ color: "green", marginTop: "6px" }}>
+        Coupon <strong>{appliedCoupon}</strong> applied!
+      </p>
+    )}
+  </div>
+
+  {/* Price calculation */}
+  <h4
+    style={{
+      fontSize: "16px",
+      fontWeight: "bold",
+      marginTop: "15px",
+    }}
+  >
+    Subtotal: ${total.toFixed(2)}
+  </h4>
+  {discountAmount > 0 && (
+    <h4
+      style={{
+        fontSize: "16px",
+        color: "green",
+        marginTop: "5px",
+      }}
+    >
+      Discount: -${discountAmount.toFixed(2)}
+    </h4>
+  )}
+  <h3
+    style={{
+      fontSize: "18px",
+      fontWeight: "bold",
+      marginTop: "10px",
+    }}
+  >
+    Total: ${(total - discountAmount).toFixed(2)}
+  </h3>
+</div>
+
       </div>
 
       {/* Place Order Button */}

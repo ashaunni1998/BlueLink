@@ -1,117 +1,102 @@
-.profile-card {
+.requirement-card {
   background: #fff;
   border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0px 2px 8px rgba(0,0,0,0.08);
-  max-width: 800px;
+  padding: 24px;
+  max-width: 900px;
   margin: 20px auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-.profile-header {
-  margin-bottom: 16px;
-}
-
-.profile-title {
-  font-size: 18px;
+.header {
+  font-size: 22px;
   font-weight: 600;
+  margin-bottom: 4px;
 }
 
-.profile-subtitle {
+.subheader {
   font-size: 14px;
-  color: #666;
+  color: #777;
+  margin-bottom: 20px;
 }
 
-.profile-content {
-  display: flex;
+.section {
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
   gap: 20px;
 }
 
-.logo-upload {
-  flex: 1;
-  text-align: center;
-}
-
-.placeholder-box {
-  width: 150px;
-  height: 150px;
-  border: 2px dashed #ccc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  color: #888;
-  margin-bottom: 8px;
-  border-radius: 8px;
-}
-
-.logo-preview {
-  position: relative;
-  display: inline-block;
-}
-
-.logo-preview img {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.remove-btn {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  background: rgba(0,0,0,0.6);
-  border: none;
-  color: white;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 12px;
-  width: 20px;
-  height: 20px;
-}
-
-.details-form {
-  flex: 2;
-}
-
-.label {
+.form-item label {
   display: block;
-  margin: 8px 0 4px;
   font-size: 14px;
+  margin-bottom: 6px;
   font-weight: 500;
 }
 
-.input-box,
-.textarea {
+input, textarea {
   width: 100%;
-  padding: 8px 12px;
-  border-radius: 6px;
+  padding: 10px 12px;
   border: 1px solid #ddd;
+  border-radius: 6px;
   font-size: 14px;
-  margin-bottom: 10px;
 }
 
-.textarea {
-  min-height: 80px;
+textarea {
+  min-height: 100px;
   resize: vertical;
 }
 
-.profile-footer {
-  text-align: right;
-  margin-top: 16px;
+.logo-upload {
+  text-align: center;
 }
 
-.save-btn {
+.logo-preview {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-bottom: 8px;
+}
+
+.placeholder {
+  width: 120px;
+  height: 120px;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.footer {
+  text-align: right;
+}
+
+button {
   background: #6c5ce7;
   color: white;
   padding: 10px 20px;
+  border: none;
   border-radius: 6px;
   font-weight: 500;
-  border: none;
   cursor: pointer;
   transition: 0.2s ease;
 }
 
-.save-btn:hover {
-  background: #5846d6;
+button:hover {
+  background: #5745d6;
 }

@@ -28,6 +28,7 @@ export default function ProductDetail() {
   const [isCropOpen, setIsCropOpen] = useState(false);
 const [croppedImage, setCroppedImage] = useState(null);
 const [selectedFile, setSelectedFile] = useState(null);
+const [orderId, setOrderId] = useState(null);
 
 
 
@@ -430,109 +431,8 @@ console.log(id);
 </div>
 <div style={{ marginTop: "10px" }}>
 {/* Customer Needs */}
-<CustomRequirement/>
-<div
-  style={{
-    maxWidth: "420px",
-    margin: "20px auto",
-    padding: "20px",
-    borderRadius: "12px",
-    background: "#fff",
-    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-    fontFamily: "Arial, sans-serif",
-  }}
->
-  <h2
-    style={{
-      fontSize: "20px",
-      fontWeight: "bold",
-      marginBottom: "16px",
-      color: "#222",
-    }}
-  >
-    Upload Product Image
-  </h2>
-
-  {/* File Upload */}
-  <input
-    type="file"
-    accept="image/*"
-    onChange={handleFileChange}
-    style={{
-      display: "block",
-      width: "100%",
-      padding: "10px",
-      marginBottom: "20px",
-      border: "1px solid #ddd",
-      borderRadius: "8px",
-      cursor: "pointer",
-      fontSize: "14px",
-      background: "#f9f9f9",
-    }}
-  />
-
-  {/* Show cropped image preview */}
-  {croppedImage && (
-    <div style={{ marginTop: "20px" }}>
-      <h3
-        style={{
-          fontSize: "16px",
-          fontWeight: "600",
-          marginBottom: "10px",
-          color: "#444",
-        }}
-      >
-        Cropped Preview:
-      </h3>
-      <div
-        style={{
-          width: "180px",
-          height: "180px",
-          borderRadius: "10px",
-          overflow: "hidden",
-          border: "1px solid #ccc",
-          boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-          marginBottom: "20px",
-        }}
-      >
-        <img
-          src={croppedImage.url}
-          alt="Cropped"
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-        />
-      </div>
-
-      {/* Submit Button */}
-      <button
-        onClick={handleSubmit}
-        style={{
-          display: "inline-block",
-          padding: "10px 20px",
-          fontSize: "15px",
-          fontWeight: "600",
-          color: "#fff",
-          background: "#007bff",
-          border: "none",
-          borderRadius: "8px",
-          cursor: "pointer",
-          transition: "background 0.3s ease",
-        }}
-        onMouseOver={(e) => (e.target.style.background = "#0056b3")}
-        onMouseOut={(e) => (e.target.style.background = "#007bff")}
-      >
-        Submit
-      </button>
-    </div>
-  )}
-
-  {/* CropImage Modal */}
-  <CropImage
-    imageFile={selectedFile}
-    isOpen={isCropOpen}
-    setIsOpen={setIsCropOpen}
-    onCropComplete={handleCropComplete}
-  />
-</div>
+<CustomRequirement orderId={orderId} productId={id}/>
+<CropImage/>
 
 
         {/* Reviews */}
