@@ -71,7 +71,7 @@ import OtherCardDesigner from "./pages/user/OtherCardDesigner";
 import Sample from "./pages/user/Sample";
 import CropImage from "./pages/user/CropImage.jsx";
 import CustomerRequirement from "./pages/user/CustomerRequirement.jsx";
-
+import UploadDesign from "./pages/user/UploadDesign.jsx";
 
 
 
@@ -164,6 +164,7 @@ function App() {
           <Route path="/design-selector/:id" element={<DesignSelector />} />
           <Route path="/other-design-selector/:id" element={<OtherCardDesigner />} />
           <Route path="/sample" element={<Sample/>}/>
+          <Route path="/upload-design/:productId" element={<UploadDesign/>}/>
         </Routes>
       </Router>
 
