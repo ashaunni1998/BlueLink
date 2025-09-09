@@ -5,7 +5,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Review from "./Review";
 import CropImage from "./CropImage";
-import CustomRequirement from "./CustomRequirement";
+import CustomRequirement from "./CustomerRequirement";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -431,8 +431,7 @@ console.log(id);
 </div>
 <div style={{ marginTop: "10px" }}>
 {/* Customer Needs */}
-<CustomRequirement orderId={orderId} productId={id}/>
-<CropImage/>
+
 
 
         {/* Reviews */}

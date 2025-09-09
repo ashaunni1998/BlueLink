@@ -183,34 +183,27 @@ console.log("worked");
       );
 
       const order = orderRes.data.orderData;
-     
-      // const orderId = order._id;
-      // const payRes = await axios.post(
-      //   `${API_BASE_URL}/order/create-payment-intent`,
-      //   { order: { orderId: order._id }, selectedPaymentMethod: "card" },
-      //   { withCredentials: true }
-      // );
-      // navigate("/checkoutform", {
-      //   state: {
-      //     orderDetails: {
-      //       orderId: order._id,
-      //       amount: payRes.data.paymentIntent.amount,
-      //       clientSecret: payRes.data.paymentIntent.client_secret,
-      //       description: `Order #${order._id}`,
-      //     },
-      //   },
-      // });
-
-          navigate("/checkout-form", {
+             navigate("/customer-requirement", {
       state: {
         orderDetails: {
-          amount: order.totalPrice * 100, // Stripe works in cents
-          currency: "usd",
+         
           orderId: order._id,
-          description: "Test Order",
+         orderData:order,
         },
       },
     });
+     
+
+    //       navigate("/checkout-form", {
+    //   state: {
+    //     orderDetails: {
+    //       amount: order.totalPrice * 100, // Stripe works in cents
+    //       currency: "usd",
+    //       orderId: order._id,
+    //       description: "Test Order",
+    //     },
+    //   },
+    // });
     } catch (err) {
       console.error("Checkout error:", err);
     }
@@ -237,7 +230,7 @@ console.log("worked");
     const res = await axios.put(
       `${API_BASE_URL}/order/apply-coupon`,
       {
-        orderId: orderDetails?._id, // use current order id
+        orderId: orderDetails?.orderId, // use current order id
         coupon: couponCode,
       },
       { withCredentials: true }
@@ -600,7 +593,7 @@ console.log("worked");
               cursor: "pointer",
             }}
           >
-            Place Order & Continue to Payment
+           Customize And Place order
           </button>
         ) : (
           <div

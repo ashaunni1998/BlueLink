@@ -70,7 +70,7 @@ import DesignSelector from "./pages/user/DesignSelector";
 import OtherCardDesigner from "./pages/user/OtherCardDesigner";
 import Sample from "./pages/user/Sample";
 import CropImage from "./pages/user/CropImage.jsx";
-import CustomerRequirement from "./pages/user/CustomRequirement.jsx";
+import CustomerRequirement from "./pages/user/CustomerRequirement.jsx";
 
 
 
@@ -125,7 +125,7 @@ function App() {
           <Route path="/buttonbadges" element={<ButtonBadges />} />
           <Route path="/buttonbadgesdetails" element={<ButtonBadgesDetail />} />
           <Route path="/cropimage" element={<CropImage/>}/>
-         <Route path="/customer-requirement/:orderId/:productId" element={<CustomerRequirement />} />
+         <Route path="/customer-requirement" element={<CustomerRequirement />} />
 
           {/* ✅ Wrap checkout with Stripe Elements */}
           <Route
