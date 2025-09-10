@@ -125,6 +125,7 @@ const Home = () => {
       fontSize: "12px",
     },
   };
+  
 
   const logos = [
     { alt: "Uber", src: "https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" },
@@ -485,7 +486,7 @@ const Home = () => {
               <a
                 href="#"
                 style={{
-                  color: "#007a5e",
+                  color: "#007bff",
                   fontWeight: "600",
                   textDecoration: "none",
                 }}
@@ -521,7 +522,7 @@ const Home = () => {
               <a
                 href="#"
                 style={{
-                  color: "#007a5e",
+                  color: "#007bff",
                   fontWeight: "600",
                   textDecoration: "none",
                 }}
@@ -533,124 +534,122 @@ const Home = () => {
         </div>
       </section>
 
-      <section
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "#f5f5f5",
-          padding: "60px 20px",
-        }}
-      >
-        {/* Left Side - Image */}
-        <div
-          style={{
-            flex: "1 1 50%",
-            minWidth: "300px",
-            maxWidth: "800px",
-            padding: "20px",
-            textAlign: "center",
-          }}
-        >
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQd19vInA8bUX20OregUR32xvV6CbNZ_kMhDQ&s" // Replace with flyer image if available
-            alt="Flyers & Leaflets"
-            style={{ width: "100%", height: "auto", borderRadius: "8px" }}
-          />
-        </div>
+     {/* Section 1 - Flyers */}
+<section
+ 
+  className="promo-section"
+>
+  {/* Left Image */}
+  <div
+    
+  className="promo-image"
+  >
+    <img
+      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQd19vInA8bUX20OregUR32xvV6CbNZ_kMhDQ&s"
+      alt="Flyers & Leaflets"
+      style={{
+        width: "100%",
+        maxWidth: "600px",
+        height: "auto",
+        borderRadius: "16px",
+        boxShadow: "0 6px 25px rgba(0,0,0,0.1)",
+        transition: "transform 0.3s ease",
+      }}
+      onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.03)")}
+      onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+    />
+  </div>
 
-        {/* Right Side - Text Card */}
-        <div
-          style={{
-            flex: "1 1 400px",
-            maxWidth: "500px",
-            backgroundColor: "#fff",
+  {/* Right Text */}
+  <div
+   className="promo-card"
+  >
+    <h2 style={{ fontSize: "32px", marginBottom: "20px", fontWeight: "700", color: "#111" }}>
+      Flyers & Leaflets. Spread the word.
+    </h2>
+    <p style={{ fontSize: "18px", color: "#444", marginBottom: "30px", lineHeight: "1.6" }}>
+      Make your message loud and clear with professional, high-impact flyers and
+      leaflets – ideal for promotions, menus, and more.
+    </p>
+    <a
+      href="#"
+      style={{
+        fontSize: "16px",
+        padding: "12px 28px",
+        borderRadius: "8px",
+        backgroundColor: "#007bff",
+        color: "#fff",
+        fontWeight: "600",
+        textDecoration: "none",
+        display: "inline-block",
+        transition: "background 0.3s ease",
+      }}
+      onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#005f47")}
+      onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#007a5e")}
+    >
+      Shop Flyers & Leaflets 
+    </a>
+  </div>
+</section>
 
-            borderRadius: "8px",
-            padding: "40px",
-            boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-            margin: "20px",
-          }}
-        >
-          <h2 style={{ fontSize: "28px", marginBottom: "20px", fontWeight: "600", color: "#111" }}>
-            Flyers & Leaflets. Spread the word.
-          </h2>
-          <p style={{ fontSize: "16px", color: "#555", marginBottom: "30px" }}>
-            Make your message loud and clear with professional, high-impact flyers and leaflets – ideal for promotions, menus, and more.
-          </p>
-          <a
-            href="#"
-            style={{
-              fontSize: "16px",
-              color: "#007a5e",
-              fontWeight: "600",
-              textDecoration: "none",
-            }}
-          >
-            Shop Flyers & Leaflets &gt;
-          </a>
-        </div>
-      </section>
-      <section
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "#f5f5f5",
-          padding: "60px 20px",
-        }}
-      >
-        {/* Left Side - Image */}
-        <div
-          style={{
-            flex: "1 1 50%",
-            minWidth: "300px",
-            maxWidth: "800px",
-            padding: "20px",
-            textAlign: "center",
-          }}
-        >
-          <img
-            src="https://thesignaturebox.com/cdn/shop/articles/personalised-gifts-5-things-to-consider-before-choosing-personalized-gifts-294055.jpg?v=1706979689&width=1280" // Replace with flyer image if available
-            alt="Flyers & Leaflets"
-            style={{ width: "100%", height: "auto", borderRadius: "8px" }}
-          />
-        </div>
+{/* Section 2 - Gifts */}
+<section
 
-        {/* Right Side - Text Card */}
-        <div
-          style={{
-            flex: "1 1 400px",
-            maxWidth: "500px",
-            backgroundColor: "#fff",
-            borderRadius: "8px",
-            padding: "40px",
-            boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-            margin: "20px",
-          }}
-        >
-          <h2 style={{ fontSize: "28px", marginBottom: "20px", fontWeight: "600", color: "#111" }}>
-            Personalized Gift. Make it special.
-          </h2>
-          <p style={{ fontSize: "16px", color: "#555", marginBottom: "30px" }}>
-            Add a personal touch with custom gifts perfect for any occasion – from birthdays to business branding.
-          </p>
+  className="promo-section reverse"
+>
+  {/* Left Text */}
+  <div
+    className="promo-card"
+  >
+    <h2 style={{ fontSize: "32px", marginBottom: "20px", fontWeight: "700", color: "#111" }}>
+      Personalized Gifts. Make it special.
+    </h2>
+    <p style={{ fontSize: "18px", color: "#444", marginBottom: "30px", lineHeight: "1.6" }}>
+      Add a personal touch with custom gifts perfect for any occasion – from
+      birthdays to business branding.
+    </p>
+    <a
+      href="#"
+      style={{
+        fontSize: "16px",
+        padding: "12px 28px",
+        borderRadius: "8px",
+        backgroundColor: "#007bff",
+        color: "#fff",
+        fontWeight: "600",
+        textDecoration: "none",
+        display: "inline-block",
+        transition: "background 0.3s ease",
+      }}
+      onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#005f47")}
+      onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#007a5e")}
+    >
+      Shop Personalized Gifts 
+    </a>
+  </div>
 
-          <a
-            href="#"
-            style={{
-              fontSize: "16px",
-              color: "#007a5e",
-              fontWeight: "600",
-              textDecoration: "none",
-            }}
-          >
-            Shop Flyers & Leaflets &gt;
-          </a>
-        </div>
-      </section>
+  {/* Right Image */}
+  <div
+   className="promo-image "
+  >
+    <img
+      src="https://thesignaturebox.com/cdn/shop/articles/personalised-gifts-5-things-to-consider-before-choosing-personalized-gifts-294055.jpg?v=1706979689&width=1280"
+      alt="Personalized Gift"
+      style={{
+        width: "100%",
+        maxWidth: "600px",
+        height: "auto",
+        borderRadius: "16px",
+        boxShadow: "0 6px 25px rgba(0,0,0,0.1)",
+        transition: "transform 0.3s ease",
+      }}
+      onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.03)")}
+      onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+    />
+  </div>
+</section>
+
+
 
       {/* CTA Banner */}
       <section
