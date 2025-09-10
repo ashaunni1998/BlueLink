@@ -251,7 +251,8 @@ console.log("worked");
   }
 };
   return (
-    <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "20px" }}>
+    // <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "20px" }}>
+     <div className="responsive-container">
       <style>
         {`
           @media (max-width: 768px) {
@@ -269,9 +270,9 @@ console.log("worked");
       </style>
 
       <Header />
-      <h2 style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "20px" }}>
+      {/* <h2 style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "20px" ,color:"#007bff",fontFamily:"monospace"}}>
         Checkout
-      </h2>
+      </h2> */}
 
       <div
         className="checkout-grid"
@@ -307,7 +308,7 @@ console.log("worked");
               style={{
                 padding: "6px 12px",
                 fontSize: "14px",
-                background: "#16a34a",
+                background: "#007bff",
                 color: "#fff",
                 borderRadius: "6px",
                 border: "none",
@@ -524,7 +525,7 @@ console.log("worked");
       onClick={handleApplyCoupon}
       style={{
         padding: "10px 16px",
-        background: "#16a34a",
+        background: "#007bff",
         color: "#fff",
         border: "none",
         borderRadius: "6px",
@@ -611,6 +612,7 @@ console.log("worked");
       </div>
       <Footer />
     </div>
+    
   );
 };
 

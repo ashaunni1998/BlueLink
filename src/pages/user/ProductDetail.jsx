@@ -460,26 +460,71 @@ console.log(id);
           </div>
 
           {/* Details */}
-         <div style={styles.detailsSection}>
-  {/* Basic Details */}
-  <h1>{product.name}</h1>
-  <p>{product.description}</p>
-  <p><strong>Price:</strong> ${product.price}</p>
+ <div style={styles.detailsSection}>
+  {/* Product Title */}
+  <h1 style={{ fontSize: "28px", fontWeight: "600", marginBottom: "8px",fontFamily:"initial" ,color:"#007bff" }}>
+    {product.name}
+  </h1>
+<p
+  style={{
+    fontSize: "16px",
+    fontWeight: "500",
+    color: "#444",
+    marginBottom: "16px",
+    fontFamily: "cursive",
+    // backgroundColor: "#a5a7c1ff", // soft yellow highlight
+    padding: "12px 16px",
+    // borderLeft: "4px solid #ff9800", // orange accent bar
+    borderRadius: "6px",
+    boxShadow: "0 2px 5px rgba(0,0,0,0.08)",
+    lineHeight: "1.6",
+  }}
+>
+  {product.description}
+</p>
 
-  {/* Images */}
-  {/* {product.images && product.images.length > 0 && (
-    <div style={styles.imageGallery}>
-      {product.images.map((img, index) => (
-        <img key={index} src={img} alt={product.name} style={styles.productImage} />
-      ))}
-    </div>
-  )} */}
+<p
+  style={{
+    fontSize: "16px",
+    marginBottom: "16px",
+    backgroundColor: "#f0f7ff", // light blue highlight
+    padding: "10px 14px",
+    borderRadius: "8px",
+    fontWeight: "500",
+    display: "inline-block",
+    boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
+  }}
+>
+  <strong style={{ color: "#1a73e8" }}>{product.quantity}</strong> from{" "}
+  <span style={{ fontWeight: "700", fontSize: "18px", color: "#e53935" }}>
+    ${product.price}
+  </span>
+</p>
+
+
+  {/* Rating */}
+  <div style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
+    <span style={{ color: "#007bff", fontSize: "20px", marginRight: "8px" }}>★★★★★</span>
+    <span style={{ fontSize: "15px", color: "#555" }}>
+      {product.rating.count > 0
+        ? `${product.rating.count} reviews`
+        : "No reviews yet"}
+    </span>
+  </div>
+
+  {/* Premium Section */}
+  {/* <h2 style={{ fontSize: "20px", fontWeight: "600", marginBottom: "8px" }}>
+    Premium as standard
+  </h2>
+  <p style={{ fontSize: "15px", color: "#555", lineHeight: "1.6", marginBottom: "16px" }}>
+    {product.description}
+  </p> */}
 
   {/* Sizes */}
-  {product.size && product.size.length > 0 && (
-    <div>
-      <h3>Available Sizes</h3>
-      <ul>
+  {product.size?.length > 0 && (
+    <div style={{ marginBottom: "16px" }}>
+      <h3 style={{ fontSize: "18px", fontWeight: "600", marginBottom: "6px" }}>Available Sizes</h3>
+      <ul style={{ margin: 0, paddingLeft: "20px", fontSize: "15px", color: "#444" }}>
         {product.size.map((s, i) => (
           <li key={i}>
             {s.name}: {s.size.width} x {s.size.height}
@@ -490,62 +535,63 @@ console.log(id);
   )}
 
   {/* Paper */}
-  {product.paper && product.paper.length > 0 && (
-    <div>
-      <h3>Paper Options</h3>
-      <ul>
+  {product.paper?.length > 0 && (
+    <div style={{ marginBottom: "16px" }}>
+      <h3 style={{ fontSize: "18px", fontWeight: "600", marginBottom: "6px" }}>Paper Options</h3>
+      <ul style={{ margin: 0, paddingLeft: "20px", fontSize: "15px", color: "#444" }}>
         {product.paper.map((p, i) => (
-          <li key={i}>
-            {p.name} - {p.points.join(", ")}
-          </li>
+          <li key={i}>{p.name} - {p.points.join(", ")}</li>
         ))}
       </ul>
     </div>
   )}
 
   {/* Finish */}
-  {product.finish && product.finish.length > 0 && (
-    <div>
-      <h3>Finish</h3>
-      <ul>
+  {product.finish?.length > 0 && (
+    <div style={{ marginBottom: "16px" }}>
+      <h3 style={{ fontSize: "18px", fontWeight: "600", marginBottom: "6px" }}>Finish</h3>
+      <ul style={{ margin: 0, paddingLeft: "20px", fontSize: "15px", color: "#444" }}>
         {product.finish.map((f, i) => (
-          <li key={i}>
-            <strong>{f.name}</strong>: {f.description}
-          </li>
+          <li key={i}><strong>{f.name}</strong>: {f.description}</li>
         ))}
       </ul>
     </div>
   )}
 
   {/* Corners */}
-  {product.corner && product.corner.length > 0 && (
-    <div>
-      <h3>Corners</h3>
-      <ul>
+  {product.corner?.length > 0 && (
+    <div style={{ marginBottom: "16px" }}>
+      <h3 style={{ fontSize: "18px", fontWeight: "600", marginBottom: "6px" }}>Corners</h3>
+      <ul style={{ margin: 0, paddingLeft: "20px", fontSize: "15px", color: "#444" }}>
         {product.corner.map((c, i) => (
-          <li key={i}>
-            <strong>{c.name}</strong>: {c.description}
-          </li>
+          <li key={i}><strong>{c.name}</strong>: {c.description}</li>
         ))}
       </ul>
     </div>
   )}
 
-  {/* Rating */}
-  <div>
-    <h3>Rating</h3>
-    <p>
-      {product.rating.count > 0
-        ? `${(product.rating.total / product.rating.count).toFixed(1)} ⭐ (${product.rating.count} reviews)`
-        : "No ratings yet"}
-    </p>
-  </div>
-
   {/* Add to Cart */}
-  <button onClick={handleAddToCart} style={styles.button}>
+  <button
+    onClick={handleAddToCart}
+    style={{
+      backgroundColor: "#007bff",
+      color: "#fff",
+      padding: "12px 24px",
+      borderRadius: "6px",
+      border: "none",
+      fontSize: "16px",
+      fontWeight: "500",
+      cursor: "pointer",
+      marginTop: "20px",
+      display:"block",
+      marginLeft:"auto",
+      marginRight:"auto"
+    }}
+  >
     🛒 Add to Cart
   </button>
 </div>
+
 </div>
 <div style={{ marginTop: "10px" }}>
 {/* Customer Needs */}

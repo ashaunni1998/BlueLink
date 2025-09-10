@@ -496,7 +496,7 @@ const styles = {
   mobileLogoutBtn: { background: "none", border: "none", cursor: "pointer", color: "inherit", textAlign: "left", padding: "8px 0", width: "100%" },
   mobileSignIn: { marginBottom: "10px", padding: "12px" },
   mobileSignInLink: { color: "#fff", textDecoration: "none", fontWeight: "bold" },
-  mobileCart: { padding: "12px", backgroundColor: "#10B981", textAlign: "center", borderRadius: "6px", fontWeight: "bold", color: "white" },
+  mobileCart: { padding: "12px", backgroundColor: "#007bff", textAlign: "center", borderRadius: "6px", fontWeight: "bold", color: "white" },
   mobileCartLink: { color: "white", textDecoration: "none" },
   offerBar: { backgroundColor: "#007BFF", color: "#fff", textAlign: "center", padding: "10px 20px", fontSize: "14px", fontWeight: "500", lineHeight: "1.4", wordWrap: "break-word" },
   responsive: `

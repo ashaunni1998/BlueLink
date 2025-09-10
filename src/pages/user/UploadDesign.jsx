@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Cropper from "react-easy-crop";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 export default function UploadDesign() {
   const { productId } = useParams();
@@ -81,39 +83,47 @@ export default function UploadDesign() {
   };
 
   return (
+    <div className="responsive-container">
+      <Header/>
     <div
       style={{
         padding: "40px",
         maxWidth: "1100px",
         margin: "0 auto",
-        background: "linear-gradient(135deg, #f9fafb, #eef2ff)",
+        background: "linear-gradient(135deg, #f9fafb, #e0f2ff)",
         borderRadius: "20px",
         boxShadow: "0 8px 30px rgba(0,0,0,0.1)",
       }}
     >
       <h2
         style={{
-          fontSize: "28px",
-          fontWeight: "800",
+          fontSize: "26px",
+          fontWeight: "500",
+          fontFamily:"cursive",
           marginBottom: "30px",
           textAlign: "center",
-          background: "linear-gradient(90deg,#2563eb,#9333ea)",
+          background: "linear-gradient(90deg,#2563eb,#1d4ed8)",
           WebkitBackgroundClip: "text",
-          color: "transparent",
+          color: "blue",
         }}
       >
         Upload Your Design
       </h2>
 
       {/* Upload grid */}
-      <div
+      {/* <div
         style={{
           display: "grid",
           gridTemplateColumns: "1fr 1fr 1fr",
           gap: "25px",
           marginBottom: "40px",
         }}
-      >
+      > */}
+      <div
+  style={{ marginBottom: "40px" }}
+  className="upload-grid"
+>
+
         {["front", "back", "full"].map((side) => {
           const preview =
             side === "front"
@@ -163,14 +173,14 @@ export default function UploadDesign() {
                 <label
                   htmlFor={`${side}-upload`}
                   style={{
-                    background: "linear-gradient(90deg,#2563eb,#9333ea)",
+                    background: "linear-gradient(90deg,#2563eb,#dc2626)",
                     color: "#fff",
                     padding: "12px 18px",
                     borderRadius: "10px",
                     cursor: "pointer",
                     fontWeight: "600",
                     display: "inline-block",
-                    boxShadow: "0 4px 12px rgba(79,70,229,0.4)",
+                    boxShadow: "0 4px 12px rgba(37,99,235,0.4)",
                   }}
                 >
                   Choose File
@@ -194,44 +204,47 @@ export default function UploadDesign() {
       </div>
 
       {/* Buttons */}
-      <div style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
+      {/* <div style={{ display: "flex", justifyContent: "center", gap: "20px" }}> */}
+      <div className="button-group">
+
         <button
           onClick={() => navigate(`/product/${productId}`)}
           style={{
             padding: "14px 28px",
-            background: "linear-gradient(90deg,#6b7280,#374151)",
+            background: "linear-gradient(90deg,#2563eb,#1d4ed8)",
             color: "#fff",
             border: "none",
             borderRadius: "12px",
             cursor: "pointer",
             fontSize: "16px",
             fontWeight: "600",
-            boxShadow: "0 5px 15px rgba(55,65,81,0.4)",
+            boxShadow: "0 5px 15px rgba(37,99,235,0.4)",
             transition: "all 0.3s ease",
           }}
         >
-          ⬅ Back to Product
+          Back to Product
         </button>
 
         <button
           onClick={handleSubmit}
           style={{
             padding: "14px 28px",
-            background: "linear-gradient(90deg,#16a34a,#15803d)",
+            background: "linear-gradient(90deg,#2563eb,#1d4ed8)",
             color: "#fff",
             border: "none",
             borderRadius: "12px",
             cursor: "pointer",
             fontSize: "16px",
             fontWeight: "600",
-            boxShadow: "0 5px 15px rgba(22,163,74,0.4)",
+            boxShadow: "0 5px 15px rgba(10, 17, 47, 0.4)",
             transition: "all 0.3s ease",
           }}
-        >
-          ✅ Submit Design
+        >Submit Design
         </button>
       </div>
-
+</div>
+<Footer/>
+      
       {/* Crop modal */}
       {croppingImage && (
         <div
@@ -328,5 +341,6 @@ export default function UploadDesign() {
         </div>
       )}
     </div>
+    
   );
 }

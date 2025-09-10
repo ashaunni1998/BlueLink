@@ -210,119 +210,187 @@ const Home = () => {
       {/* Hero Section */}
       <HomeSlider />
       {/* Features Section */}
-      <section style={{ padding: "10px 5px", backgroundColor: "#ffffff" }}>
+    <section style={{ padding: "40px 20px", backgroundColor: "#ffffff" }}>
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "stretch",
+      flexWrap: "wrap",
+      gap: "30px",
+      textAlign: "center",
+      maxWidth: "1200px",
+      margin: "0 auto",
+    }}
+  >
+    {/* Card 1 */}
+   <div
+      style={{
+        flex: "1 1 280px",
+        maxWidth: "320px",
+        padding: "25px 20px",
+        borderRadius: "12px",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+        backgroundColor: "#fff",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        textAlign: "center",
+      }}
+    >
+      <img
+        src="https://img.icons8.com/ios-filled/100/007bff/blueprint.png"
+        alt="Print"
+        style={{ marginBottom: "15px", height: "80px" }}
+      />
+      <h3 style={{ fontSize: "20px", marginBottom: "10px", fontWeight: "600" }}>
+        High-Quality Prints
+      </h3>
+      <p style={{ color: "#555", fontSize: "15px", lineHeight: "1.6" }}>
+        Crisp, clear, and durable blueprint prints for professionals.
+      </p>
+    </div>
+  
+
+    {/* Card 2 */}
+    <div
+      style={{
+        flex: "1 1 280px",
+        maxWidth: "320px",
+        padding: "25px 20px",
+        borderRadius: "12px",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+        backgroundColor: "#fff",
+                display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        textAlign: "center",
+
+      }}
+    >
+      <img
+        src="https://img.icons8.com/ios-filled/100/007bff/shipped.png"
+        alt="Delivery"
+        style={{ marginBottom: "15px", height: "80px" }}
+      />
+      <h3 style={{ fontSize: "20px", marginBottom: "10px", fontWeight: "600" }}>
+        Fast Delivery
+      </h3>
+      <p style={{ color: "#555", fontSize: "15px", lineHeight: "1.6" }}>
+        Next-day delivery available for urgent projects and deadlines.
+      </p>
+    </div>
+
+    {/* Card 3 */}
+    <div
+      style={{
+        flex: "1 1 280px",
+        maxWidth: "320px",
+        padding: "20px",
+        borderRadius: "12px",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+        backgroundColor: "#fff",
+                display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        textAlign: "center",
+
+      }}
+    >
+      <img
+        src="https://img.icons8.com/ios-filled/100/007bff/customer-support.png"
+        alt="Support"
+        style={{ marginBottom: "15px", height: "80px" }}
+      />
+      <h3 style={{ fontSize: "20px", marginBottom: "10px", fontWeight: "600" }}>
+        Customer Support
+      </h3>
+      <p style={{ color: "#555", fontSize: "15px", lineHeight: "1.6" }}>
+        Reach out any time—our team is here to help you succeed.
+      </p>
+    </div>
+  </div>
+</section>
+
+      {/* Popular Products Section */}
+      <section style={{ backgroundColor: "#f5f8f6", padding: "50px 0px", textAlign: "center" }}>
+  <h2 style={{ fontSize: "28px", marginBottom: "10px", fontWeight: "600", color: "#111" }}>
+    Popular products
+  </h2>
+  <p style={{ fontSize: "16px", color: "#666", marginBottom: "40px" }}>
+    These are tried and true favorites that will have you set to get down to business.
+  </p>
+
+  <div
+    style={{
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+      gap: "30px",
+      maxWidth: "1200px",
+      margin: "0 auto",
+    }}
+  >
+    {products.map((product) => (
+      <div
+        key={product._id}
+        style={{
+          backgroundColor: "#fff",
+          borderRadius: "8px",
+          overflow: "hidden",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+          transition: "transform 0.2s ease",
+        }}
+      >
+        {/* Image wrapper */}
         <div
           style={{
-            display: "flex",
-            justifyContent: "space-around",
-            flexWrap: "wrap",
-            gap: "40px",
+            width: "100%",
+            aspectRatio: "4/3", // keeps images same shape
+            overflow: "hidden",
+          }}
+        >
+          <img
+            src={product.images[0] || "https://via.placeholder.com/300"}
+            alt={product.name}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "contain", // prevents cropping
+              display: "block",
+              backgroundColor: "#f9f9f9",
+            }}
+          />
+        </div>
+
+        {/* Product details */}
+        <div
+          style={{
+            padding: "14px",
+            borderTop: "1px solid #eee",
             textAlign: "center",
           }}
         >
-          <div style={{ maxWidth: "300px" }}>
-            <img
-              src="https://img.icons8.com/ios-filled/100/007bff/blueprint.png"
-              alt="Print"
-              style={{ marginBottom: "5px" }}
-            />
-            <h3 style={{ fontSize: "20px", marginBottom: "10px" }}>High-Quality Prints</h3>
-            <p style={{ color: "#666" }}>
-              Crisp, clear, and durable blueprint prints for professionals.
-            </p>
-          </div>
-          <div style={{ maxWidth: "300px" }}>
-            <img
-              src="https://img.icons8.com/ios-filled/100/007bff/shipped.png"
-              alt="Delivery"
-              style={{ marginBottom: "10px" }}
-            />
-            <h3 style={{ fontSize: "20px", marginBottom: "10px" }}>Fast Delivery</h3>
-            <p style={{ color: "#666" }}>
-              Next-day delivery available for urgent projects and deadlines.
-            </p>
-          </div>
-          <div style={{ maxWidth: "300px" }}>
-            <img
-              src="https://img.icons8.com/ios-filled/100/007bff/customer-support.png"
-              alt="Support"
-              style={{ marginBottom: "10px" }}
-            />
-            <h3 style={{ fontSize: "20px", marginBottom: "10px" }}>Customer Support</h3>
-            <p style={{ color: "#666" }}>
-              Reach out any time—our team is here to help you succeed.
-            </p>
-          </div>
+          <Link
+            to={`/product/${product._id}`}
+            style={{
+              color: "#007a5e",
+              textDecoration: "none",
+              fontWeight: "500",
+              fontSize: "15px",
+              display: "block",
+              marginBottom: "6px",
+            }}
+          >
+            {product.name} &gt;
+          </Link>
+          <p style={{ fontSize: "14px", color: "#444", margin: 0 }}>
+            ${product.price}
+          </p>
         </div>
-      </section>
-      {/* Popular Products Section */}
-      <section style={{ backgroundColor: "#f5f8f6", padding: "50px 0px", textAlign: "center" }}>
-        <h2 style={{ fontSize: "28px", marginBottom: "10px", fontWeight: "600", color: "#111" }}>
-          Popular products
-        </h2>
-        <p style={{ fontSize: "16px", color: "#666", marginBottom: "40px" }}>
-          These are tried and true favorites that will have you set to get down to business.
-        </p>
-
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-            gap: "30px",
-            maxWidth: "1200px",
-            margin: "0 auto",
-          }}
-        >
-          {products.map((product) => (
-            <div
-              key={product._id}
-              style={{
-                backgroundColor: "#fff",
-                borderRadius: "6px",
-                overflow: "hidden",
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <div style={{ height: "160px", overflow: "hidden" }}>
-                <img
-                  src={product.images[0] || "https://via.placeholder.com/300"}
-                  alt={product.name}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    display: "block",
-                  }}
-                />
-              </div>
-              <div
-                style={{
-                  padding: "12px",
-                  borderTop: "1px solid #eee",
-                  textAlign: "center",
-                }}
-              >
-                <Link
-                  to={`/product/${product._id}`}
-                  style={{
-                    color: "#007a5e",
-                    textDecoration: "none",
-                    fontWeight: "500",
-                    fontSize: "14px",
-                  }}
-                >
-                  {product.name} &gt;
-                </Link>
-                <p style={{ fontSize: "13px", color: "#666", marginTop: "6px" }}>
-                  ${product.price}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-      </section>
+      </div>
+    ))}
+  </div>
+</section>
 
 
 
